@@ -522,7 +522,22 @@
         </form>
     </div>
 
+    <script src="config.js"></script>
     <script>
+        // Inicialização dinâmica do Meta Pixel
+        if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.metaPixelId) {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', SAILORS_CONFIG.metaPixelId);
+            fbq('track', 'PageView');
+        }
+
         let currentStep = 1;
         const totalSteps = 7;
         let alertTimeout = null;
@@ -665,6 +680,54 @@
             const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
             leads.push(formData);
             localStorage.setItem('sailors_leads', JSON.stringify(leads));
+
+            // Meta Pixel Lead event trigger
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead', {
+                    content_name: formData.cargo,
+                    content_category: formData.faturamento
+                });
+            }
+
+            // General Webhook dispatch (Make / Zapier / Google Sheets)
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
+                fetch(SAILORS_CONFIG.webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                }).catch(err => console.error('Erro ao disparar webhook geral:', err));
+            }
+
+            // Discord Webhook dispatch (Rich embed notification)
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.discordWebhookUrl) {
+                const cleanPhone = formData.whatsapp.replace(/\D/g, '');
+                const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+                const cleanInsta = formData.instagram.startsWith('@') ? formData.instagram.substring(1) : formData.instagram;
+
+                const discordPayload = {
+                    embeds: [{
+                        title: "⚓ Novo Lead Capturado! — Sailors Marketing",
+                        color: 16736538, // #FF611A
+                        fields: [
+                            { name: "👤 Nome", value: formData.nome, inline: true },
+                            { name: "💼 Empresa", value: formData.empresa, inline: true },
+                            { name: "📝 Cargo", value: formData.cargo, inline: true },
+                            { name: "💰 Faturamento Mensal", value: formData.faturamento, inline: true },
+                            { name: "📧 E-mail", value: formData.email, inline: false },
+                            { name: "🟢 WhatsApp", value: `[Falar no WhatsApp](https://wa.me/${waLink}) (${formData.whatsapp})`, inline: true },
+                            { name: "📸 Instagram", value: `[@${cleanInsta}](https://instagram.com/${cleanInsta})`, inline: true }
+                        ],
+                        footer: { text: "Sailors Lead System" },
+                        timestamp: new Date().toISOString()
+                    }]
+                };
+
+                fetch(SAILORS_CONFIG.discordWebhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordPayload)
+                }).catch(err => console.error('Erro ao disparar webhook do Discord:', err));
+            }
 
             // Redirect back to main page
             setTimeout(() => {
