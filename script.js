@@ -1,16 +1,32 @@
 /* ==========================================================================
-   SAILORS MARKETING — THE EXACT PROMPT INTERACTIVE ENGINE
-   Vanilla JS implementing Slideshow, Dynamic words, IntersectionObserver reveals,
-   Infinite looping carousels fallback, Feeds switcher, Count-up & Form logic.
+   SAILORS MARKETING — REDESIGN V2 INTERACTIVE ENGINE
+   Vanilla JS implementing Mouse Glow, Count-up, Accordions & Mobile Nav.
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 0. UNIQUE SESSION TRACKING
-    if (!sessionStorage.getItem('sailors_session_viewed')) {
-        sessionStorage.setItem('sailors_session_viewed', 'true');
-        let views = parseInt(localStorage.getItem('sailors_page_views') || '0');
-        localStorage.setItem('sailors_page_views', (views + 1).toString());
+    // 0. INITIALIZE META PIXEL AND VISITOR TRACKING
+    if (typeof SAILORS_CONFIG !== 'undefined') {
+        // Dynamic Facebook Pixel loading
+        if (SAILORS_CONFIG.metaPixelId) {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', SAILORS_CONFIG.metaPixelId);
+            fbq('track', 'PageView');
+        }
+
+        // Visitor page-view session tracking
+        if (!sessionStorage.getItem('sailors_page_view_counted')) {
+            let views = parseInt(localStorage.getItem('sailors_page_views') || '0');
+            localStorage.setItem('sailors_page_views', views + 1);
+            sessionStorage.setItem('sailors_page_view_counted', 'true');
+        }
     }
 
     // 1. CUSTOM MOUSE GLOW FOLLOWER (Smooth easing)
@@ -22,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+            cursorGlow.classList.add('active');
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.classList.remove('active');
         });
 
         const updateGlowPosition = () => {
@@ -34,151 +55,48 @@ document.addEventListener('DOMContentLoaded', () => {
         updateGlowPosition();
     }
 
-    // 2. HERO SLIDESHOW (Crossfade every 4000ms)
-    const slides = document.querySelectorAll('.hero-slideshow .slide');
-    if (slides.length > 0) {
-        let currentSlideIndex = 0;
-        setInterval(() => {
-            slides[currentSlideIndex].classList.remove('active');
-            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-            slides[currentSlideIndex].classList.add('active');
-        }, 4000);
-    }
 
-    // 3. NAVBAR STICKY EFFECT ON SCROLL
-    const navbar = document.querySelector('.navbar');
-    const checkNavbarSticky = () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('sticky');
-        } else {
-            navbar.classList.remove('sticky');
-        }
-    };
-    window.addEventListener('scroll', checkNavbarSticky);
-    checkNavbarSticky();
 
-    // 4. MOBILE MENU TOGGLE
+    // 3. MOBILE MENU TOGGLE
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
 
     if (menuToggle && navMenu) {
         const toggleMenu = () => {
-            menuToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
+            // Toggle hamburger icon animation states if needed
+            const bars = menuToggle.querySelectorAll('.bar');
+            if (navMenu.classList.contains('active')) {
+                bars[0].style.transform = 'translateY(6px) rotate(45deg)';
+                bars[1].style.opacity = '0';
+                bars[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+            } else {
+                bars[0].style.transform = 'none';
+                bars[1].style.opacity = '1';
+                bars[2].style.transform = 'none';
+            }
         };
 
         menuToggle.addEventListener('click', toggleMenu);
 
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
+                const bars = menuToggle.querySelectorAll('.bar');
+                bars[0].style.transform = 'none';
+                bars[1].style.opacity = '1';
+                bars[2].style.transform = 'none';
             });
         });
     }
 
-    // 5. SCROLL-TRIGGERED ENTRANCE ANIMATIONS (IntersectionObserver with will-change removal)
-    // Targets all reveal classes
-    const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-bottom, .reveal-fade');
-
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const element = entry.target;
-                
-                // Trigger animation by adding class
-                element.classList.add('reveal-active');
-                
-                // performance optimization: Remove will-change after transition completes
-                element.addEventListener('transitionend', function handler(e) {
-                    if (e.propertyName === 'transform' || e.propertyName === 'opacity') {
-                        element.style.willChange = 'auto';
-                        element.removeEventListener('transitionend', handler); // Clean listener
-                    }
-                });
-
-                // Fail-safe: remove will-change after a threshold anyway
-                setTimeout(() => {
-                    element.style.willChange = 'auto';
-                }, 1000);
-
-                // Stop observing once animated
-                observer.unobserve(element);
-            }
-        });
-    }, {
-        root: null,
-        threshold: 0.15,
-        rootMargin: '0px 0px -40px 0px'
-    });
-
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
-
-    // 6. DYNAMIC ANIMATING WORD (crescer -> expandir -> vender -> comunicar)
-    const dynamicWord = document.getElementById('dynamicWord');
-    if (dynamicWord) {
-        const words = ['crescer', 'expandir', 'vender', 'comunicar'];
-        let wordIndex = 0;
-
-        setInterval(() => {
-            // Step 1: Fade out
-            dynamicWord.classList.add('fade-out');
-
-            // Step 2: Update content and fade back in after 400ms transition completes
-            setTimeout(() => {
-                wordIndex = (wordIndex + 1) % words.length;
-                dynamicWord.textContent = words[wordIndex];
-                dynamicWord.classList.remove('fade-out');
-            }, 400);
-        }, 1900); // 1500ms display time + 400ms transition time = 1900ms cycle
-    }
-
-    // 7. FEEDS CARROSSEL (Manual navigation - 1 feed at a time)
-    const feedTrack = document.getElementById('feedTrack');
-    const feedSlides = document.querySelectorAll('.feed-slide');
-    const prevBtn = document.getElementById('feedPrevBtn');
-    const nextBtn = document.getElementById('feedNextBtn');
-
-    if (feedTrack && feedSlides.length > 0 && prevBtn && nextBtn) {
-        let currentFeedIndex = 0;
-        const totalFeeds = feedSlides.length;
-
-        const updateFeedCarousel = () => {
-            const shiftPercentage = currentFeedIndex * 100;
-            feedTrack.style.transform = `translateX(-${shiftPercentage / totalFeeds}%)`;
-            
-            // Toggle active classes on slides
-            feedSlides.forEach((slide, index) => {
-                if (index === currentFeedIndex) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
-        };
-
-        nextBtn.addEventListener('click', () => {
-            currentFeedIndex = (currentFeedIndex + 1) % totalFeeds;
-            updateFeedCarousel();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            currentFeedIndex = (currentFeedIndex - 1 + totalFeeds) % totalFeeds;
-            updateFeedCarousel();
-        });
-    }
-
-    // 8. STATISTICS COUNT-UP ANIMATION (Animate in 1.5s with easeOutQuad)
-    const statNumbers = document.querySelectorAll('.stat-number');
+    // 4. METRICS COUNT-UP ANIMATION (easeOutQuad)
+    const statNumbers = document.querySelectorAll('.metric-number');
 
     const runCountUp = (element) => {
         const target = parseInt(element.getAttribute('data-target'), 10);
-        const duration = 1500; // Exact 1.5s specification match
+        const duration = 2000; // 2 seconds duration
         const startTime = performance.now();
 
         const animate = (currentTime) => {
@@ -194,15 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                element.textContent = `+${target}`; // Secure target stop
+                element.textContent = `+${target}`; // final check
             }
         };
 
         requestAnimationFrame(animate);
     };
 
-    const statsSection = document.querySelector('.stats-box-neon');
-    if (statsSection) {
+    const confiaSection = document.querySelector('.section-confia');
+    if (confiaSection && statNumbers.length > 0) {
         let statsAnimated = false;
 
         const statsObserver = new IntersectionObserver((entries) => {
@@ -212,232 +130,309 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, { threshold: 0.15 });
 
-        statsObserver.observe(statsSection);
+        statsObserver.observe(confiaSection);
     }
 
-    // 9. FORM VALIDATION & SUCCESS FEEDBACK ON CONTACTS
-    const contactForm = document.getElementById('contactForm');
-    const formSuccessCard = document.getElementById('formSuccessCard');
-    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
-
-    if (contactForm && formSuccessCard) {
+    // 5. ACCORDION TOGGLE LOGIC (Nossos Serviços)
+    const serviceItems = document.querySelectorAll('.accordion-item');
+    serviceItems.forEach(item => {
+        const trigger = item.querySelector('.accordion-trigger');
+        const icon = item.querySelector('.accordion-icon');
         
-        const validateEmail = (email) => {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        };
+        if (trigger) {
+            trigger.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close other items
+                serviceItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    const otherTrigger = otherItem.querySelector('.accordion-trigger');
+                    const otherIcon = otherItem.querySelector('.accordion-icon');
+                    if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+                    if (otherIcon) otherIcon.textContent = '+';
+                });
 
-        const validatePhone = (phone) => {
-            const digits = phone.replace(/\D/g, '');
-            return digits.length >= 8;
-        };
-
-        const markFieldGroupError = (input, hasError) => {
-            const formGroup = input.closest('.form-group');
-            if (hasError) {
-                formGroup.classList.add('has-error');
-            } else {
-                formGroup.classList.remove('has-error');
-            }
-        };
-
-        // Live clean error
-        const inputs = contactForm.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                markFieldGroupError(input, false);
-            });
-        });
-
-        // Submit listener
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            let isFormValid = true;
-            
-            const nameInput = document.getElementById('name');
-            if (nameInput.value.trim().length < 3) {
-                markFieldGroupError(nameInput, true);
-                isFormValid = false;
-            }
-
-            const emailInput = document.getElementById('email');
-            if (!validateEmail(emailInput.value.trim())) {
-                markFieldGroupError(emailInput, true);
-                isFormValid = false;
-            }
-
-            const phoneInput = document.getElementById('phone');
-            if (!validatePhone(phoneInput.value.trim())) {
-                markFieldGroupError(phoneInput, true);
-                isFormValid = false;
-            }
-
-            const messageInput = document.getElementById('message');
-            if (messageInput.value.trim().length < 5) {
-                markFieldGroupError(messageInput, true);
-                isFormValid = false;
-            }
-
-            if (isFormValid) {
-                const submitBtn = contactForm.querySelector('.btn-submit');
-                const submitSpan = submitBtn.querySelector('span');
-                const prevText = submitSpan.textContent;
-
-                // Animate loader
-                submitBtn.style.pointerEvents = 'none';
-                submitSpan.textContent = 'Lançando Âncora...';
-                submitBtn.style.backgroundColor = 'var(--accent-teal)';
-
-                setTimeout(() => {
-                    formSuccessCard.classList.add('active');
-                    contactForm.reset();
-                    
-                    submitBtn.style.pointerEvents = 'auto';
-                    submitSpan.textContent = prevText;
-                    submitBtn.style.backgroundColor = '';
-                }, 1500);
-            }
-        });
-
-        if (closeSuccessBtn) {
-            closeSuccessBtn.addEventListener('click', () => {
-                formSuccessCard.classList.remove('active');
+                // Toggle this item
+                if (!isActive) {
+                    item.classList.add('active');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    if (icon) icon.textContent = '−'; // minus icon
+                } else {
+                    item.classList.remove('active');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    if (icon) icon.textContent = '+';
+                }
             });
         }
-    }
+    });
 
-    // 10. TEAM CAROUSEL (Geometric card-by-card horizontal sliding with progress dots)
-    const teamTrack = document.getElementById('teamTrack');
-    const teamPrevBtn = document.getElementById('teamPrevBtn');
-    const teamNextBtn = document.getElementById('teamNextBtn');
-    const teamDotsContainer = document.getElementById('teamDots');
-    const teamCards = document.querySelectorAll('.team-card');
-    
-    if (teamTrack && teamCards.length > 0 && teamPrevBtn && teamNextBtn) {
-        let currentIndex = 0;
+    // 6. ACCORDION TOGGLE LOGIC (Perguntas Frequentes FAQ)
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const trigger = item.querySelector('.faq-trigger');
+        const icon = item.querySelector('.faq-icon');
         
-        const getVisibleCards = () => {
-            const width = window.innerWidth;
-            if (width > 1024) return 4;
-            if (width > 768) return 3;
-            return 1.3; // mobile (shows one full card and cuts off the next slightly)
-        };
-        
-        const getMaxIndex = () => {
-            return Math.max(0, teamCards.length - Math.floor(getVisibleCards()));
-        };
-        
-        const updateDots = () => {
-            if (!teamDotsContainer) return;
-            teamDotsContainer.innerHTML = '';
-            
-            const maxIndex = getMaxIndex();
-            const totalDots = maxIndex + 1;
-            
-            for (let i = 0; i < totalDots; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('team-dot');
-                if (i === currentIndex) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    currentIndex = i;
-                    updateCarousel();
+        if (trigger) {
+            trigger.addEventListener('click', () => {
+                const isFaqActive = item.classList.contains('faq-active');
+                
+                // Close other items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('faq-active');
+                    const otherTrigger = otherItem.querySelector('.faq-trigger');
+                    const otherIcon = otherItem.querySelector('.faq-icon');
+                    if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+                    if (otherIcon) otherIcon.textContent = '+';
                 });
-                teamDotsContainer.appendChild(dot);
-            }
-        };
-        
-        const updateCarousel = () => {
-            const cardWidth = teamCards[0].offsetWidth;
-            const width = window.innerWidth;
-            const gap = width > 1024 ? 24 : (width > 768 ? 20 : 16); // Match gap sizes in CSS
-            const maxIndex = getMaxIndex();
-            
-            if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
-            
-            const offset = currentIndex * (cardWidth + gap);
-            teamTrack.style.transform = `translateX(-${offset}px)`;
-            
-            // Toggle active dots
-            const dots = teamDotsContainer.querySelectorAll('.team-dot');
-            dots.forEach((dot, idx) => {
-                if (idx === currentIndex) {
-                    dot.classList.add('active');
+
+                // Toggle this item
+                if (!isFaqActive) {
+                    item.classList.add('faq-active');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    if (icon) icon.textContent = '−';
                 } else {
-                    dot.classList.remove('active');
+                    item.classList.remove('faq-active');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    if (icon) icon.textContent = '+';
                 }
             });
-            
-            // Toggle disabled states on buttons
-            if (currentIndex === 0) {
-                teamPrevBtn.classList.add('disabled');
-            } else {
-                teamPrevBtn.classList.remove('disabled');
-            }
-            
-            if (currentIndex >= maxIndex) {
-                teamNextBtn.classList.add('disabled');
-            } else {
-                teamNextBtn.classList.remove('disabled');
-            }
-        };
-        
-        teamNextBtn.addEventListener('click', () => {
-            const maxIndex = getMaxIndex();
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                updateCarousel();
-            }
-        });
-        
-        teamPrevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        });
-        
-        // Touch support for swiping on mobile
-        let startX = 0;
-        let isSwiping = false;
-        
-        teamTrack.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isSwiping = true;
-        }, { passive: true });
-        
-        teamTrack.addEventListener('touchmove', (e) => {
-            if (!isSwiping) return;
-            const diffX = startX - e.touches[0].clientX;
-            
-            if (Math.abs(diffX) > 50) {
-                const maxIndex = getMaxIndex();
-                if (diffX > 0 && currentIndex < maxIndex) {
-                    currentIndex++;
-                    updateCarousel();
-                    isSwiping = false;
-                } else if (diffX < 0 && currentIndex > 0) {
-                    currentIndex--;
-                    updateCarousel();
-                    isSwiping = false;
+        }
+    });
+
+    // 7. TOUCH SUPPORT FOR CASES CARDS IN MOBILE
+    const caseCards = document.querySelectorAll('.case-card');
+    caseCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Check if device is touch based
+            if (window.innerWidth <= 1024) {
+                const overlay = card.querySelector('.case-hover-overlay');
+                if (overlay && !overlay.contains(e.target)) {
+                    // Toggle state on click for touch screens
+                    const isActive = card.classList.contains('touch-active');
+                    
+                    // Reset all other touch active cards
+                    caseCards.forEach(c => c.classList.remove('touch-active'));
+                    
+                    if (!isActive) {
+                        card.classList.add('touch-active');
+                        // Prevent click on background link if just activating hover overlay
+                        e.preventDefault();
+                    }
                 }
             }
-        }, { passive: true });
-        
-        teamTrack.addEventListener('touchend', () => {
-            isSwiping = false;
         });
-        
-        // Handle window resize dynamically
-        window.addEventListener('resize', () => {
-            updateDots();
-            updateCarousel();
+    });
+
+    // 8. SCROLL REVEAL ANIMATIONS (Intersection Observer)
+    const addRevealWithStagger = (selector, delayIncrement = 100) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((el, index) => {
+            el.classList.add('reveal');
+            if (index > 0) {
+                el.style.transitionDelay = `${index * delayIncrement}ms`;
+            }
         });
-        
-        // Initial setup
-        updateDots();
-        updateCarousel();
+    };
+
+    // Add simple reveal to general block elements
+    const generalTargets = document.querySelectorAll(
+        '.hero-headline-v2, .hero-cta-btn, .hero-bottom-desc, .hero-top-meta, ' +
+        '.section-label, .awesome-headline, .support-text-small, ' +
+        '.posicionamento-buttons-vertical, .problema-content-right, .estrutura-text, .estrutura-buttons-vertical, ' +
+        '.estrutura-images-block, .servicos-header, .accordion-container, ' +
+        '.depoimentos-cta, .faq-accordion-container, .contatos-left, .contatos-right'
+    );
+    generalTargets.forEach(el => el.classList.add('reveal'));
+
+    // Stagger grid/card items
+    addRevealWithStagger('.logo-item', 80);
+    addRevealWithStagger('.metric-item', 150);
+    addRevealWithStagger('.case-card', 150);
+    addRevealWithStagger('.depoimento-card', 150);
+    addRevealWithStagger('.faq-item', 100);
+
+    // Intersection Observer to trigger active state
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.05,
+        rootMargin: '0px 0px -50px 0px' // triggers slightly before entering viewport
+    });
+
+    revealElements.forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // 9. ESTRUTURA MULTI-SLOT SLIDESHOW (Independent staggered fade transition)
+    const initMultiSlotSlideshow = () => {
+        const slots = document.querySelectorAll('.slideshow-slot');
+        slots.forEach((slot, slotIndex) => {
+            const slides = slot.querySelectorAll('.slide');
+            if (slides.length <= 1) return;
+
+            let currentIndex = 0;
+            // Stagger intervals: Slot 1 is 4.2s, Slot 2 is 5.0s, Slot 3 is 5.8s
+            const intervalTime = 4200 + (slotIndex * 800);
+
+            setInterval(() => {
+                const activeSlide = slides[currentIndex];
+                activeSlide.classList.remove('active');
+                
+                currentIndex = (currentIndex + 1) % slides.length;
+                
+                const nextSlide = slides[currentIndex];
+                nextSlide.classList.add('active');
+            }, intervalTime);
+        });
+    };
+    initMultiSlotSlideshow();
+
+    // 10. CONTACT MODAL FUNCTIONALITY (Popup & Background Blur)
+    const contactModal = document.getElementById('contactModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalForm = document.getElementById('modalContactForm');
+    const ctaTriggers = document.querySelectorAll('.hero-cta-btn, .btn-posicionamento-primary, .btn-primary, .btn-primary-footer');
+
+    if (contactModal) {
+        const openModal = (e) => {
+            if (e) e.preventDefault();
+            contactModal.classList.add('active');
+            document.body.classList.add('modal-open');
+        };
+
+        const closeModal = () => {
+            contactModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        };
+
+        // Attach click triggers to CTAs
+        ctaTriggers.forEach(trigger => {
+            trigger.addEventListener('click', openModal);
+        });
+
+        // Close on close button click
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        // Close on clicking outside the modal card
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key press
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Form submission handling (Save lead to dashboard + webhooks + success screen)
+        if (modalForm) {
+            modalForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const nomeVal = document.getElementById('formNome').value.trim();
+                const empresaVal = document.getElementById('formEmpresa').value.trim();
+                const cargoVal = document.getElementById('formCargo').value;
+                const telefoneVal = document.getElementById('formTelefone').value.trim();
+                const faturamentoVal = document.getElementById('formFaturamento').value;
+                const desafioVal = document.getElementById('formDesafio').value.trim();
+
+                const formData = {
+                    data: new Date().toLocaleString('pt-BR'),
+                    nome: nomeVal,
+                    whatsapp: telefoneVal,
+                    email: '', // Not collected in popup form
+                    empresa: empresaVal,
+                    instagram: '', // Not collected in popup form
+                    cargo: cargoVal,
+                    faturamento: faturamentoVal,
+                    desafio: desafioVal
+                };
+
+                // 1. Save lead to localStorage for the admin panel dashboard
+                try {
+                    const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
+                    leads.push(formData);
+                    localStorage.setItem('sailors_leads', JSON.stringify(leads));
+                } catch (err) {
+                    console.error('Error saving lead to localStorage:', err);
+                }
+
+                // 2. Meta Pixel Lead event trigger
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', {
+                        content_name: formData.cargo,
+                        content_category: formData.faturamento
+                    });
+                }
+
+                // 3. General Webhook dispatch
+                if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
+                    fetch(SAILORS_CONFIG.webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    }).catch(err => console.error('Erro ao disparar webhook geral:', err));
+                }
+
+                // 4. Discord Webhook dispatch
+                if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.discordWebhookUrl) {
+                    const cleanPhone = formData.whatsapp.replace(/\D/g, '');
+                    const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+
+                    const discordPayload = {
+                        embeds: [{
+                            title: "⚓ Novo Lead Capturado! (Pop-up LP) — Sailors Marketing",
+                            color: 16736538, // #FF611A
+                            fields: [
+                                { name: "👤 Nome", value: formData.nome, inline: true },
+                                { name: "💼 Empresa", value: formData.empresa, inline: true },
+                                { name: "📝 Cargo", value: formData.cargo, inline: true },
+                                { name: "💰 Faturamento Mensal", value: formData.faturamento, inline: true },
+                                { name: "🟢 WhatsApp", value: `[Falar no WhatsApp](https://wa.me/${waLink}) (${formData.whatsapp})`, inline: true },
+                                { name: "🎯 Desafio", value: formData.desafio, inline: false }
+                            ],
+                            footer: { text: "Sailors Lead System" },
+                            timestamp: new Date().toISOString()
+                        }]
+                    };
+
+                    fetch(SAILORS_CONFIG.discordWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(discordPayload)
+                    }).catch(err => console.error('Erro ao disparar webhook do Discord:', err));
+                }
+
+                // Show success screen and hide form
+                modalForm.style.display = 'none';
+                const successState = document.getElementById('modalSuccessState');
+                if (successState) {
+                    successState.style.display = 'block';
+                }
+
+                // Close modal after 4.5 seconds and reset form
+                setTimeout(() => {
+                    closeModal();
+                    setTimeout(() => {
+                        modalForm.style.display = 'flex';
+                        if (successState) {
+                            successState.style.display = 'none';
+                        }
+                        modalForm.reset();
+                    }, 400);
+                }, 4500);
+            });
+        }
     }
 });

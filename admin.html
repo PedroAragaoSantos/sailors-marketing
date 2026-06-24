@@ -4,20 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controle — Sailors Marketing</title>
-    <!-- Google Fonts: Inter & Outfit -->
+    <!-- Google Fonts & Font-face configurations matching landing page -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="config.js"></script>
     <style>
+        @font-face {
+            font-family: 'Awesome Serif';
+            src: local('Awesome Serif Light'), local('AwesomeSerif-Light');
+            font-weight: 300;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Awesome Serif';
+            src: local('Awesome Serif Regular'), local('Awesome Serif'), local('AwesomeSerif-Regular');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Awesome Serif';
+            src: local('Awesome Serif Italic'), local('Awesome Serif Regular Italic'), local('AwesomeSerif-Italic');
+            font-weight: 400;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Roobert Light';
+            src: local('Roobert Light'), local('Roobert-Light'), local('RoobertLight');
+            font-weight: 300;
+            font-style: normal;
+        }
+
         :root {
-            --bg-dark: #141414;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-card: rgba(255, 255, 255, 0.08);
+            --bg-dark: #000000;
+            --bg-card: #000000;
+            --border-card: rgba(255, 255, 255, 0.15);
             --accent-orange: #FF611A;
-            --accent-teal: #26C8BB;
+            --accent-bege: #FFCFA9;
             --text-white: #FFFFFF;
-            --text-gray: #888888;
+            --text-gray: rgba(255, 255, 255, 0.55);
+            --font-primary: 'Awesome Serif', 'Instrument Serif', serif;
+            --font-secondary: 'Roobert Light', 'Roobert', 'Inter', sans-serif;
         }
 
         * {
@@ -29,14 +56,14 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-white);
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-secondary);
             min-height: 100vh;
-            padding: 40px;
+            padding: 60px 40px;
         }
 
         header {
             max-width: 1200px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 50px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,50 +76,53 @@
         }
 
         .logo-img {
-            height: 32px;
+            height: 28px;
             width: auto;
         }
 
         .panel-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 600;
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            color: var(--text-white);
         }
 
         .header-actions {
             display: flex;
-            gap: 12px;
+            gap: 16px;
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 0;
+            font-family: var(--font-secondary);
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
             cursor: pointer;
             border: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             outline: none;
+            text-transform: uppercase;
         }
 
         .btn-primary {
             background-color: var(--accent-orange);
-            color: #FFFFFF;
+            color: var(--text-white);
         }
 
         .btn-primary:hover {
-            background-color: #ff7230;
-            transform: translateY(-1px);
+            background-color: #E05010;
         }
 
         .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: transparent;
             color: var(--text-white);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-card);
         }
 
         .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-danger {
@@ -110,57 +140,60 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 40px;
         }
 
         /* Metrics grid */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
 
         .metric-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 0;
+            padding: 32px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
+            gap: 12px;
         }
 
-        .metric-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: var(--accent-orange);
-        }
-
-        .metric-card.teal::after {
-            background-color: var(--accent-teal);
+        .metric-card.teal {
+            background-color: var(--accent-bege);
+            border-color: var(--accent-bege);
+            color: var(--bg-dark);
         }
 
         .metric-label {
-            font-size: 14px;
+            font-family: var(--font-secondary);
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.08em;
             color: var(--text-gray);
-            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .metric-card.teal .metric-label {
+            color: rgba(0, 0, 0, 0.6);
         }
 
         .metric-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 36px;
-            font-weight: 800;
+            font-family: var(--font-primary);
+            font-size: 3.2rem;
+            line-height: 1;
         }
 
         .metric-sub {
+            font-family: var(--font-secondary);
             font-size: 12px;
+            font-weight: 300;
             color: rgba(255, 255, 255, 0.4);
+        }
+
+        .metric-card.teal .metric-sub {
+            color: rgba(0, 0, 0, 0.45);
         }
 
         /* Split grid for graphs */
@@ -179,38 +212,39 @@
         .chart-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 0;
+            padding: 32px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .chart-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 18px;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 12px;
+            font-family: var(--font-primary);
+            font-style: italic;
+            font-size: 1.4rem;
+            font-weight: normal;
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 16px;
         }
 
         .chart-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
         .insight-bar-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .insight-bar-label {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
-            font-weight: 500;
+            font-family: var(--font-secondary);
         }
 
         .insight-bar-label span:first-child {
@@ -222,47 +256,47 @@
         }
 
         .insight-bar-track {
-            height: 8px;
+            height: 6px;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 0;
             overflow: hidden;
         }
 
         .insight-bar-fill {
             height: 100%;
             background-color: var(--accent-orange);
-            border-radius: 4px;
+            border-radius: 0;
             width: 0;
-            transition: width 1s ease;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .chart-card:nth-child(2) .insight-bar-fill {
-            background-color: var(--accent-teal);
+            background-color: var(--accent-bege);
         }
 
         /* Leads Table Card */
         .table-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 24px;
-            overflow: hidden;
+            border-radius: 0;
+            padding: 32px;
         }
 
         .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 16px;
-            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
         }
 
         .table-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 18px;
-            font-weight: 600;
+            font-family: var(--font-primary);
+            font-style: italic;
+            font-size: 1.4rem;
+            font-weight: normal;
         }
 
         .table-wrapper {
@@ -274,47 +308,54 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 14px;
+            font-size: 13px;
+            font-family: var(--font-secondary);
         }
 
         th {
-            padding: 12px 16px;
-            color: var(--text-gray);
-            font-weight: 500;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            color: var(--accent-bege);
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         td {
             padding: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.85);
             white-space: nowrap;
         }
 
         tr:hover td {
-            background-color: rgba(255, 255, 255, 0.01);
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
         .link-icon {
-            text-decoration: underline;
-            color: var(--accent-teal);
-            font-weight: 500;
+            text-decoration: none;
+            color: var(--accent-bege);
+            border-bottom: 1px solid rgba(255, 207, 169, 0.3);
+            font-weight: normal;
+            transition: border-bottom-color 0.2s, color 0.2s;
         }
 
         .link-icon:hover {
-            color: #ffffff;
+            color: var(--text-white);
+            border-bottom-color: var(--text-white);
         }
 
         .empty-state {
-            padding: 60px;
+            padding: 80px 40px;
             text-align: center;
             color: var(--text-gray);
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .empty-state-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
+            font-size: 48px;
+            margin-bottom: 20px;
             opacity: 0.5;
         }
 
@@ -323,15 +364,16 @@
             position: fixed;
             bottom: -80px;
             right: 40px;
-            background-color: #1e1e1e;
-            border: 1px solid var(--accent-teal);
-            box-shadow: 0 10px 30px rgba(38, 200, 187, 0.2);
-            padding: 16px 24px;
-            border-radius: 8px;
+            background-color: #111111;
+            border: 1px solid var(--accent-bege);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 16px 28px;
+            border-radius: 0;
             z-index: 100;
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             font-weight: 500;
-            color: #ffffff;
+            font-size: 14px;
+            color: var(--text-white);
         }
 
         .toast.show {
@@ -342,20 +384,20 @@
 <body>
 
     <!-- Bloqueio por senha -->
-    <div id="passwordOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #141414; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; font-family: 'Inter', sans-serif;">
-        <img src="logo-sailors.png" alt="Sailors Logo" style="height: 40px; width: auto;">
-        <h2 style="font-family: 'Outfit', sans-serif; font-size: 20px; color: #ffffff; font-weight: 600;">Painel de Controle</h2>
-        <div style="display: flex; flex-direction: column; gap: 8px; width: 280px;">
-            <input type="password" id="adminPasswordInput" placeholder="Senha de Acesso" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background-color: rgba(255,255,255,0.03); color: #ffffff; outline: none; font-size: 14px; text-align: center;">
-            <button onclick="checkAdminPassword()" style="width: 100%; padding: 12px; border-radius: 8px; background-color: #FF611A; color: #ffffff; border: none; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">Entrar</button>
-            <span id="passwordError" style="color: #ff4a4a; font-size: 12px; text-align: center; display: none;">Senha incorreta. Tente novamente!</span>
+    <div id="passwordOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; font-family: 'Roobert Light', 'Inter', sans-serif;">
+        <img src="logo-sailors.png" alt="Sailors Logo" style="height: 32px; width: auto;">
+        <h2 style="font-family: 'Awesome Serif', 'Instrument Serif', serif; font-style: italic; font-size: 2.2rem; color: #ffffff; font-weight: normal;">Painel de Controle</h2>
+        <div style="display: flex; flex-direction: column; gap: 12px; width: 300px; border: 1px solid rgba(255, 255, 255, 0.15); padding: 32px; background-color: #000000;">
+            <input type="password" id="adminPasswordInput" placeholder="Senha de Acesso" style="width: 100%; padding: 16px; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.2); background-color: rgba(255, 255, 255, 0.03); color: #ffffff; outline: none; font-size: 14px; text-align: center; border-radius: 0; margin-bottom: 8px;">
+            <button onclick="checkAdminPassword()" style="width: 100%; padding: 16px; background-color: #FF611A; color: #ffffff; border: none; font-weight: bold; cursor: pointer; transition: background-color 0.2s; border-radius: 0; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;">Entrar</button>
+            <span id="passwordError" style="color: #ff4a4a; font-size: 12px; text-align: center; display: none; margin-top: 8px;">Senha incorreta. Tente novamente!</span>
         </div>
     </div>
 
     <header>
         <div class="logo-container">
             <img src="logo-sailors.png" alt="Sailors Logo" class="logo-img">
-            <span class="panel-title">Painel de Conversão</span>
+            <span class="panel-title">Painel de <span style="font-style: italic;">Conversão</span></span>
         </div>
         <div class="header-actions">
             <a href="index.html" class="btn btn-secondary">Ver LP</a>
@@ -475,19 +517,21 @@
                     const tr = document.createElement('tr');
                     
                     // Clean phone digits for wa.me link
-                    const cleanPhone = lead.whatsapp.replace(/\D/g, '');
-                    const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+                    const whatsappStr = lead.whatsapp || '';
+                    const cleanPhone = whatsappStr.replace(/\D/g, '');
+                    const waLink = cleanPhone ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
                     
                     // Clean instagram handle for link
-                    const cleanInsta = lead.instagram.startsWith('@') ? lead.instagram.substring(1) : lead.instagram;
+                    const instaStr = lead.instagram || '';
+                    const cleanInsta = instaStr.startsWith('@') ? instaStr.substring(1) : instaStr;
 
                     tr.innerHTML = `
                         <td>${lead.data || 'N/A'}</td>
                         <td><strong>${lead.nome || 'N/A'}</strong></td>
-                        <td><a href="https://wa.me/${waLink}" target="_blank" class="link-icon">🟢 ${lead.whatsapp || 'N/A'}</a></td>
-                        <td><a href="mailto:${lead.email}" class="link-icon">${lead.email || 'N/A'}</a></td>
+                        <td>${whatsappStr ? `<a href="https://wa.me/${waLink}" target="_blank" class="link-icon">🟢 ${whatsappStr}</a>` : 'Não informado'}</td>
+                        <td>${lead.email ? `<a href="mailto:${lead.email}" class="link-icon">${lead.email}</a>` : 'Não informado'}</td>
                         <td>${lead.empresa || 'N/A'}</td>
-                        <td><a href="https://instagram.com/${cleanInsta}" target="_blank" class="link-icon">📸 @${cleanInsta || 'N/A'}</a></td>
+                        <td>${instaStr ? `<a href="https://instagram.com/${cleanInsta}" target="_blank" class="link-icon">📸 @${cleanInsta}</a>` : 'Não informado'}</td>
                         <td>${lead.cargo || 'N/A'}</td>
                         <td>${lead.faturamento || 'N/A'}</td>
                     `;
@@ -503,22 +547,56 @@
             const total = leads.length;
 
             // 1. Cargo distribution
-            const cargoCounts = { Dono: 0, Diretor: 0, Gerente: 0, Supervisor: 0, Colaborador: 0 };
+            const cargoCounts = {
+                'Diretor / C-Level': 0,
+                'Gerente / Coordenador': 0,
+                'Especialista / Analista': 0,
+                'Sócio / Fundador': 0,
+                'Outro': 0
+            };
             // 2. Faturamento distribution
             const fatCounts = {
-                'Até 50 mil': 0,
-                'de 51 à 100 mil': 0,
-                'de 101 à 400 mil': 0,
-                'de 400 mil à 1 milhão': 0,
-                'mais de 1 milhão': 0
+                'Até R$ 50 mil': 0,
+                'R$ 50 mil a R$ 100 mil': 0,
+                'R$ 100 mil a R$ 500 mil': 0,
+                'Mais de R$ 500 mil': 0
             };
 
             leads.forEach(lead => {
-                if (cargoCounts[lead.cargo] !== undefined) {
-                    cargoCounts[lead.cargo]++;
+                // Map cargo
+                let cargo = lead.cargo;
+                if (cargo) {
+                    if (cargo === 'Dono' || cargo === 'Sócio / Fundador') {
+                        cargo = 'Sócio / Fundador';
+                    } else if (cargo === 'Diretor' || cargo === 'Diretor / C-Level') {
+                        cargo = 'Diretor / C-Level';
+                    } else if (cargo === 'Gerente' || cargo === 'Supervisor' || cargo === 'Gerente / Coordenador') {
+                        cargo = 'Gerente / Coordenador';
+                    } else if (cargo === 'Colaborador' || cargo === 'Especialista / Analista') {
+                        cargo = 'Especialista / Analista';
+                    } else {
+                        cargo = 'Outro';
+                    }
+                    if (cargoCounts[cargo] !== undefined) {
+                        cargoCounts[cargo]++;
+                    }
                 }
-                if (fatCounts[lead.faturamento] !== undefined) {
-                    fatCounts[lead.faturamento]++;
+
+                // Map faturamento
+                let fat = lead.faturamento;
+                if (fat) {
+                    if (fat === 'Até 50 mil' || fat === 'Até R$ 50 mil') {
+                        fat = 'Até R$ 50 mil';
+                    } else if (fat === 'de 51 à 100 mil' || fat === 'R$ 50 mil a R$ 100 mil') {
+                        fat = 'R$ 50 mil a R$ 100 mil';
+                    } else if (fat === 'de 101 à 400 mil' || fat === 'R$ 100 mil a R$ 500 mil') {
+                        fat = 'R$ 100 mil a R$ 500 mil';
+                    } else if (fat === 'de 400 mil à 1 milhão' || fat === 'mais de 1 milhão' || fat === 'Mais de R$ 500 mil') {
+                        fat = 'Mais de R$ 500 mil';
+                    }
+                    if (fatCounts[fat] !== undefined) {
+                        fatCounts[fat]++;
+                    }
                 }
             });
 
