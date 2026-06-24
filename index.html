@@ -3,735 +3,603 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAILORS Marketing — Posicionamento de Alto Padrão</title>
-    <meta name="description" content="Unimos estratégia de branding, audiovisual cinematográfico e tráfego pago para atrair clientes premium para o seu negócio. Posicionamento de alto padrão para marcas de destaque.">
+    <title>Sailors Marketing — Qualidade de Produtora, Agilidade de Agência</title>
+    <meta name="description" content="Nascemos para marcas que querem crescer de verdade. Sailors Marketing combina a qualidade estética de uma produtora de cinema com a agilidade estratégica de uma agência moderna.">
+    <!-- Google Fonts fallbacks: Syne, Outfit, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=20260624_24">
+    <link rel="stylesheet" href="style.css?v=46">
 </head>
 <body>
 
     <!-- Custom Cursor Glow Effect -->
     <div class="cursor-glow" id="cursorGlow"></div>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <div class="container navbar-container">
-            <div class="navbar-brand">
-                <img src="logo-sailors.png" alt="Sailors Logo" class="brand-logo-img">
-                <div class="brand-divider"></div>
-                <span class="brand-subtext">marketing</span>
-            </div>
-            
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
-                <span class="bar"></span>
-                <span class="bar" style="margin: 5px 0;"></span>
-                <span class="bar"></span>
-            </button>
-
-            <nav class="nav-menu" id="navMenu">
-                <a href="#quem-confia" class="nav-link">Quem Confia</a>
-                <a href="#posicionamento" class="nav-link">Posicionamento</a>
-                <a href="#nossa-estrutura" class="nav-link">Estrutura</a>
-                <a href="#nossos-servicos" class="nav-link">Serviços</a>
-                <a href="#cases" class="nav-link">Cases</a>
-                <a href="#depoimentos" class="nav-link">Depoimentos</a>
-                <a href="#faq" class="nav-link">FAQ</a>
-                <a href="#contato" class="nav-link">Contato</a>
-            </nav>
+    <!-- SECTION 1: HERO (With slideshow & Sticky Navbar) -->
+    <section class="section-hero" id="home">
+        <!-- Automatic Slideshow with crossfade -->
+        <div class="hero-slideshow">
+            <div class="slide active" style="background-image: url('imagens_hero/imagem 1.png');"></div>
+            <div class="slide" style="background-image: url('imagens_hero/imagem2.png');"></div>
+            <div class="slide" style="background-image: url('imagens_hero/imagem3.png');"></div>
+            <div class="hero-overlay"></div>
         </div>
-    </header>
 
-    <!-- HERO AND CONFIA WRAPPER FOR SHARED BACKGROUND -->
-    <div class="hero-and-confia-wrapper">
-        <!-- SEÇÃO HERO -->
-        <section class="section-hero" id="home">
-            <div class="container hero-container">
-                <div class="hero-grid-v2">
-                    <!-- Left Column -->
-                    <div class="hero-left-col">
-                        <h1 class="hero-headline-v2">
-                            Posicionamento de <br>
-                            <span class="orange-italic">alto padrão</span> para <br>
-                            marcas que não <br>
-                            aceitam ser comuns.
-                        </h1>
-                        <a href="#contato" class="hero-cta-btn">
-                            <span>AGENDAR DIAGNÓSTICO ESTRATÉGICO</span>
-                            <span class="arrow">&rarr;</span>
-                        </a>
-                    </div>
-                    
-                    <!-- Right Column -->
-                    <div class="hero-right-col">
-                        <!-- Top Right Meta -->
-                        <div class="hero-top-meta">
-                            EST. 2020 - SANTA CATARINA / BR
-                        </div>
-                        
-                        <!-- Bottom Right Description -->
-                        <div class="hero-bottom-desc">
-                            <span class="line">Unimos estratégia de branding, audiovisual</span><br>
-                            <span class="line"><span class="orange-italic">cinematográfico</span> e tráfego pago para atrair</span><br>
-                            <span class="line">clientes premium para o seu negócio.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO 01 — QUEM CONFIA NA SAILORS -->
-        <section class="section-confia" id="quem-confia">
-            <div class="container confia-container">
-                <div class="confia-grid">
-                    <div class="confia-left">
-                        <div class="section-label">
-                            <span class="bullet"></span> 01 · QUEM CONFIA NA SAILORS
-                        </div>
-                        <h2 class="awesome-headline">
-                            Alguns de <br>
-                            <span class="orange-italic">nossos clientes.</span>
-                        </h2>
-                        
-                        <div class="confia-logos-grid">
-                            <div class="logo-item"><img src="assets/v2/logos/logo wikify.png" alt="Kiwify"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/DW_logo-reduzido-3.png" alt="DW"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/logo de ville.png" alt="De Ville"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/club_casa_design.png" alt="Club Casa Design"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/2024-10-10-imagens-home-header-logo.webp" alt="Cristo Luz"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/embraed.png" alt="Embraed"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/j marcon.png" alt="J Marcon"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/a10_empreendimentos.png" alt="A10 Empreendimentos"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/tkws.png" alt="TKWS"></div>
-                            <div class="logo-item"><img src="assets/v2/logos/toro_bianco.png" alt="Toro Bianco"></div>
-                        </div>
-                    </div>
-
-                    <div class="confia-right">
-                        <div class="metric-item">
-                            <span class="metric-label">MARCAS ATENDIDAS</span>
-                            <span class="metric-number" data-target="100">+0</span>
-                        </div>
-                        <div class="metric-item">
-                            <span class="metric-label">ANOS NO MERCADO</span>
-                            <span class="metric-number" data-target="6">+0</span>
-                        </div>
-                        <div class="metric-item">
-                            <span class="metric-label">HORAS DE GRAVAÇÃO</span>
-                            <span class="metric-number" data-target="2000">+0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- POSICIONAMENTO E PROBLEMA WRAPPER FOR SHARED BACKGROUND -->
-    <div class="posicionamento-and-problema-wrapper">
-        <div class="posicionamento-glow-blob"></div>
-
-        <!-- SEÇÃO 02 — POSICIONAMENTO -->
-        <section class="section-posicionamento" id="posicionamento">
-            <div class="container posicionamento-container">
-                <div class="posicionamento-grid">
-                    <!-- Left side content -->
-                    <div class="posicionamento-left">
-                        <div class="section-label">
-                            <span class="bullet"></span> 02 · POSICIONAMENTO
-                        </div>
-                        <h2 class="awesome-headline">
-                            Se o seu produto é premium, seu marketing não pode parecer barato. <span class="orange-italic">Somos a solução</span> para o mercado de alto padrão.
-                        </h2>
-                        <p class="support-text-small">
-                            A agência definitiva para marcas do setor imobiliário, arquitetura e serviços <span class="orange-text">high-ticket</span>.
-                        </p>
-                    </div>
-                    
-                    <!-- Right side buttons -->
-                    <div class="posicionamento-right">
-                        <div class="posicionamento-buttons-vertical">
-                            <a href="#contato" class="btn-posicionamento-primary">
-                                <span>QUERO ELEVAR MINHA MARCA</span>
-                                <span class="arrow">&rarr;</span>
-                            </a>
-                            <a href="#cases" class="btn-posicionamento-outline">
-                                <span>VER CASES</span>
-                                <span class="arrow">&rarr;</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO 03 — PROBLEMA X SOLUÇÃO -->
-        <section class="section-problema-solucao" id="problema-solucao">
-            <div class="container problema-container">
-                <div class="section-label">
-                    <span class="bullet"></span> 03 · PROBLEMA X SOLUÇÃO
-                </div>
-                <div class="problema-content-right">
-                    <h2 class="awesome-headline">
-                        Marketing comum vs <br>
-                        Posicionamento de <span class="orange-italic">alto padrão</span>
-                    </h2>
-                    <p class="support-text-small">
-                        Esqueça o marketing feito apenas com celular. Entregamos <br>
-                        qualidade de produtora e agilidade de agência.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- SEÇÃO 04 — NOSSA ESTRUTURA (TEXTO) -->
-    <section class="section-estrutura-texto" id="nossa-estrutura">
-        <div class="container estrutura-container">
-            <div class="estrutura-content-block">
-                <div class="section-label">
-                    <span class="bullet"></span> 04 · NOSSA ESTRUTURA
-                </div>
-                <p class="estrutura-text">
-                    Localizado em Santa Catarina, nosso espaço foi pensado para entregar o melhor. Uma estrutura completa com tudo o que nossos clientes precisam. Estúdio exclusivo para podcasts e gravações, zero complicação. Os <span class="orange-highlight">melhores equipamentos do mercado</span> para atender as suas necessidades.
-                </p>
-                <div class="estrutura-buttons-vertical">
-                    <a href="#contato" class="btn-primary">
-                        <span>QUERO ELEVAR MINHA MARCA</span>
-                        <span class="arrow">&rarr;</span>
-                    </a>
-                    <a href="#estrutura-fotos" class="btn-outline-black">
-                        <span>VER NOSSO ESPAÇO</span>
-                        <span class="arrow">&rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEÇÃO 04b — NOSSA ESTRUTURA (IMAGENS) -->
-    <section class="section-estrutura-imagens" id="estrutura-fotos">
-        <div class="container">
-            <!-- Bloco de imagens com alternância (fade) em cada slot -->
-            <div class="estrutura-images-block">
-                <!-- Imagem Grande acima (Slideshow Slot 1 - Aspect Ratio 3:2) -->
-                <div class="estrutura-img-large slideshow-slot">
-                    <img src="assets/v2/images/estudio/Editadas Equipe Sailors2.jpg" alt="Estúdio Sailors — Mesa de Podcast" class="slide active">
-                    <img src="assets/v2/images/estudio/Sailors26.jpg" alt="Estúdio Sailors — Sala de Gravação" class="slide">
+        <!-- Sticky Navbar -->
+        <header class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-brand">
+                    <img src="logo-sailors.png" alt="Sailors Logo" class="navbar-logo">
+                    <div class="vertical-divider"></div>
+                    <span class="navbar-sub-title">Marketing</span>
                 </div>
                 
-                <!-- Duas menores abaixo lado a lado -->
-                <div class="estrutura-images-bottom">
-                    <!-- Slideshow Slot 2 (Inferior Esquerdo - Aspect Ratio 16:9) -->
-                    <div class="estrutura-img-small slideshow-slot">
-                        <img src="assets/v2/images/estudio/IMG_6941 1.png" alt="Equipamentos Sailors — Câmera e Gravação" class="slide active">
-                        <img src="assets/v2/images/estudio/Editadas Equipe Sailors52 1.png" alt="Estúdio Sailors — Bastidores" class="slide">
-                    </div>
-                    <!-- Slideshow Slot 3 (Inferior Direito - Aspect Ratio 16:9) -->
-                    <div class="estrutura-img-small slideshow-slot">
-                        <img src="assets/v2/images/estudio/Sailors3 1.png" alt="Espaço Estúdio — Iluminação de Led" class="slide active">
-                        <img src="assets/v2/images/estudio/grdr 2025-08-12 110555.405 1.png" alt="Espaço Estúdio — Detalhe Refletores" class="slide">
-                    </div>
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#quem-somos" class="nav-link">Quem Somos</a>
+                    <a href="#diferenciais" class="nav-link">Diferenciais</a>
+                    <a href="#captacoes" class="nav-link">Captações</a>
+                    <a href="#feeds" class="nav-link">Feeds</a>
+                    <a href="#por-que-sailors" class="nav-link">Por que Sailors</a>
+                </nav>
+
+                <div class="nav-cta-wrapper">
+                    <a href="contato.html" class="btn-nav btn-hover-effect">
+                        <span>Seja Sailors</span>
+                        <img src="seta.png" alt="Seta" class="btn-arrow-icon">
+                    </a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- SEÇÃO 04 (Repetida) — NOSSOS SERVIÇOS -->
-    <section class="section-servicos" id="nossos-servicos">
-        <div class="container servicos-container">
-            <div class="section-label">
-                <span class="bullet"></span> 04 · NOSSOS SERVIÇOS
-            </div>
+        <!-- Centered content -->
+        <div class="hero-container-centered">
+            <!-- Headline in lowercase -->
+            <h1 class="hero-title-centered reveal-left">
+                Qualidade de <span class="text-highlight">produtora</span><br>
+                Agilidade de <span class="text-highlight">agência</span>
+            </h1>
             
-            <div class="servicos-header">
-                <div class="servicos-header-left">
-                    <h2 class="awesome-headline">
-                        Do técnico <br>
-                        <span class="orange-italic">ao estratégico</span>
-                    </h2>
-                </div>
-                <div class="servicos-header-right">
-                    <p class="support-text-small">
-                        Para empresas que valorizam estratégia, criatividade e performance como parte da mesma operação.
-                    </p>
-                </div>
-            </div>
-
-            <!-- accordion list -->
-            <div class="accordion-container">
-                <!-- Item 1 -->
-                <div class="accordion-item">
-                    <button class="accordion-trigger" aria-expanded="false">
-                        <span class="service-name">Branding</span>
-                        <span class="service-desc-preview">Construção da identidade e narrativa da sua marca.</span>
-                        <div class="service-tags-wrapper">
-                            <span class="service-tag">IDENTIDADE</span>
-                            <span class="service-tag">DESIGN SYSTEM</span>
-                        </div>
-                        <span class="accordion-icon">+</span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>Ajudamos empresas a descobrirem quem são, o que defendem e como querem ser lembradas. Desenvolvemos a identidade e a narrativa da sua marca do zero — definindo propósito, personalidade e tom de voz — para que cada mensagem transmita autenticidade e gere conexão real com o público certo.</p>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="accordion-item">
-                    <button class="accordion-trigger" aria-expanded="false">
-                        <span class="service-name">Audiovisual</span>
-                        <span class="service-desc-preview">Captação de fotos, vídeos e podcasts em estúdio próprio.</span>
-                        <div class="service-tags-wrapper">
-                            <span class="service-tag">IDENTIDADE</span>
-                            <span class="service-tag">DESIGN SYSTEM</span>
-                        </div>
-                        <span class="accordion-icon">+</span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>Produzimos fotos, vídeos e podcasts em estúdio próprio, com estrutura completa para transformar suas ideias em conteúdo visual e sonoro de alta qualidade — pronto para engajar e impactar em qualquer plataforma.</p>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="accordion-item">
-                    <button class="accordion-trigger" aria-expanded="false">
-                        <span class="service-name">Performance</span>
-                        <span class="service-desc-preview">Tráfego pago inteligente para atrair o cliente certo.</span>
-                        <div class="service-tags-wrapper">
-                            <span class="service-tag">IDENTIDADE</span>
-                            <span class="service-tag">DESIGN SYSTEM</span>
-                        </div>
-                        <span class="accordion-icon">+</span>
-                    </button>
-                    <div class="accordion-content">
-                        <p>Criamos e gerenciamos campanhas de tráfego pago com estratégia, levando sua marca até as pessoas certas, no momento certo — maximizando resultados e transformando cliques em clientes reais.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEÇÃO 05 — CASES DE SUCESSO -->
-    <section class="section-cases" id="cases">
-        <div class="container cases-container">
-            <div class="section-label">
-                <span class="bullet"></span> 05 · CASES DE SUCESSO
-            </div>
-            <div class="cases-header">
-                <div class="cases-header-left">
-                    <h2 class="awesome-headline">
-                        Cases e <br>
-                        <span class="orange-italic">Resultados</span>
-                    </h2>
-                </div>
-                <div class="cases-header-right">
-                    <p class="support-text-small">
-                        Escolhemos alguns projetos que mais orgulham nosso time.
-                    </p>
-                </div>
-            </div>
-
-            <div class="cases-grid">
-                <!-- Card 1: Grupo De Ville -->
-                <div class="case-card" style="background-image: url('assets/v2/images/de ville.png');">
-                    <img src="assets/v2/logos/logo de ville.png" alt="De Ville Logo" class="case-logo">
-                    <span class="case-title-bottom">Grupo De Ville</span>
-                    
-                    <div class="case-hover-overlay">
-                        <img src="assets/v2/logos/logo de ville.png" alt="De Ville Logo" class="case-logo">
-                        <div class="case-hover-top">
-                            <div class="case-section-block">
-                                <span class="case-subtitle">O desafio</span>
-                                <p class="case-desc">A marca buscava se posicionar no mercado premium através de um conteúdo que realmente transmitisse o valor das suas peças.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">A solução</span>
-                                <p class="case-desc">Desenvolvemos uma estratégia de branding focada em sofisticação, com campanhas de captação cinematográficas.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">E o resultado?</span>
-                                <p class="case-desc">Mais de 1 milhão de visualizações orgânicas e posicionamento consolidado no setor de alto padrão.</p>
-                            </div>
-                        </div>
-                        <span class="case-hover-bottom-title">Grupo De Ville</span>
-                    </div>
-                </div>
-
-                <!-- Card 2: A10 Empreendimentos -->
-                <div class="case-card" style="background-image: url('assets/v2/images/A10.png');">
-                    <img src="assets/v2/logos/a10_empreendimentos.png" alt="A10 Logo" class="case-logo">
-                    <span class="case-title-bottom">A10 Empreendimentos</span>
-                    
-                    <div class="case-hover-overlay">
-                        <img src="assets/v2/logos/a10_empreendimentos.png" alt="A10 Logo" class="case-logo">
-                        <div class="case-hover-top">
-                            <div class="case-section-block">
-                                <span class="case-subtitle">O desafio</span>
-                                <p class="case-desc">O desafio do cliente consistia em comunicar de forma elegante as suas soluções exclusivas para investidores de alto padrão.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">A solução</span>
-                                <p class="case-desc">Estruturamos campanhas audiovisuais focadas na experiência, integrando tráfego qualificado de alta conversão.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">E o resultado?</span>
-                                <p class="case-desc">Vendas aceleradas de lançamentos de luxo e reconhecimento imediato de autoridade no mercado.</p>
-                            </div>
-                        </div>
-                        <span class="case-hover-bottom-title">A10 Empreendimentos</span>
-                    </div>
-                </div>
-
-                <!-- Card 3: Kiwify -->
-                <div class="case-card" style="background-image: url('assets/v2/images/kiwifi.png');">
-                    <img src="assets/v2/logos/logo wikify.png" alt="Kiwify Logo" class="case-logo">
-                    <span class="case-title-bottom">Kiwify — Kiwicast</span>
-                    
-                    <div class="case-hover-overlay">
-                        <img src="assets/v2/logos/logo wikify.png" alt="Kiwify Logo" class="case-logo">
-                        <div class="case-hover-top">
-                            <div class="case-section-block">
-                                <span class="case-subtitle">O desafio</span>
-                                <p class="case-desc">A Kiwify necessitava de uma estrutura completa e com agilidade profissional para gravação consistente de seus podcasts.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">A solução</span>
-                                <p class="case-desc">Disponibilizamos nosso estúdio próprio exclusivo, com captação cinematográfica multicâmera e edição ágil.</p>
-                            </div>
-                            <div class="case-section-block">
-                                <span class="case-subtitle">E o resultado?</span>
-                                <p class="case-desc">Garantia de episódios impecáveis com alcance nacional, fortalecendo a autoridade da marca no setor digital.</p>
-                            </div>
-                        </div>
-                        <span class="case-hover-bottom-title">Kiwify — Kiwicast</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEÇÃO 06 — DEPOIMENTOS -->
-    <section class="section-depoimentos" id="depoimentos">
-        <div class="depoimentos-glow-blob"></div>
-        <div class="container depoimentos-container">
-            <div class="depoimentos-header">
-                <div class="section-label">
-                    <span class="bullet"></span> 06 · DEPOIMENTOS
-                </div>
-                <h2 class="awesome-headline">
-                    O que <br>
-                    <span class="orange-italic">os nossos clientes</span> <br>
-                    falam sobre a Sailors?
-                </h2>
-            </div>
-
-            <div class="depoimentos-grid">
-                <!-- Card 1 -->
-                <div class="depoimento-card">
-                    <p class="depoimento-text">"A Sailors transformou completamente a nossa presença digital. O nível das captações de vídeo e fotos trouxe o posicionamento premium que precisávamos para atrair clientes de alto padrão."</p>
-                    <div class="depoimento-author">Ricardo Salles, De Ville Imóveis</div>
-                    <span class="depoimento-dot"></span>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="depoimento-card">
-                    <p class="depoimento-text">"Profissionalismo impecável da equipe. A agilidade em entregar materiais de altíssima qualidade cinematográfica superou todas as nossas expectativas de marketing."</p>
-                    <div class="depoimento-author">Juliana Marcon, J Marcon Construtora</div>
-                    <span class="depoimento-dot"></span>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="depoimento-card">
-                    <p class="depoimento-text">"A estratégia de tráfego pago combinada com o branding sofisticado gerou um retorno excelente para os nossos lançamentos imobiliários. Eles entendem o mercado high-ticket."</p>
-                    <div class="depoimento-author">Thiago K., A10 Empreendimentos</div>
-                    <span class="depoimento-dot"></span>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="depoimento-card">
-                    <p class="depoimento-text">"Gravar os nossos podcasts e conteúdos no estúdio próprio da Sailors otimizou muito o nosso tempo. O espaço é sensacional e a estrutura de som e imagem é de cinema."</p>
-                    <div class="depoimento-author">Rodrigo M., Kiwify Studio</div>
-                    <span class="depoimento-dot"></span>
-                </div>
-            </div>
-
-            <div class="depoimentos-cta">
-                <a href="#contato" class="btn-primary">
-                    <span>INICIAR PROJETO</span>
-                    <span class="arrow">&rarr;</span>
+            <!-- Subheadline -->
+            <p class="hero-subtitle-centered reveal-fade">
+                Produção estruturada para atender demandas<br>
+                com rapidez, consistência e alto padrão de execução.
+            </p>
+            
+            <!-- CTA Button -->
+            <div class="hero-actions-centered reveal-bottom">
+                <a href="contato.html" class="btn-cta btn-hover-effect">
+                    <span>Seja Sailors</span>
+                    <img src="seta.png" alt="Seta" class="btn-arrow-large">
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO 07 — PERGUNTAS FREQUENTES -->
-    <section class="section-faq" id="faq">
-        <div class="container faq-container">
-            <div class="faq-header">
-                <div class="section-label">
-                    <span class="bullet"></span> 07 · PERGUNTAS FREQUENTES
+    <!-- SECTION 2: QUEM NÓS SOMOS (Left title, right description, 4 white cards) -->
+    <section class="section-about" id="quem-somos">
+        <div class="about-container">
+            <!-- Top Block (Two columns) -->
+            <div class="about-header">
+                <!-- Stacked big title -->
+                <div class="about-title-wrapper reveal-left">
+                    <h2 class="section-title-stacked">
+                        Quem<br>Nós<br>Somos?
+                    </h2>
+                </div>
+                <!-- Right-aligned description -->
+                <div class="about-description reveal-right">
+                    <p class="body-text-about">
+                        A Sailors nasceu em 2020 unindo estratégia, criatividade e resultado para fortalecer marcas. Começamos no social media e expandimos para o audiovisual, com estúdio próprio e mais de 100 clientes atendidos. Hoje, atuamos lado a lado com cada marca, criando conteúdos e estratégias que geram presença, conexão e crescimento.
+                    </p>
                 </div>
             </div>
 
-            <div class="faq-accordion-container">
-                <!-- FAQ Item 1 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Prazo</span>
-                        <span class="faq-question-text">Quanto tempo leva para desenvolver um projeto completo?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">CRONOGRAMA</span>
-                            <span class="faq-tag">PROCESSO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        O prazo varia conforme a complexidade e escopo de cada projeto, girando em torno de 30 a 60 dias para um desenvolvimento completo de branding estratégico e estrutura audiovisual.
+            <!-- Bottom Block (4 White Cards with specific corner radiuses) -->
+            <div class="services-grid-white">
+                <!-- Card 1 (Top-Left corner border-radius 200px) -->
+                <a href="contato.html" class="service-card-white card-left-curved reveal-bottom">
+                    <div class="card-white-content">
+                        <h3 class="card-white-title">Criação de<br>conteúdo</h3>
+                        <p class="card-white-desc">Sessões de foto/vídeo, design gráfico, edição e copywriting</p>
                     </div>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Investimento</span>
-                        <span class="faq-question-text">Como funciona o orçamento dos serviços?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">VALORES</span>
-                            <span class="faq-tag">ESCOPO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        Trabalhamos com propostas sob medida de acordo com as necessidades específicas da sua marca. Agende um diagnóstico para estruturarmos o melhor escopo financeiro.
+                </a>
+                
+                <!-- Card 2 -->
+                <a href="contato.html" class="service-card-white reveal-bottom" style="transition-delay: 0.1s;">
+                    <div class="card-white-content">
+                        <h3 class="card-white-title">Gestão de<br>redes sociais</h3>
+                        <p class="card-white-desc">Planejamento de conteúdo, publicações, stories, reels, configuração de perfil e engajamento com a comunidade</p>
                     </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Estratégia</span>
-                        <span class="faq-question-text">Vocês trabalham apenas com execução ou também planejamento?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">PESQUISA</span>
-                            <span class="faq-tag">POSICIONAMENTO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        Unimos ambos de ponta a ponta. Nosso trabalho começa no diagnóstico estratégico e planejamento de posicionamento de alto padrão, seguido pela execução audiovisual e performance de tráfego.
+                </a>
+                
+                <!-- Card 3 -->
+                <a href="contato.html" class="service-card-white reveal-bottom" style="transition-delay: 0.2s;">
+                    <div class="card-white-content">
+                        <h3 class="card-white-title">Análise & crescimento<br>de marca</h3>
+                        <p class="card-white-desc">Relatórios mensais, insights de desempenho, análise de concorrência e estratégias de crescimento</p>
                     </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Suporte</span>
-                        <span class="faq-question-text">Existe acompanhamento após a entrega do projeto?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">CONSULTORIA</span>
-                            <span class="faq-tag">EVOLUÇÃO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        Sim, oferecemos suporte contínuo de consultoria e acompanhamento estratégico de performance para garantir a consistência das campanhas e a evolução da sua marca.
+                </a>
+                
+                <!-- Card 4 (Top-Right corner border-radius 200px) -->
+                <a href="contato.html" class="service-card-white card-right-curved reveal-bottom" style="transition-delay: 0.3s;">
+                    <div class="card-white-content">
+                        <h3 class="card-white-title">Publicidade<br>segmentada</h3>
+                        <p class="card-white-desc">Configuração de anúncios no Facebook/Instagram, segmentação de público, testes A/B e otimização de orçamento</p>
                     </div>
-                </div>
-
-                <!-- FAQ Item 5 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Suporte</span>
-                        <span class="faq-question-text">Existe acompanhamento após a entrega do projeto?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">CONSULTORIA</span>
-                            <span class="faq-tag">EVOLUÇÃO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        Sim, oferecemos suporte contínuo de consultoria e acompanhamento estratégico de performance para garantir a consistência das campanhas e a evolução da sua marca.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 6 -->
-                <div class="faq-item">
-                    <button class="faq-trigger" aria-expanded="false">
-                        <span class="faq-category">Suporte</span>
-                        <span class="faq-question-text">Existe acompanhamento após a entrega do projeto?</span>
-                        <div class="faq-tags-wrapper">
-                            <span class="faq-tag">CONSULTORIA</span>
-                                <span class="faq-tag">EVOLUÇÃO</span>
-                        </div>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer-block">
-                        Sim, oferecemos suporte contínuo de consultoria e acompanhamento estratégico de performance para garantir a consistência das campanhas e a evolução da sua marca.
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO 08 — CONTATOS & FOOTER -->
-    <section class="section-contatos" id="contato">
-        <div class="container contatos-container">
-            <div class="contatos-grid">
-                <div class="contatos-left">
-                    <div class="section-label">
-                        <span class="bullet"></span> 08 · CONTATOS
-                    </div>
-                    <img src="logo-sailors.png" alt="Sailors Logo" class="footer-logo-img">
-                    
-                    <div class="social-links-grid">
-                        <a href="https://instagram.com/weare.sailors" target="_blank" class="social-link">
-                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                            <span>@weare.sailors</span>
-                        </a>
-                        <a href="https://instagram.com/sailors.madrid" target="_blank" class="social-link">
-                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                            <span>@sailors.madrid</span>
-                        </a>
-                        <a href="https://instagram.com/studio.sailors" target="_blank" class="social-link">
-                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                            <span>@studio.sailors</span>
-                        </a>
-                        <a href="https://www.youtube.com/@agenciasailors" target="_blank" class="social-link">
-                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                            <span>We Are Sailors</span>
-                        </a>
-                        <a href="https://wa.me/5547996905509" target="_blank" class="social-link">
-                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>47 99690-5509</span>
-                        </a>
-                    </div>
- 
-                    <div class="contact-info-block">
-                        <span class="contact-address">Rua 2650, 975, Balneário Camboriú 88330-383</span>
-                        <hr class="contact-divider">
-                        <p class="contact-philosophy">Toda estratégia começa com compreensão. Escutamos, analisamos o cenário e transformamos informações em direção.</p>
-                    </div>
-                </div>
- 
-                <div class="contatos-right">
-                    <h2 class="awesome-headline-footer">
-                        <span class="text-white">Bora</span><br>
-                        <span class="text-white">conversar!</span><br>
-                        <span class="text-white">Conta pra</span><br>
-                        <span class="text-white">gente;</span> <span class="text-black">o que</span><br>
-                        <span class="text-black">você precisa?</span>
-                    </h2>
-                    <a href="mailto:contato@wearesailors.com" class="btn-primary-footer">
-                        <span>INICIAR PROJETO</span>
-                        <span class="arrow">&rarr;</span>
+    <!-- SECTION 3: UMA AGÊNCIA PARA MARCAS (Dynamic title, 2x2 asymmetric columns) -->
+    <section class="section-growth" id="diferenciais">
+        <div class="growth-container">
+            <!-- Left Block -->
+            <div class="growth-info reveal-left">
+                <h2 class="section-title-growth">
+                    Uma agência para marcas que querem <span class="text-dynamic" id="dynamicWord">crescer</span>
+                </h2>
+                <p class="body-text-growth">
+                    Enquanto muitas agências prometem fórmulas prontas e resultados rápidos que não funcionam na prática, a Sailors trabalha com <span class="text-bold">estratégia, direção criativa e execução consistente</span> para construir marcas que realmente crescem.
+                </p>
+                <div class="growth-action">
+                    <a href="contato.html" class="btn-cta btn-hover-effect">
+                        <span>Seja Sailors</span>
+                        <img src="seta.png" alt="Seta" class="btn-arrow-large">
                     </a>
                 </div>
             </div>
- 
-            <div class="footer-bottom">
-                <span>&copy; 2026 We Are Sailors. Todos os direitos reservados.</span>
-                <span>Qualidade de Produtora. Agilidade de Agência.</span>
+
+            <!-- Right Block (Two vertical columns to preserve exact asymmetric heights) -->
+            <div class="growth-steps-grid reveal-right">
+                <!-- Column 1 (Left): contains Step 01 and Step 03 -->
+                <div class="steps-col">
+                    <!-- Step 01 (Height: 306px) -->
+                    <div class="step-box step-h-short">
+                        <span class="step-box-num">01</span>
+                        <h4 class="step-box-title">Entendemos sua marca</h4>
+                    </div>
+                    <!-- Step 03 (Height: 383px) -->
+                    <div class="step-box step-h-tall">
+                        <span class="step-box-num">03</span>
+                        <h4 class="step-box-title">Consolidamos posicionamento</h4>
+                    </div>
+                </div>
+
+                <!-- Column 2 (Right): contains Step 02 and Step 04 -->
+                <div class="steps-col">
+                    <!-- Step 02 (Height: 383px) -->
+                    <div class="step-box step-h-tall">
+                        <span class="step-box-num">02</span>
+                        <h4 class="step-box-title">Criamos com estratégia</h4>
+                    </div>
+                    <!-- Step 04 (Height: 306px) -->
+                    <div class="step-box step-h-short">
+                        <span class="step-box-num">04</span>
+                        <h4 class="step-box-title">Otimizamos resultados</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- MODAL POPUP (INICIAR PROJETO) -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-card">
-            <button class="modal-close-btn" id="closeModalBtn" aria-label="Fechar">&times;</button>
-            <div class="modal-grid">
-                <!-- Left Column: Branding / Title -->
-                <div class="modal-branding">
-                    <div class="modal-branding-top">
-                        <img src="logo-sailors.png" alt="Sailors" class="modal-logo">
-                    </div>
-                    <div class="modal-branding-mid">
-                        <h3 class="modal-branding-title">
-                            Iniciar um <br>
-                            <span class="orange-italic">projeto</span>
-                        </h3>
-                        <p class="modal-branding-subtitle">Preencha o formulário e nosso time entrará em contato com você em breve.</p>
-                    </div>
-                    <div class="modal-branding-bottom">
-                        <div class="modal-detail-item">
-                            <span class="detail-num">01</span>
-                            <span class="detail-lbl">DIAGNÓSTICO ESTRATÉGICO</span>
+    <!-- SECTION 4: CARROSSEL DE CAPTAÇÕES (Continuous loop carousel) -->
+    <section class="section-carousel-captures" id="captacoes">
+        <div class="captures-container">
+            <h2 class="captures-title reveal-fade">
+                Mais do que posts, construímos <span class="text-highlight">posicionamento</span>
+            </h2>
+            
+            <!-- Infinite loop wrapper -->
+            <div class="infinite-carousel-wrapper reveal-bottom">
+                <div class="infinite-carousel-track">
+                    <!-- Carousel items -->
+                    <div class="carousel-card"><img src="imagens_captações/imagem1.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem2.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem3.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem4.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem5.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem6.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem7.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem8.png" alt="Captação" class="carousel-img"></div>
+                    
+                    <!-- Loop duplication -->
+                    <div class="carousel-card"><img src="imagens_captações/imagem1.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem2.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem3.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem4.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem5.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem6.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem7.png" alt="Captação" class="carousel-img"></div>
+                    <div class="carousel-card"><img src="imagens_captações/imagem8.png" alt="Captação" class="carousel-img"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CARROSSEL DE FEEDS DOS CLIENTES (Manual navigation) -->
+    <section class="section-feeds" id="feeds">
+        <div class="feeds-container">
+            <span class="feeds-indicator reveal-fade">FEEDS DE SUCESSO</span>
+            <h2 class="feeds-title reveal-fade">Presença visual consistente</h2>
+
+            <div class="feeds-carousel-wrapper reveal-bottom">
+                <!-- Navigation Buttons -->
+                <button class="feed-nav-btn feed-prev" id="feedPrevBtn" aria-label="Anterior">
+                    <img src="seta.png" alt="Seta Anterior" class="feed-btn-arrow-left">
+                </button>
+                
+                <!-- Display Area -->
+                <div class="feed-display-area">
+                    <div class="feed-track" id="feedTrack">
+                        <div class="feed-slide active">
+                            <img src="feed_clientes/feed-abdo.png" alt="Feed Abdo" class="feed-img">
                         </div>
-                        <div class="modal-detail-item">
-                            <span class="detail-num">02</span>
-                            <span class="detail-lbl">CONTATO EM MENOS DE 24H</span>
+                        <div class="feed-slide">
+                            <img src="feed_clientes/feed-costelao.png" alt="Feed Costelão" class="feed-img">
+                        </div>
+                        <div class="feed-slide">
+                            <img src="feed_clientes/feed-deville.png" alt="Feed Deville" class="feed-img">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Right Column: Form -->
-                <div class="modal-form-container">
-                    <form class="modal-form" id="modalContactForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="formNome">*SEU NOME</label>
-                                <input type="text" id="formNome" name="nome" required placeholder="Digite seu nome">
-                            </div>
-                            <div class="form-group">
-                                <label for="formEmpresa">*NOME DA SUA EMPRESA</label>
-                                <input type="text" id="formEmpresa" name="empresa" required placeholder="Digite o nome da empresa">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="formCargo">*SEU CARGO</label>
-                                <div class="select-wrapper">
-                                    <select id="formCargo" name="cargo" required>
-                                        <option value="" disabled selected hidden>Selecione seu cargo</option>
-                                        <option value="Diretor / C-Level">Diretor / C-Level</option>
-                                        <option value="Gerente / Coordenador">Gerente / Coordenador</option>
-                                        <option value="Especialista / Analista">Especialista / Analista</option>
-                                        <option value="Sócio / Fundador">Sócio / Fundador</option>
-                                        <option value="Outro">Outro</option>
-                                    </select>
-                                    <span class="select-arrow"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="formTelefone">*TELEFONE</label>
-                                <input type="tel" id="formTelefone" name="telefone" required placeholder="(00) 00000-0000">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="formFaturamento">*FATURAMENTO MENSAL DA EMPRESA</label>
-                            <div class="select-wrapper">
-                                <select id="formFaturamento" name="faturamento" required>
-                                    <option value="" disabled selected hidden>Selecione o faturamento</option>
-                                    <option value="Até R$ 50 mil">Até R$ 50 mil</option>
-                                    <option value="R$ 50 mil a R$ 100 mil">R$ 50 mil a R$ 100 mil</option>
-                                    <option value="R$ 100 mil a R$ 500 mil">R$ 100 mil a R$ 500 mil</option>
-                                    <option value="Mais de R$ 500 mil">Mais de R$ 500 mil</option>
-                                </select>
-                                <span class="select-arrow"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="formDesafio">*QUAL SEU MAIOR DESAFIO HOJE?</label>
-                            <textarea id="formDesafio" name="desafio" required placeholder="Descreva brevemente seu maior desafio comercial ou de marketing"></textarea>
-                        </div>
-                        <button type="submit" class="btn-submit-modal">
-                            <span>ENVIAR MENSAGEM</span>
-                            <span class="arrow">&rarr;</span>
-                        </button>
-                    </form>
-                    
-                    <div class="modal-success" id="modalSuccessState" style="display: none; text-align: center; padding: 40px 0;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">⚓</div>
-                        <h3 class="modal-success-title">Mensagem Enviada!</h3>
-                        <p class="modal-success-subtitle">O seu contato foi recebido. Logo nosso time entrará em contato com você!</p>
-                        <p class="modal-success-hint">Fique atento a ligações ou mensagens de números não salvos.</p>
+                <button class="feed-nav-btn feed-next" id="feedNextBtn" aria-label="Próximo">
+                    <img src="seta.png" alt="Seta Próximo" class="feed-btn-arrow-right">
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: POR QUE ENTRAR NO NOSSO BARCO (Vibrant Orange with neon glows & original art) -->
+    <section class="section-boat" id="por-que-sailors">
+        <div class="boat-container">
+            <!-- Header Title -->
+            <h2 class="boat-title reveal-bottom">
+                <span class="title-orange">Por que</span> <span class="title-white">entrar no nosso barco?</span>
+            </h2>
+
+            <!-- Statistics card with neon border and shadow -->
+            <div class="stats-box-neon reveal-bottom">
+                <div class="stats-grid-row">
+                    <div class="stat-item-horizontal">
+                        <span class="stat-number" data-target="100">+0</span>
+                        <p class="stat-label">Já atendemos mais de 100 clientes na região de Santa Catarina</p>
+                    </div>
+                    <div class="stat-item-horizontal">
+                        <span class="stat-number" data-target="6">+0</span>
+                        <p class="stat-label">Estamos há mais de 6 anos no mercado publicitário</p>
+                    </div>
+                    <div class="stat-item-horizontal">
+                        <span class="stat-number" data-target="2000">+0</span>
+                        <p class="stat-label">Mais de 2000 horas de gravação</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Config file -->
-    <script src="config.js"></script>
+            <!-- Full-width visual art (Matches 100% of reference visual chart) -->
+            <div class="boat-art-wrapper reveal-bottom">
+                <img src="arte_lp.png" alt="Gráfico de Performance Você com a Sailors" class="boat-art-img">
+            </div>
+
+            <!-- Logos Box with neon border -->
+            <div class="logos-box-neon reveal-bottom">
+                <div class="logos-box-content">
+                    <h3 class="logos-title-neon">Veja alguns de nossos tripulantes:</h3>
+                    <div class="logos-grid-container">
+                        <!-- Row 1: 3 logos -->
+                        <div class="logos-row">
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/2024-10-10-imagens-home-header-logo.webp" alt="Cristo Luz" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/DW_logo-reduzido-3.png" alt="D.W." class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/j marcon.png" alt="J Marcon" class="client-logo-img">
+                            </div>
+                        </div>
+                        <!-- Row 2: 4 logos -->
+                        <div class="logos-row">
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/logo wikify.png" alt="Wikify" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/embraed.png" alt="Embraed" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/tkws.png" alt="TKWS" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/logo de ville.png" alt="De Ville" class="client-logo-img">
+                            </div>
+                        </div>
+                        <!-- Row 3: 3 logos -->
+                        <div class="logos-row">
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/club_casa_design.png" alt="Club da Casa Design" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item logo-span-2 reveal-bottom">
+                                <img src="logos_clientes_lp/toro_bianco.png" alt="Toro Bianco" class="client-logo-img">
+                            </div>
+                            <div class="logo-grid-item reveal-bottom">
+                                <img src="logos_clientes_lp/a10_empreendimentos.png" alt="A10" class="client-logo-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Box with neon border -->
+            <div class="testimonials-box-neon reveal-bottom">
+                <div class="testimonials-box-content">
+                    <h3 class="testimonials-title-neon">O que estão falando sobre a Sailors</h3>
+                    <div class="video-testimonial-wrapper">
+                        <iframe src="https://player.vimeo.com/video/1199541151?title=0&byline=0&portrait=0&badge=0&autopause=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="width: 100%; height: 100%; display: block;" title="quando-contrata-a-sailors"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Box with neon border -->
+            <div class="team-box-neon reveal-bottom">
+                <div class="team-box-content">
+                    <div class="team-header-row">
+                        <h3 class="team-title-neon">Nosso time</h3>
+                        <div class="team-nav-buttons">
+                            <button class="team-nav-btn team-prev" id="teamPrevBtn" aria-label="Anterior">
+                                <img src="seta.png" alt="Seta Anterior" class="team-btn-arrow-left">
+                            </button>
+                            <button class="team-nav-btn team-next" id="teamNextBtn" aria-label="Próximo">
+                                <img src="seta.png" alt="Seta Próximo" class="team-btn-arrow-right">
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="team-carousel-wrapper">
+                        <div class="team-carousel-track" id="teamTrack">
+                            
+                            <!-- Card 1 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/natasha_daffine.jpg" alt="Natasha Daffine" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">CEO & Social Media</span>
+                                    <h4 class="team-name">Natasha Daffine</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/pedro_manhaes.jpg" alt="Pedro Manhães" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">CEO & Comercial</span>
+                                    <h4 class="team-name">Pedro Manhães</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 4 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/joao_alexandre.jpg" alt="João Alexandre" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Audiovisual</span>
+                                    <h4 class="team-name">João Alexandre</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 5 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/joao_eduardo.png" alt="João Eduardo" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Audiovisual</span>
+                                    <h4 class="team-name">João Eduardo</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 6 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/andre_varela.jpg" alt="André Varela" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Audiovisual</span>
+                                    <h4 class="team-name">André Varela</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 7 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/guilherme_peroza.jpg" alt="Guilherme Peroza" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Audiovisual</span>
+                                    <h4 class="team-name">Guilherme Peroza</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 8 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/gabriel_siqueira.jpg" alt="Gabriel Siqueira" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Designer</span>
+                                    <h4 class="team-name">Gabriel Siqueira</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 9 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/maria_clara.jpg" alt="Maria Clara" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Designer</span>
+                                    <h4 class="team-name">Maria Clara</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 10 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/kevin_oliveira.jpg" alt="Kevin Oliveira" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Audiovisual</span>
+                                    <h4 class="team-name">Kevin Oliveira</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 11 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/pedro_aragao.png" alt="Pedro Aragão" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Designer</span>
+                                    <h4 class="team-name">Pedro Aragão</h4>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 12 -->
+                            <div class="team-card">
+                                <div class="team-photo-wrapper">
+                                    <img src="time_sailors/maria_eduarda.jpg" alt="Maria Eduarda" class="team-photo">
+                                </div>
+                                <div class="team-info">
+                                    <span class="team-role">Social Media</span>
+                                    <h4 class="team-name">Maria Eduarda</h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Dots -->
+                    <div class="team-dots-container" id="teamDots"></div>
+                </div>
+            </div>
+
+            <!-- Anchor — absolute inside boat-container, BEHIND logos-box (z:20) -->
+            <div class="anchor-visual-wrapper">
+                <img src="ancora.png" alt="Anchor" class="contact-anchor-img">
+            </div>
+        </div>
+
+        <!-- Fade vertical gradient from orange to dark -->
+        <div class="boat-bottom-transition"></div>
+    </section>
+
+    <!-- SECTION 7: ÂNCORA + CONTATO (Centred anchor layout matching reference) -->
+    <section class="section-contact" id="contato">
+        <div class="contact-wrapping-container">
+
+            <!-- Seja Sailors CTA Centered under anchor -->
+            <div class="contact-cta-wrapper reveal-bottom">
+                <a href="contato.html" class="btn-cta btn-hover-effect">
+                    <span>Seja Sailors!</span>
+                    <img src="seta.png" alt="Seta" class="btn-arrow-large">
+                </a>
+            </div>
+        </div>
+
+        <!-- New Rounded Orange Footer Card -->
+        <footer class="footer-card reveal-bottom">
+            <div class="footer-card-container">
+                <!-- Left column: Huge black logo overlapping edge -->
+                <div class="footer-card-logo-col">
+                    <img src="logo-sailors.png" alt="Sailors Logo" class="footer-card-logo-large">
+                </div>
+
+                <!-- Right column: Contact grid with black icons -->
+                <div class="footer-card-info-col">
+                    <div class="footer-contacts-grid">
+                        <div class="footer-contact-item">
+                            <img src="assets/icons/instagram_1384047.png" alt="Instagram" class="footer-icon">
+                            <a href="https://instagram.com/weare.sailors" target="_blank">@weare.sailors</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <img src="assets/icons/youtube_1384044.png" alt="YouTube" class="footer-icon">
+                            <a href="https://www.youtube.com/@agenciasailors" target="_blank">We Are Sailors</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <img src="assets/icons/instagram_1384047.png" alt="Instagram" class="footer-icon">
+                            <a href="https://instagram.com/sailors.madrid" target="_blank">@sailors.madrid</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <img src="assets/icons/whatsapp_1384039.png" alt="WhatsApp" class="footer-icon">
+                            <a href="https://wa.me/5547996905509" target="_blank">47 99690-5509</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <img src="assets/icons/instagram_1384047.png" alt="Instagram" class="footer-icon">
+                            <a href="https://instagram.com/studio.sailors" target="_blank">@studio.sailors</a>
+                        </div>
+                    </div>
+                    <div class="footer-address">
+                        Rua 2650, 975, Balneário Camboriú 88330-383
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     <!-- Main Script file -->
-    <script src="script.js?v=20260624_05"></script>
+    <script src="config.js"></script>
+    <script>
+        if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.metaPixelId) {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', SAILORS_CONFIG.metaPixelId);
+            fbq('track', 'PageView');
+        }
+    </script>
+    <script src="script.js?v=45"></script>
+
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <script>
+        (function() {
+            const glow = document.getElementById('cursorGlow');
+            let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                glow.classList.add('active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                glow.classList.remove('active');
+            });
+
+            function animateGlow() {
+                glowX += (mouseX - glowX) * 0.08;
+                glowY += (mouseY - glowY) * 0.08;
+                glow.style.left = glowX + 'px';
+                glow.style.top = glowY + 'px';
+                requestAnimationFrame(animateGlow);
+            }
+            animateGlow();
+        })();
+    </script>
 </body>
 </html>
