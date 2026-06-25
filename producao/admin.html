@@ -583,15 +583,37 @@
             }, 3000);
         }
 
+        let cachedLeads = [];
+
         function loadDashboard() {
-            const visitors = parseInt(localStorage.getItem('sailors_page_views') || '0');
-            const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
+            const webhookUrl = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) || '';
+            
+            if (webhookUrl) {
+                document.getElementById('valLeads').textContent = '...';
+                fetch(webhookUrl)
+                    .then(r => r.json())
+                    .then(leads => {
+                        cachedLeads = leads;
+                        renderDashboard(leads);
+                    })
+                    .catch(err => {
+                        console.error('Erro ao buscar leads do Google Sheets:', err);
+                        showToast('Erro ao carregar leads. Tentando localStorage...');
+                        const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
+                        cachedLeads = localLeads;
+                        renderDashboard(localLeads);
+                    });
+            } else {
+                const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
+                cachedLeads = localLeads;
+                renderDashboard(localLeads);
+            }
+        }
 
-            document.getElementById('valVisitors').textContent = visitors;
+        function renderDashboard(leads) {
+            document.getElementById('valVisitors').textContent = '—';
             document.getElementById('valLeads').textContent = leads.length;
-
-            const conversionRate = visitors > 0 ? ((leads.length / visitors) * 100).toFixed(1) : '0.0';
-            document.getElementById('valConversion').textContent = conversionRate + '%';
+            document.getElementById('valConversion').textContent = '—';
 
             const tbody = document.getElementById('leadsTableBody');
             const emptyState = document.getElementById('emptyState');
@@ -607,11 +629,11 @@
                 leads.slice().reverse().forEach(lead => {
                     const tr = document.createElement('tr');
                     
-                    const whatsappStr = lead.whatsapp || '';
+                    const whatsappStr = (lead.whatsapp || '').toString();
                     const cleanPhone = whatsappStr.replace(/\D/g, '');
                     const waLink = cleanPhone ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
                     
-                    const instaStr = lead.instagram || '';
+                    const instaStr = (lead.instagram || '').toString();
                     const cleanInsta = instaStr.startsWith('@') ? instaStr.substring(1) : instaStr;
 
                     tr.innerHTML = `
@@ -732,24 +754,23 @@
         }
 
         function exportCSV() {
-            const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
-            if (leads.length === 0) {
+            if (cachedLeads.length === 0) {
                 showToast('Nenhum lead para exportar!');
                 return;
             }
 
             let csvContent = "\uFEFFData;Nome;WhatsApp;Email;Empresa;Instagram;Cargo;Faturamento\n";
 
-            leads.forEach(lead => {
+            cachedLeads.forEach(lead => {
                 const row = [
-                    lead.data || '',
-                    lead.nome || '',
-                    lead.whatsapp || '',
-                    lead.email || '',
-                    lead.empresa || '',
-                    lead.instagram || '',
-                    lead.cargo || '',
-                    lead.faturamento || ''
+                    (lead.data || '').toString(),
+                    (lead.nome || '').toString(),
+                    (lead.whatsapp || '').toString(),
+                    (lead.email || '').toString(),
+                    (lead.empresa || '').toString(),
+                    (lead.instagram || '').toString(),
+                    (lead.cargo || '').toString(),
+                    (lead.faturamento || '').toString()
                 ].map(text => `"${text.replace(/"/g, '""')}"`).join(';');
                 csvContent += row + "\n";
             });
