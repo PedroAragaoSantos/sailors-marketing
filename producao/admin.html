@@ -590,18 +590,38 @@
             
             if (webhookUrl) {
                 document.getElementById('valLeads').textContent = '...';
-                fetch(webhookUrl)
-                    .then(r => r.json())
+                
+                // Use JSONP approach to bypass CORS with Google Apps Script
+                window._sailorsCallback = function(leads) {
+                    cachedLeads = leads;
+                    renderDashboard(leads);
+                };
+                
+                // Try fetch first, fallback to iframe approach
+                fetch(webhookUrl, { redirect: 'follow' })
+                    .then(r => {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        return r.json();
+                    })
                     .then(leads => {
                         cachedLeads = leads;
                         renderDashboard(leads);
                     })
                     .catch(err => {
-                        console.error('Erro ao buscar leads do Google Sheets:', err);
-                        showToast('Erro ao carregar leads. Tentando localStorage...');
-                        const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
-                        cachedLeads = localLeads;
-                        renderDashboard(localLeads);
+                        console.warn('Fetch direto falhou, tentando via proxy...', err);
+                        // Fallback: use allorigins proxy to bypass CORS
+                        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(webhookUrl))
+                            .then(r => r.json())
+                            .then(data => {
+                                const leads = JSON.parse(data.contents);
+                                cachedLeads = leads;
+                                renderDashboard(leads);
+                            })
+                            .catch(err2 => {
+                                console.error('Proxy também falhou:', err2);
+                                showToast('Erro ao carregar leads.');
+                                renderDashboard([]);
+                            });
                     });
             } else {
                 const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');

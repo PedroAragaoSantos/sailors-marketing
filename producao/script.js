@@ -376,11 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // 3. General Webhook dispatch
+                // 3. General Webhook dispatch (Google Sheets)
                 if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
                     fetch(SAILORS_CONFIG.webhookUrl, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain' },
                         body: JSON.stringify(formData)
                     }).catch(err => console.error('Erro ao disparar webhook geral:', err));
                 }
