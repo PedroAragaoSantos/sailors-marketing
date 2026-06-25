@@ -493,9 +493,9 @@
     <!-- METRICS -->
     <div class="metrics-strip">
         <div class="metric-card">
-            <span class="metric-label">Visitantes (Sessões)</span>
-            <span class="metric-value" id="valVisitors">0</span>
-            <span class="metric-sub">Sessões únicas rastreadas</span>
+            <span class="metric-label">Leads esta semana</span>
+            <span class="metric-value" id="valWeekLeads">0</span>
+            <span class="metric-sub">Últimos 7 dias</span>
         </div>
         <div class="metric-card highlight">
             <span class="metric-label">Total de Leads</span>
@@ -503,9 +503,9 @@
             <span class="metric-sub">Formulários preenchidos</span>
         </div>
         <div class="metric-card">
-            <span class="metric-label">Taxa de Conversão</span>
-            <span class="metric-value" id="valConversion">0.0%</span>
-            <span class="metric-sub">Visitantes → Leads</span>
+            <span class="metric-label">Último Lead</span>
+            <span class="metric-value" id="valLastLead" style="font-size: 1.6rem;">—</span>
+            <span class="metric-sub">Data do lead mais recente</span>
         </div>
     </div>
 
@@ -631,9 +631,34 @@
         }
 
         function renderDashboard(leads) {
-            document.getElementById('valVisitors').textContent = '—';
             document.getElementById('valLeads').textContent = leads.length;
-            document.getElementById('valConversion').textContent = '—';
+
+            // Calculate leads this week
+            const now = new Date();
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            let weekCount = 0;
+            let lastLeadDate = '—';
+            leads.forEach(lead => {
+                try {
+                    const d = new Date(lead.data);
+                    if (!isNaN(d) && d >= weekAgo) weekCount++;
+                } catch(e) {}
+            });
+            if (leads.length > 0) {
+                const last = leads[leads.length - 1];
+                if (last.data) {
+                    try {
+                        const d = new Date(last.data);
+                        if (!isNaN(d)) {
+                            lastLeadDate = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+                        } else {
+                            lastLeadDate = last.data.toString().substring(0, 10);
+                        }
+                    } catch(e) { lastLeadDate = last.data.toString().substring(0, 10); }
+                }
+            }
+            document.getElementById('valWeekLeads').textContent = weekCount;
+            document.getElementById('valLastLead').textContent = lastLeadDate;
 
             const tbody = document.getElementById('leadsTableBody');
             const emptyState = document.getElementById('emptyState');
