@@ -1,6 +1,12 @@
-# Vídeos pesados (devem ser hospedados externamente em produção)
-quando-contrata-a-sailors.mp4
-
-# Arquivos de sistema
+# OS files
 .DS_Store
 Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+*.zip
+*.mp4
+*.py
