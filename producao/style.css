@@ -1908,9 +1908,9 @@ body.stepform-open {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--color-orange);
+    background-color: var(--color-black);
     color: var(--color-white);
-    border: none;
+    border: 1px solid rgba(255, 97, 26, 0.4);
     padding: 12px 28px;
     font-family: var(--font-secondary);
     font-size: 0.95rem;
@@ -1919,12 +1919,13 @@ body.stepform-open {
     border-radius: 30px;
     width: fit-content;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 20px rgba(255, 97, 26, 0.35);
+    box-shadow: 0 0 20px rgba(255, 97, 26, 0.35), 0 0 60px rgba(255, 97, 26, 0.15);
 }
 
 .stepform-ok-btn:hover {
-    background-color: #E04E0D;
-    box-shadow: 0 0 30px rgba(255, 97, 26, 0.6);
+    background-color: #111;
+    border-color: var(--color-orange);
+    box-shadow: 0 0 30px rgba(255, 97, 26, 0.6), 0 0 80px rgba(255, 97, 26, 0.25);
     transform: translateY(-1px);
 }
 
