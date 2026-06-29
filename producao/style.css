@@ -1761,19 +1761,15 @@ img {
     height: 100%;
     background: linear-gradient(180deg, #1a1008 0%, #2a1a0c 30%, #4a2510 55%, #8B3A0F 75%, #D4520A 90%, #FF611A 100%);
     z-index: 10000;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
 }
 
 .stepform-overlay.active {
-    opacity: 1;
-    pointer-events: all;
+    display: flex;
 }
 
 body.stepform-open {
