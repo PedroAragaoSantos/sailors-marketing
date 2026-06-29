@@ -1759,7 +1759,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, #1a1008 0%, #2a1a0c 30%, #4a2510 55%, #8B3A0F 75%, #D4520A 90%, #FF611A 100%);
+    background: var(--color-black);
     z-index: 10000;
     display: none;
     flex-direction: column;
@@ -1904,9 +1904,9 @@ body.stepform-open {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--color-black);
+    background-color: var(--color-orange);
     color: var(--color-white);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--color-orange);
     padding: 0 24px;
     height: 50px;
     width: 160px;
@@ -1920,8 +1920,9 @@ body.stepform-open {
 }
 
 .stepform-ok-btn:hover {
-    background-color: var(--color-orange);
-    border-color: var(--color-orange);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
 }
 
 /* Hint */
