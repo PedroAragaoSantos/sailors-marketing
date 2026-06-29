@@ -1752,279 +1752,362 @@ img {
 /* ==========================================================================
    10. MODAL POPUP (INICIAR PROJETO)
    ========================================================================== */
-.modal-overlay {
+/* ===== FULLSCREEN STEP FORM ===== */
+.stepform-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background: linear-gradient(180deg, #1a1008 0%, #2a1a0c 30%, #4a2510 55%, #8B3A0F 75%, #D4520A 90%, #FF611A 100%);
     z-index: 10000;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 20px;
-    overflow-y: auto;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
 }
 
-.modal-overlay.active {
+.stepform-overlay.active {
     opacity: 1;
     pointer-events: all;
 }
 
-.modal-card {
-    background-color: #F2C9A3;
-    width: 720px;
-    max-width: 100%;
-    padding: 56px 48px;
-    position: relative;
-    border-radius: 0;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-    transform: scale(0.95);
-    opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    margin: auto;
-}
-
-.modal-overlay.active .modal-card {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.modal-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: none;
-    border: none;
-    font-size: 2.2rem;
-    line-height: 1;
-    color: #3D2B1F;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s, color 0.3s;
-    z-index: 10;
-}
-
-.modal-close-btn:hover {
-    opacity: 1;
-    color: var(--color-orange);
-}
-
-/* Modal Header */
-.modal-header {
-    margin-bottom: 36px;
-}
-
-.modal-title {
-    font-family: var(--font-primary);
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    line-height: 1.1;
-    font-weight: normal;
-    color: #2C1A0E;
-    margin-bottom: 10px;
-}
-
-.modal-title em {
-    font-style: italic;
-}
-
-.modal-subtitle {
-    font-family: var(--font-secondary);
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #4A3628;
-    font-weight: 300;
-}
-
-/* Form Container */
-.modal-form-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
-    font-family: var(--font-secondary);
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 0.08em;
-    color: #3D2B1F;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    background-color: #C9A07D;
-    color: #2C1A0E;
-    border: 2px solid transparent;
-    border-radius: 0;
-    padding: 14px 16px;
-    font-family: var(--font-secondary);
-    font-size: 0.9rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.3s;
-    outline: none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    border-color: var(--color-orange);
-    background-color: #D4AC88;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: rgba(44, 26, 14, 0.4);
-}
-
-.form-group textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.select-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.select-wrapper select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding-right: 40px;
-    cursor: pointer;
-}
-
-.select-wrapper select option {
-    background-color: #C9A07D;
-    color: #2C1A0E;
-}
-
-.select-wrapper .select-arrow {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-70%) rotate(45deg);
-    width: 8px;
-    height: 8px;
-    border-right: 1.5px solid #3D2B1F;
-    border-bottom: 1.5px solid #3D2B1F;
-    pointer-events: none;
-    transition: border-color 0.3s;
-}
-
-.form-group select:focus + .select-arrow {
-    border-color: var(--color-orange);
-}
-
-.btn-submit-modal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-transform: uppercase;
-    height: 56px;
-    padding: 0 24px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: var(--font-secondary);
-    font-weight: 400;
-    font-size: 0.88rem;
-    letter-spacing: 0.06em;
-    border-radius: 0;
-    border: none;
-    background-color: var(--color-orange);
-    color: var(--color-white);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    margin-top: 12px;
-}
-
-.btn-submit-modal:hover {
-    background-color: #E04E0D;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(255, 97, 26, 0.4);
-}
-
-.btn-submit-modal:active {
-    transform: scale(0.99);
-}
-
-/* Success State styling */
-.modal-success {
-    text-align: center;
-    padding: 40px 0;
-}
-
-.modal-success-title {
-    font-family: var(--font-primary);
-    font-style: italic;
-    font-size: 2.8rem;
-    line-height: 1.1;
-    font-weight: normal;
-    color: #2C1A0E;
-    margin-bottom: 16px;
-}
-
-.modal-success-subtitle {
-    font-family: var(--font-secondary);
-    font-size: 1.1rem;
-    color: #4A3628;
-    max-width: 420px;
-    margin: 0 auto 16px auto;
-    line-height: 1.5;
-    font-weight: 300;
-}
-
-.modal-success-hint {
-    font-family: var(--font-secondary);
-    font-size: 0.9rem;
-    color: rgba(61, 43, 31, 0.6);
-    font-weight: 300;
-}
-
-body.modal-open {
+body.stepform-open {
     overflow: hidden;
 }
 
-/* Modal Responsiveness */
+/* Close Button */
+.stepform-close {
+    position: absolute;
+    top: 28px;
+    right: 36px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    z-index: 10;
+}
+
+.stepform-close:hover {
+    color: var(--color-white);
+    transform: rotate(90deg);
+}
+
+/* Logo */
+.stepform-logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    z-index: 10;
+}
+
+.stepform-logo img {
+    height: 32px;
+    width: auto;
+    opacity: 0.9;
+}
+
+/* Progress Bar */
+.stepform-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+.stepform-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-orange), #FFCFA9);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Form Container */
+.stepform-container {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 40px;
+    position: relative;
+}
+
+/* Steps */
+.stepform-step {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    animation: stepFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stepform-step.active {
+    display: flex;
+}
+
+@keyframes stepFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Question */
+.stepform-question {
+    font-family: var(--font-secondary);
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    color: var(--color-white);
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.stepform-number {
+    font-family: var(--font-secondary);
+    font-weight: 400;
+    margin-right: 4px;
+}
+
+/* Input */
+.stepform-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+    font-family: var(--font-secondary);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    font-weight: 300;
+    padding: 16px 0;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s;
+    caret-color: var(--color-orange);
+}
+
+.stepform-input:focus {
+    border-bottom-color: var(--color-orange);
+}
+
+.stepform-input::placeholder {
+    color: rgba(255, 207, 169, 0.35);
+    font-weight: 300;
+}
+
+/* Ok Button */
+.stepform-ok-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-orange);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 28px;
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 30px;
+    width: fit-content;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 20px rgba(255, 97, 26, 0.35);
+}
+
+.stepform-ok-btn:hover {
+    background-color: #E04E0D;
+    box-shadow: 0 0 30px rgba(255, 97, 26, 0.6);
+    transform: translateY(-1px);
+}
+
+.stepform-ok-check {
+    font-size: 0.85rem;
+}
+
+/* Hint */
+.stepform-hint {
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 300;
+}
+
+.stepform-hint strong {
+    font-weight: 400;
+}
+
+/* Option Buttons (Cargo / Faturamento) */
+.stepform-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stepform-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-white);
+    padding: 16px 20px;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+    width: 100%;
+}
+
+.stepform-option-btn:hover {
+    background: rgba(255, 97, 26, 0.15);
+    border-color: var(--color-orange);
+}
+
+.stepform-option-btn.selected {
+    background: rgba(255, 97, 26, 0.2);
+    border-color: var(--color-orange);
+    box-shadow: 0 0 15px rgba(255, 97, 26, 0.2);
+}
+
+.stepform-option-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.stepform-option-btn:hover .stepform-option-key,
+.stepform-option-btn.selected .stepform-option-key {
+    border-color: var(--color-orange);
+    background-color: var(--color-orange);
+    color: var(--color-white);
+}
+
+/* Navigation Arrows */
+.stepform-nav {
+    position: absolute;
+    bottom: 32px;
+    right: 36px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+}
+
+.stepform-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.stepform-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.stepform-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Success Screen */
+.stepform-success {
+    align-items: center;
+    text-align: center;
+}
+
+.stepform-success-icon {
+    font-size: 4rem;
+    margin-bottom: 8px;
+}
+
+.stepform-success-title {
+    font-family: var(--font-primary);
+    font-style: italic;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: normal;
+    color: var(--color-white);
+}
+
+.stepform-success-subtitle {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 420px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.stepform-success-hint {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 300;
+}
+
+/* Responsive Step Form */
 @media (max-width: 768px) {
-    .modal-card {
-        padding: 40px 24px;
+    .stepform-logo {
+        top: 20px;
+        left: 24px;
     }
-    
-    .modal-title {
-        font-size: 2.2rem;
+
+    .stepform-logo img {
+        height: 26px;
     }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 20px;
+
+    .stepform-close {
+        top: 18px;
+        right: 22px;
+        font-size: 2rem;
+    }
+
+    .stepform-container {
+        padding: 0 24px;
+    }
+
+    .stepform-nav {
+        bottom: 20px;
+        right: 24px;
+    }
+
+    .stepform-question {
+        font-size: 1.15rem;
+    }
+
+    .stepform-input {
+        font-size: 1.1rem;
+    }
+
+    .stepform-option-btn {
+        padding: 14px 16px;
+        font-size: 0.9rem;
     }
 }
 

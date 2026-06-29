@@ -293,147 +293,289 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initMultiSlotSlideshow();
 
-    // 10. CONTACT MODAL FUNCTIONALITY (Popup & Background Blur)
-    const contactModal = document.getElementById('contactModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const modalForm = document.getElementById('modalContactForm');
+    // 10. FULLSCREEN STEP FORM (Typeform-style)
+    const stepFormOverlay = document.getElementById('stepFormOverlay');
+    const stepFormClose = document.getElementById('stepFormClose');
+    const stepForm = document.getElementById('stepForm');
+    const stepProgressBar = document.getElementById('stepProgressBar');
+    const stepPrev = document.getElementById('stepPrev');
+    const stepNext = document.getElementById('stepNext');
     const ctaTriggers = document.querySelectorAll('.hero-cta-btn, .btn-posicionamento-primary, .btn-primary, .btn-primary-footer');
 
-    if (contactModal) {
-        const openModal = (e) => {
+    if (stepFormOverlay) {
+        const totalSteps = 5;
+        let currentStep = 1;
+
+        const getAllSteps = () => stepFormOverlay.querySelectorAll('.stepform-step[data-step]');
+
+        const showStep = (stepNum) => {
+            const steps = getAllSteps();
+            steps.forEach(s => s.classList.remove('active'));
+
+            const target = stepFormOverlay.querySelector(`.stepform-step[data-step="${stepNum}"]`);
+            if (target) {
+                target.classList.remove('active');
+                // Force reflow to restart animation
+                void target.offsetWidth;
+                target.classList.add('active');
+
+                // Focus input if step has one
+                const input = target.querySelector('.stepform-input');
+                if (input) setTimeout(() => input.focus(), 100);
+            }
+
+            // Update progress bar
+            if (stepNum === 'success') {
+                stepProgressBar.style.width = '100%';
+            } else {
+                stepProgressBar.style.width = `${(stepNum / totalSteps) * 100}%`;
+            }
+
+            // Update nav button states
+            if (stepPrev) stepPrev.disabled = (stepNum === 1 || stepNum === 'success');
+            if (stepNext) stepNext.disabled = (stepNum === totalSteps || stepNum === 'success');
+
+            // Hide nav on success
+            const navEl = document.getElementById('stepFormNav');
+            if (navEl) navEl.style.display = (stepNum === 'success') ? 'none' : 'flex';
+
+            currentStep = stepNum;
+        };
+
+        const validateCurrentStep = () => {
+            if (currentStep === 'success') return false;
+
+            const step = stepFormOverlay.querySelector(`.stepform-step[data-step="${currentStep}"]`);
+            if (!step) return false;
+
+            const input = step.querySelector('.stepform-input');
+            if (input && !input.value.trim()) {
+                input.style.borderBottomColor = '#ff4444';
+                setTimeout(() => { input.style.borderBottomColor = ''; }, 1500);
+                input.focus();
+                return false;
+            }
+
+            const hiddenInput = step.querySelector('input[type="hidden"]');
+            if (hiddenInput && !hiddenInput.value) {
+                // Flash options to indicate selection needed
+                const options = step.querySelectorAll('.stepform-option-btn');
+                options.forEach(opt => {
+                    opt.style.borderColor = '#ff4444';
+                    setTimeout(() => { opt.style.borderColor = ''; }, 1500);
+                });
+                return false;
+            }
+
+            return true;
+        };
+
+        const goToNextStep = () => {
+            if (currentStep === 'success') return;
+            if (!validateCurrentStep()) return;
+
+            const nextStep = currentStep + 1;
+            if (nextStep > totalSteps) {
+                submitForm();
+            } else {
+                showStep(nextStep);
+            }
+        };
+
+        const goToPrevStep = () => {
+            if (currentStep === 'success' || currentStep <= 1) return;
+            showStep(currentStep - 1);
+        };
+
+        const openStepForm = (e) => {
             if (e) e.preventDefault();
-            contactModal.classList.add('active');
-            document.body.classList.add('modal-open');
+            stepFormOverlay.classList.add('active');
+            document.body.classList.add('stepform-open');
+            currentStep = 1;
+            showStep(1);
         };
 
-        const closeModal = () => {
-            contactModal.classList.remove('active');
-            document.body.classList.remove('modal-open');
+        const closeStepForm = () => {
+            stepFormOverlay.classList.remove('active');
+            document.body.classList.remove('stepform-open');
+            // Reset form after animation
+            setTimeout(() => {
+                if (stepForm) stepForm.reset();
+                // Clear hidden inputs
+                const hiddenInputs = stepForm.querySelectorAll('input[type="hidden"]');
+                hiddenInputs.forEach(i => { i.value = ''; });
+                // Clear selected options
+                const selectedOpts = stepForm.querySelectorAll('.stepform-option-btn.selected');
+                selectedOpts.forEach(o => o.classList.remove('selected'));
+                // Reset to step 1
+                const steps = getAllSteps();
+                steps.forEach(s => s.classList.remove('active'));
+                currentStep = 1;
+                stepProgressBar.style.width = '0%';
+            }, 500);
         };
 
-        // Attach click triggers to CTAs
-        ctaTriggers.forEach(trigger => {
-            trigger.addEventListener('click', openModal);
-        });
+        const submitForm = () => {
+            const nomeVal = document.getElementById('formNome').value.trim();
+            const empresaVal = document.getElementById('formEmpresa').value.trim();
+            const cargoVal = document.getElementById('formCargo').value;
+            const telefoneVal = document.getElementById('formTelefone').value.trim();
+            const faturamentoVal = document.getElementById('formFaturamento').value;
 
-        // Close on close button click
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', closeModal);
-        }
+            const formData = {
+                data: new Date().toLocaleString('pt-BR'),
+                nome: nomeVal,
+                whatsapp: telefoneVal,
+                email: '',
+                empresa: empresaVal,
+                instagram: '',
+                cargo: cargoVal,
+                faturamento: faturamentoVal,
+                desafio: ''
+            };
 
-        // Close on clicking outside the modal card
-        contactModal.addEventListener('click', (e) => {
-            if (e.target === contactModal) {
-                closeModal();
+            // 1. Save lead to localStorage for admin panel
+            try {
+                const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
+                leads.push(formData);
+                localStorage.setItem('sailors_leads', JSON.stringify(leads));
+            } catch (err) {
+                console.error('Error saving lead to localStorage:', err);
             }
-        });
 
-        // Close on Escape key press
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && contactModal.classList.contains('active')) {
-                closeModal();
+            // 2. Meta Pixel Lead event
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead', {
+                    content_name: formData.cargo,
+                    content_category: formData.faturamento
+                });
             }
-        });
 
-        // Form submission handling (Save lead to dashboard + webhooks + success screen)
-        if (modalForm) {
-            modalForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+            // 3. Google Sheets Webhook
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
+                fetch(SAILORS_CONFIG.webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(formData)
+                }).catch(err => console.error('Erro ao disparar webhook geral:', err));
+            }
 
-                const nomeVal = document.getElementById('formNome').value.trim();
-                const empresaVal = document.getElementById('formEmpresa').value.trim();
-                const cargoVal = document.getElementById('formCargo').value;
-                const telefoneVal = document.getElementById('formTelefone').value.trim();
-                const faturamentoVal = document.getElementById('formFaturamento').value;
-                const desafioVal = document.getElementById('formDesafio').value.trim();
+            // 4. Discord Webhook
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.discordWebhookUrl) {
+                const cleanPhone = formData.whatsapp.replace(/\D/g, '');
+                const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
 
-                const formData = {
-                    data: new Date().toLocaleString('pt-BR'),
-                    nome: nomeVal,
-                    whatsapp: telefoneVal,
-                    email: '', // Not collected in popup form
-                    empresa: empresaVal,
-                    instagram: '', // Not collected in popup form
-                    cargo: cargoVal,
-                    faturamento: faturamentoVal,
-                    desafio: desafioVal
+                const discordPayload = {
+                    embeds: [{
+                        title: "⚓ Novo Lead Capturado! (Step Form LP) — Sailors Marketing",
+                        color: 16736538,
+                        fields: [
+                            { name: "👤 Nome", value: formData.nome, inline: true },
+                            { name: "💼 Empresa", value: formData.empresa, inline: true },
+                            { name: "📝 Cargo", value: formData.cargo, inline: true },
+                            { name: "💰 Faturamento Mensal", value: formData.faturamento, inline: true },
+                            { name: "🟢 WhatsApp", value: `[Falar no WhatsApp](https://wa.me/${waLink}) (${formData.whatsapp})`, inline: true }
+                        ],
+                        footer: { text: "Sailors Lead System" },
+                        timestamp: new Date().toISOString()
+                    }]
                 };
 
-                // 1. Save lead to localStorage for the admin panel dashboard
-                try {
-                    const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
-                    leads.push(formData);
-                    localStorage.setItem('sailors_leads', JSON.stringify(leads));
-                } catch (err) {
-                    console.error('Error saving lead to localStorage:', err);
-                }
+                fetch(SAILORS_CONFIG.discordWebhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordPayload)
+                }).catch(err => console.error('Erro ao disparar webhook do Discord:', err));
+            }
 
-                // 2. Meta Pixel Lead event trigger
-                if (typeof fbq === 'function') {
-                    fbq('track', 'Lead', {
-                        content_name: formData.cargo,
-                        content_category: formData.faturamento
-                    });
-                }
+            // Show success screen
+            showStep('success');
 
-                // 3. General Webhook dispatch (Google Sheets)
-                if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
-                    fetch(SAILORS_CONFIG.webhookUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify(formData)
-                    }).catch(err => console.error('Erro ao disparar webhook geral:', err));
-                }
+            // Auto-close after 4.5 seconds
+            setTimeout(() => {
+                closeStepForm();
+            }, 4500);
+        };
 
-                // 4. Discord Webhook dispatch
-                if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.discordWebhookUrl) {
-                    const cleanPhone = formData.whatsapp.replace(/\D/g, '');
-                    const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+        // Attach CTA triggers
+        ctaTriggers.forEach(trigger => {
+            trigger.addEventListener('click', openStepForm);
+        });
 
-                    const discordPayload = {
-                        embeds: [{
-                            title: "⚓ Novo Lead Capturado! (Pop-up LP) — Sailors Marketing",
-                            color: 16736538, // #FF611A
-                            fields: [
-                                { name: "👤 Nome", value: formData.nome, inline: true },
-                                { name: "💼 Empresa", value: formData.empresa, inline: true },
-                                { name: "📝 Cargo", value: formData.cargo, inline: true },
-                                { name: "💰 Faturamento Mensal", value: formData.faturamento, inline: true },
-                                { name: "🟢 WhatsApp", value: `[Falar no WhatsApp](https://wa.me/${waLink}) (${formData.whatsapp})`, inline: true },
-                                { name: "🎯 Desafio", value: formData.desafio, inline: false }
-                            ],
-                            footer: { text: "Sailors Lead System" },
-                            timestamp: new Date().toISOString()
-                        }]
-                    };
-
-                    fetch(SAILORS_CONFIG.discordWebhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(discordPayload)
-                    }).catch(err => console.error('Erro ao disparar webhook do Discord:', err));
-                }
-
-                // Show success screen and hide form
-                modalForm.style.display = 'none';
-                const successState = document.getElementById('modalSuccessState');
-                if (successState) {
-                    successState.style.display = 'block';
-                }
-
-                // Close modal after 4.5 seconds and reset form
-                setTimeout(() => {
-                    closeModal();
-                    setTimeout(() => {
-                        modalForm.style.display = 'flex';
-                        if (successState) {
-                            successState.style.display = 'none';
-                        }
-                        modalForm.reset();
-                    }, 400);
-                }, 4500);
-            });
+        // Close button
+        if (stepFormClose) {
+            stepFormClose.addEventListener('click', closeStepForm);
         }
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && stepFormOverlay.classList.contains('active')) {
+                closeStepForm();
+            }
+        });
+
+        // Navigation arrows
+        if (stepPrev) stepPrev.addEventListener('click', goToPrevStep);
+        if (stepNext) stepNext.addEventListener('click', goToNextStep);
+
+        // Ok buttons
+        const okBtns = stepFormOverlay.querySelectorAll('.stepform-ok-btn');
+        okBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                goToNextStep();
+            });
+        });
+
+        // Enter key on inputs
+        stepFormOverlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.classList.contains('stepform-input')) {
+                e.preventDefault();
+                goToNextStep();
+            }
+        });
+
+        // Option button selection (Cargo & Faturamento)
+        const optionContainers = stepFormOverlay.querySelectorAll('.stepform-options');
+        optionContainers.forEach(container => {
+            const buttons = container.querySelectorAll('.stepform-option-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Clear previous selection in this group
+                    buttons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+
+                    // Set hidden input value
+                    const step = btn.closest('.stepform-step');
+                    const hiddenInput = step.querySelector('input[type="hidden"]');
+                    if (hiddenInput) {
+                        hiddenInput.value = btn.getAttribute('data-value');
+                    }
+
+                    // Auto-advance after short delay
+                    setTimeout(() => {
+                        goToNextStep();
+                    }, 400);
+                });
+            });
+        });
+
+        // Keyboard shortcuts for options (A, B, C, D, E)
+        document.addEventListener('keydown', (e) => {
+            if (!stepFormOverlay.classList.contains('active')) return;
+            if (currentStep === 'success') return;
+
+            const step = stepFormOverlay.querySelector(`.stepform-step[data-step="${currentStep}"]`);
+            if (!step) return;
+
+            const options = step.querySelectorAll('.stepform-option-btn');
+            if (options.length === 0) return;
+
+            const keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
+            const idx = keyMap[e.key.toLowerCase()];
+            if (idx !== undefined && idx < options.length) {
+                options[idx].click();
+            }
+        });
     }
 });

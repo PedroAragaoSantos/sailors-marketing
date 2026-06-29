@@ -651,79 +651,123 @@
         </div>
     </section>
 
-    <!-- MODAL POPUP (INICIAR PROJETO) -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-card">
-            <button class="modal-close-btn" id="closeModalBtn" aria-label="Fechar">&times;</button>
-            
-            <!-- Header -->
-            <div class="modal-header">
-                <h3 class="modal-title"><em>Iniciar um projeto</em></h3>
-                <p class="modal-subtitle">Preencha o formulário e a gente entra em contato</p>
+    <!-- FULLSCREEN STEP FORM (INICIAR PROJETO) -->
+    <div class="stepform-overlay" id="stepFormOverlay">
+        <!-- Close Button -->
+        <button class="stepform-close" id="stepFormClose" aria-label="Fechar">&times;</button>
+
+        <!-- Logo -->
+        <div class="stepform-logo">
+            <img src="logo-sailors.png" alt="Sailors Logo">
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="stepform-progress">
+            <div class="stepform-progress-bar" id="stepProgressBar"></div>
+        </div>
+
+        <!-- Form Container -->
+        <form class="stepform-container" id="stepForm">
+            <!-- Step 1: Nome -->
+            <div class="stepform-step active" data-step="1">
+                <div class="stepform-question">
+                    <span class="stepform-number">1.</span> Qual o seu nome e sobrenome?
+                </div>
+                <input type="text" class="stepform-input" id="formNome" name="nome" placeholder="digite aqui" required autocomplete="name">
+                <button type="button" class="stepform-ok-btn" data-next="2">
+                    Ok <span class="stepform-ok-check">✓</span>
+                </button>
+                <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
             </div>
 
-            <!-- Form -->
-            <div class="modal-form-container">
-                <form class="modal-form" id="modalContactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="formNome">*SEU NOME</label>
-                            <input type="text" id="formNome" name="nome" required placeholder="Digite seu nome">
-                        </div>
-                        <div class="form-group">
-                            <label for="formEmpresa">*NOME DA SUA EMPRESA</label>
-                            <input type="text" id="formEmpresa" name="empresa" required placeholder="Digite o nome da empresa">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="formCargo">*SEU CARGO</label>
-                            <div class="select-wrapper">
-                                <select id="formCargo" name="cargo" required>
-                                    <option value="" disabled selected hidden>Selecione seu cargo</option>
-                                    <option value="Diretor / C-Level">Diretor / C-Level</option>
-                                    <option value="Gerente / Coordenador">Gerente / Coordenador</option>
-                                    <option value="Especialista / Analista">Especialista / Analista</option>
-                                    <option value="Sócio / Fundador">Sócio / Fundador</option>
-                                    <option value="Outro">Outro</option>
-                                </select>
-                                <span class="select-arrow"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="formTelefone">*TELEFONE</label>
-                            <input type="tel" id="formTelefone" name="telefone" required placeholder="(00) 00000-0000">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="formFaturamento">*FATURAMENTO MENSAL DA EMPRESA</label>
-                        <div class="select-wrapper">
-                            <select id="formFaturamento" name="faturamento" required>
-                                <option value="" disabled selected hidden>Selecione o faturamento</option>
-                                <option value="Até R$ 50 mil">Até R$ 50 mil</option>
-                                <option value="R$ 50 mil a R$ 100 mil">R$ 50 mil a R$ 100 mil</option>
-                                <option value="R$ 100 mil a R$ 500 mil">R$ 100 mil a R$ 500 mil</option>
-                                <option value="Mais de R$ 500 mil">Mais de R$ 500 mil</option>
-                            </select>
-                            <span class="select-arrow"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="formDesafio">*QUAL SEU MAIOR DESAFIO HOJE?</label>
-                        <textarea id="formDesafio" name="desafio" required placeholder="Descreva brevemente seu maior desafio comercial ou de marketing"></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit-modal">
-                        <span>ENVIAR MENSAGEM</span>
-                    </button>
-                </form>
-                
-                <div class="modal-success" id="modalSuccessState" style="display: none;">
-                    <div style="font-size: 4rem; margin-bottom: 20px;">⚓</div>
-                    <h3 class="modal-success-title">Mensagem Enviada!</h3>
-                    <p class="modal-success-subtitle">O seu contato foi recebido. Logo nosso time entrará em contato com você!</p>
-                    <p class="modal-success-hint">Fique atento a ligações ou mensagens de números não salvos.</p>
+            <!-- Step 2: Empresa -->
+            <div class="stepform-step" data-step="2">
+                <div class="stepform-question">
+                    <span class="stepform-number">2.</span> Qual o nome da sua empresa?
                 </div>
+                <input type="text" class="stepform-input" id="formEmpresa" name="empresa" placeholder="digite aqui" required autocomplete="organization">
+                <button type="button" class="stepform-ok-btn" data-next="3">
+                    Ok <span class="stepform-ok-check">✓</span>
+                </button>
+                <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
             </div>
+
+            <!-- Step 3: Cargo -->
+            <div class="stepform-step" data-step="3">
+                <div class="stepform-question">
+                    <span class="stepform-number">3.</span> Qual o seu cargo?
+                </div>
+                <div class="stepform-options" id="cargoOptions">
+                    <button type="button" class="stepform-option-btn" data-value="Diretor / C-Level">
+                        <span class="stepform-option-key">A</span> Diretor / C-Level
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="Gerente / Coordenador">
+                        <span class="stepform-option-key">B</span> Gerente / Coordenador
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="Especialista / Analista">
+                        <span class="stepform-option-key">C</span> Especialista / Analista
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="Sócio / Fundador">
+                        <span class="stepform-option-key">D</span> Sócio / Fundador
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="Outro">
+                        <span class="stepform-option-key">E</span> Outro
+                    </button>
+                </div>
+                <input type="hidden" id="formCargo" name="cargo" required>
+            </div>
+
+            <!-- Step 4: Telefone -->
+            <div class="stepform-step" data-step="4">
+                <div class="stepform-question">
+                    <span class="stepform-number">4.</span> Qual o seu telefone?
+                </div>
+                <input type="tel" class="stepform-input" id="formTelefone" name="telefone" placeholder="(00) 00000-0000" required autocomplete="tel">
+                <button type="button" class="stepform-ok-btn" data-next="5">
+                    Ok <span class="stepform-ok-check">✓</span>
+                </button>
+                <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
+            </div>
+
+            <!-- Step 5: Faturamento -->
+            <div class="stepform-step" data-step="5">
+                <div class="stepform-question">
+                    <span class="stepform-number">5.</span> Qual o faturamento mensal da empresa?
+                </div>
+                <div class="stepform-options" id="faturamentoOptions">
+                    <button type="button" class="stepform-option-btn" data-value="Até R$ 50 mil">
+                        <span class="stepform-option-key">A</span> Até R$ 50 mil
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="R$ 50 mil a R$ 100 mil">
+                        <span class="stepform-option-key">B</span> R$ 50 mil a R$ 100 mil
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="R$ 100 mil a R$ 500 mil">
+                        <span class="stepform-option-key">C</span> R$ 100 mil a R$ 500 mil
+                    </button>
+                    <button type="button" class="stepform-option-btn" data-value="Mais de R$ 500 mil">
+                        <span class="stepform-option-key">D</span> Mais de R$ 500 mil
+                    </button>
+                </div>
+                <input type="hidden" id="formFaturamento" name="faturamento" required>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="stepform-step stepform-success" data-step="success">
+                <div class="stepform-success-icon">⚓</div>
+                <h3 class="stepform-success-title">Mensagem Enviada!</h3>
+                <p class="stepform-success-subtitle">O seu contato foi recebido. Logo nosso time entrará em contato com você!</p>
+                <p class="stepform-success-hint">Fique atento a ligações ou mensagens de números não salvos.</p>
+            </div>
+        </form>
+
+        <!-- Navigation Arrows -->
+        <div class="stepform-nav" id="stepFormNav">
+            <button type="button" class="stepform-nav-btn" id="stepPrev" aria-label="Anterior">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+            <button type="button" class="stepform-nav-btn" id="stepNext" aria-label="Próximo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
         </div>
     </div>
 
