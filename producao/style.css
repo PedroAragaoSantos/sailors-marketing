@@ -372,7 +372,7 @@ img {
 
 .hero-and-confia-wrapper {
     position: relative;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 62%, rgba(0,0,0,0.95) 72%, #000000 78%, #000000 100%), url('assets/v2/images/FOTO HERO.png') no-repeat top center;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 62%, rgba(0,0,0,0.95) 72%, #000000 78%, #000000 100%), url('assets/v2/images/FOTO HERO.jpg') no-repeat top center;
     background-size: 100% auto;
 }
 
@@ -598,7 +598,7 @@ img {
     left: 0;
     width: 100%;
     height: 2200px;
-    background: url('assets/v2/images/GRADIENTE_NEW.png') no-repeat -120px 40%;
+    background: url('assets/v2/images/GRADIENTE_NEW_opt.jpg') no-repeat -120px 40%;
     background-size: 115% auto;
     mix-blend-mode: screen;
     pointer-events: none;
