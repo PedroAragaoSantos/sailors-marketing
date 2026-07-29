@@ -585,27 +585,49 @@
 
         let cachedLeads = [];
 
+        function mergeLeads(sheetLeads, localLeads) {
+            // Merge sheet leads with local leads, deduplicating by nome+whatsapp
+            const seen = new Set();
+            const merged = [];
+
+            // Sheet leads take priority
+            sheetLeads.forEach(lead => {
+                const key = (lead.nome || '').toLowerCase().trim() + '|' + (lead.whatsapp || '').toString().replace(/\D/g, '');
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    merged.push(lead);
+                }
+            });
+
+            // Add local leads that aren't already in sheet
+            localLeads.forEach(lead => {
+                const key = (lead.nome || '').toLowerCase().trim() + '|' + (lead.whatsapp || '').toString().replace(/\D/g, '');
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    merged.push(lead);
+                }
+            });
+
+            return merged;
+        }
+
         function loadDashboard() {
             const webhookUrl = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) || '';
+            const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
             
             if (webhookUrl) {
                 document.getElementById('valLeads').textContent = '...';
                 
-                // Use JSONP approach to bypass CORS with Google Apps Script
-                window._sailorsCallback = function(leads) {
-                    cachedLeads = leads;
-                    renderDashboard(leads);
-                };
-                
-                // Try fetch first, fallback to iframe approach
+                // Try fetch first, fallback to proxy
                 fetch(webhookUrl, { redirect: 'follow' })
                     .then(r => {
                         if (!r.ok) throw new Error('HTTP ' + r.status);
                         return r.json();
                     })
-                    .then(leads => {
-                        cachedLeads = leads;
-                        renderDashboard(leads);
+                    .then(sheetLeads => {
+                        const merged = mergeLeads(sheetLeads, localLeads);
+                        cachedLeads = merged;
+                        renderDashboard(merged);
                     })
                     .catch(err => {
                         console.warn('Fetch direto falhou, tentando via proxy...', err);
@@ -613,18 +635,19 @@
                         fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(webhookUrl))
                             .then(r => r.json())
                             .then(data => {
-                                const leads = JSON.parse(data.contents);
-                                cachedLeads = leads;
-                                renderDashboard(leads);
+                                const sheetLeads = JSON.parse(data.contents);
+                                const merged = mergeLeads(sheetLeads, localLeads);
+                                cachedLeads = merged;
+                                renderDashboard(merged);
                             })
                             .catch(err2 => {
-                                console.error('Proxy também falhou:', err2);
-                                showToast('Erro ao carregar leads.');
-                                renderDashboard([]);
+                                console.error('Proxy também falhou, usando localStorage:', err2);
+                                // Final fallback: just use localStorage leads
+                                cachedLeads = localLeads;
+                                renderDashboard(localLeads);
                             });
                     });
             } else {
-                const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
                 cachedLeads = localLeads;
                 renderDashboard(localLeads);
             }
