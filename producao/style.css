@@ -1211,7 +1211,7 @@ img {
     background: var(--color-bege);
     color: var(--color-black);
     border: none;
-    border-radius: 16px;
+    border-radius: 0;
     padding: 36px;
     display: flex;
     flex-direction: column;
