@@ -807,7 +807,7 @@ img {
 /* 9b. SEÇÃO 04 — NOSSA ESTRUTURA (IMAGENS) */
 .section-estrutura-imagens {
     background-color: var(--color-bege);
-    padding: 100px 0;
+    padding: 0;
     position: relative;
 }
 
@@ -815,30 +815,30 @@ img {
 .estrutura-images-block {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 4px;
     width: 100%;
 }
 
 .estrutura-img-large {
     width: 100%;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 7;
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 0;
 }
 
 .estrutura-images-bottom {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 4px;
 }
 
 .estrutura-img-small {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 0;
 }
 
 /* Individual Image slot slideshow styling */
