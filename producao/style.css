@@ -1150,25 +1150,63 @@ img {
     margin-bottom: 64px;
 }
 
+/* Grid Layout — 5 items in asymmetric rows */
 .depoimentos-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    grid-template-columns: 5fr 6fr;
+    grid-template-rows: auto auto auto;
+    gap: 24px;
     position: relative;
     z-index: 5;
     margin-bottom: 56px;
 }
 
+/* Row 1: card left, dark block right */
+.depoimento-row1-left {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+}
+
+.depoimento-dark-block {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    background: var(--color-black);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    min-height: 320px;
+}
+
+/* Row 2: highlighted card, offset center-left */
+.depoimento-highlight {
+    grid-column: 1;
+    grid-row: 2;
+    background: rgba(255, 97, 26, 0.12) !important;
+    border: 1px solid rgba(255, 97, 26, 0.25);
+    align-self: start;
+}
+
+/* Row 3: two cards side by side */
+.depoimento-row3-left {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.depoimento-row3-right {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+/* Card base styles */
 .depoimento-card {
     background: var(--color-bege);
     color: var(--color-black);
     border: none;
     border-radius: 16px;
-    padding: 40px;
+    padding: 36px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 240px;
     position: relative;
     transition: all 0.3s ease;
 }
@@ -1180,10 +1218,25 @@ img {
 
 .depoimento-text {
     font-family: var(--font-secondary);
-    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
     line-height: 1.6;
     color: var(--color-black);
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+}
+
+/* Author row with inline dot */
+.depoimento-author-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.depoimento-dot-inline {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background-color: var(--color-orange);
+    border-radius: 50%;
 }
 
 .depoimento-author {
@@ -1192,14 +1245,9 @@ img {
     color: rgba(0, 0, 0, 0.7);
 }
 
+/* Keep old dot hidden in case of residual markup */
 .depoimento-dot {
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
-    width: 6px;
-    height: 6px;
-    background-color: var(--color-orange);
-    border-radius: 50%;
+    display: none;
 }
 
 .depoimentos-cta {
