@@ -1134,16 +1134,18 @@ img {
     overflow: hidden;
 }
 
-/* Glow orange decoration */
+/* Glow orange decoration — imagem de fundo */
 .depoimentos-glow-blob {
     position: absolute;
-    bottom: -10%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255, 97, 26, 0.15) 0%, rgba(0,0,0,0) 70%);
+    top: 50%;
+    left: 50%;
+    width: 3900px;
+    height: 2300px;
+    transform: translate(-50%, -50%) rotate(160deg);
+    background: url('assets/v2/images/GRADIENTE_NEW.png') center / cover no-repeat;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.9;
 }
 
 .depoimentos-header {
