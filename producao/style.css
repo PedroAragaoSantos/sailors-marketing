@@ -1181,14 +1181,12 @@ img {
     border-radius: 16px;
 }
 
-/* Row 2: highlighted card */
+/* Row 2: card */
 .depoimento-highlight {
     grid-column: 1;
     grid-row: 2;
     width: 583px;
     height: 387px;
-    background: rgba(255, 97, 26, 0.12) !important;
-    border: 1px solid rgba(255, 97, 26, 0.25);
 }
 
 /* Row 3: two cards side by side */
