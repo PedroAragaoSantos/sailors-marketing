@@ -399,6 +399,13 @@
                         <span class="depoimento-author">Ju Gomes, Convidada do Kiwicast</span>
                     </div>
                 </div>
+
+                <!-- Carousel navigation (mobile only) -->
+                <div class="depoimentos-carousel-nav" id="depoimentosCarouselNav">
+                    <button class="depoimentos-arrow" id="depoimentoPrev" aria-label="Anterior">&#8249;</button>
+                    <span class="depoimentos-counter" id="depoimentoCounter">1 / 4</span>
+                    <button class="depoimentos-arrow" id="depoimentoNext" aria-label="Próximo">&#8250;</button>
+                </div>
             </div>
 
             <div class="depoimentos-cta">
@@ -704,10 +711,64 @@
         </div>
     </div>
 
+    <!-- LIGHTBOX FULLSCREEN (MOBILE) -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">&times;</button>
+        <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Anterior">&#8249;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Foto ampliada">
+        <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Próxima">&#8250;</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
     <!-- Config file -->
     <script src="config.js"></script>
     <!-- Main Script file -->
-    <script src="script.js?v=20260729_01"></script>
+    <script src="script.js?v=20260731_04"></script>
+
+    <!-- Depoimentos Carousel (inline to avoid cache issues) -->
+    <script>
+    (function() {
+        var grid = document.querySelector('.depoimentos-grid');
+        var prev = document.getElementById('depoimentoPrev');
+        var next = document.getElementById('depoimentoNext');
+        var counter = document.getElementById('depoimentoCounter');
+        if (!grid || !prev || !next) return;
+
+        var slides = grid.querySelectorAll('.depoimento-card');
+        var current = 0;
+        var total = slides.length;
+
+        function show(idx) {
+            if (idx < 0) idx = total - 1;
+            if (idx >= total) idx = 0;
+            current = idx;
+            for (var i = 0; i < total; i++) {
+                slides[i].classList.remove('carousel-active');
+            }
+            slides[current].classList.add('carousel-active');
+            if (counter) counter.textContent = (current + 1) + ' / ' + total;
+        }
+
+        // Always init first slide
+        show(0);
+
+        prev.onclick = function() { show(current - 1); };
+        next.onclick = function() { show(current + 1); };
+
+        // Swipe support
+        var startX = 0;
+        grid.addEventListener('touchstart', function(e) {
+            startX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        grid.addEventListener('touchend', function(e) {
+            var diff = e.changedTouches[0].screenX - startX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) show(current - 1);
+                else show(current + 1);
+            }
+        }, {passive: true});
+    })();
+    </script>
 </body>
 </html>
 <!-- deployed v2 -->
