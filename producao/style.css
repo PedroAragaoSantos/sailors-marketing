@@ -1250,6 +1250,15 @@ img {
     border-radius: 50%;
 }
 
+.depoimento-author-photo {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+}
+
 .depoimento-author {
     font-family: var(--font-secondary);
     font-size: 0.82rem;
