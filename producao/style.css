@@ -780,7 +780,7 @@ img {
     font-size: clamp(2.2rem, 3.2vw, 3rem);
     line-height: 1.45;
     font-weight: 300;
-    max-width: 1050px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
     align-self: center;
