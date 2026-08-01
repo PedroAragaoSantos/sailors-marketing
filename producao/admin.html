@@ -3,874 +3,708 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle — Sailors Marketing</title>
+    <meta name="robots" content="noindex, nofollow">
+    <title>Painel — Sailors Marketing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="config.js?v=20260801_sb"></script>
     <style>
-        @font-face {
-            font-family: 'Awesome Serif';
-            src: local('Awesome Serif Light'), local('AwesomeSerif-Light');
-            font-weight: 300;
-            font-style: normal;
-        }
-        @font-face {
-            font-family: 'Awesome Serif';
-            src: local('Awesome Serif Regular'), local('Awesome Serif'), local('AwesomeSerif-Regular');
-            font-weight: 400;
-            font-style: normal;
-        }
-        @font-face {
-            font-family: 'Awesome Serif';
-            src: local('Awesome Serif Italic'), local('Awesome Serif Regular Italic'), local('AwesomeSerif-Italic');
-            font-weight: 400;
-            font-style: italic;
-        }
-        @font-face {
-            font-family: 'Roobert Light';
-            src: local('Roobert Light'), local('Roobert-Light'), local('RoobertLight');
-            font-weight: 300;
-            font-style: normal;
-        }
+        @font-face { font-family:'Awesome Serif'; src:local('Awesome Serif Regular'),local('AwesomeSerif-Regular'); font-weight:400; }
+        @font-face { font-family:'Awesome Serif'; src:local('Awesome Serif Italic'),local('AwesomeSerif-Italic'); font-weight:400; font-style:italic; }
+        @font-face { font-family:'Roobert'; src:local('Roobert Light'),local('Roobert-Light'); font-weight:300; }
+        @font-face { font-family:'Roobert'; src:local('Roobert Regular'),local('Roobert-Regular'); font-weight:400; }
+        @font-face { font-family:'Roobert'; src:local('Roobert Medium'),local('Roobert-Medium'); font-weight:500; }
+        @font-face { font-family:'Roobert'; src:local('Roobert SemiBold'),local('Roobert-SemiBold'); font-weight:600; }
+        @font-face { font-family:'Roobert'; src:local('Roobert Bold'),local('Roobert-Bold'); font-weight:700; }
 
         :root {
-            --color-black: #000000;
-            --color-orange: #FF611A;
-            --color-bege: #FFCFA9;
-            --color-bege-light: #F2C9A3;
-            --color-white: #FFFFFF;
-            --color-brown-dark: #2C1A0E;
-            --color-brown-mid: #4A3628;
-            --font-primary: 'Awesome Serif', 'Instrument Serif', serif;
-            --font-secondary: 'Roobert Light', 'Roobert', 'Inter', sans-serif;
+            --bg: #000000;
+            --panel: rgba(20, 12, 6, 0.55);
+            --panel-solid: rgba(30, 18, 8, 0.75);
+            --line: rgba(255, 255, 255, 0.1);
+            --fg: #ffffff;
+            --muted: rgba(255,255,255,0.55);
+            --muted2: rgba(255,255,255,0.35);
+            --accent: #FF611A;
+            --accent-soft: rgba(255, 97, 26, 0.18);
+            --bege: #FFCFA9;
+            --bege-soft: rgba(255,207,169,0.12);
+            --good: #FF611A;
+            --font-serif: 'Awesome Serif','Instrument Serif',serif;
+            --font-sans: 'Roobert','Inter','Helvetica Neue',Arial,sans-serif;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0 }
+        html, body { margin: 0; padding: 0 }
         body {
-            background-color: var(--color-black);
-            color: var(--color-white);
-            font-family: var(--font-secondary);
+            color: var(--fg);
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            background: var(--bg);
             min-height: 100vh;
         }
+        a { color: var(--bege); text-decoration: none }
+        a:hover { text-decoration: underline; color: var(--accent) }
 
-        /* ── HERO HEADER ── */
-        .admin-hero {
-            background-color: var(--color-bege-light);
-            padding: 48px 40px 56px;
+        /* ── HEADER ── */
+        header {
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            padding: 16px 26px;
+            border-bottom: 1px solid var(--line);
+            position: sticky; top: 0; z-index: 5;
+            background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        }
+        header h1 {
+            font-family: var(--font-sans);
+            font-size: 15px; margin: 0; font-weight: 600;
+            letter-spacing: 0.01em;
+            display: flex; align-items: center; gap: 10px;
+        }
+        header h1 img { height: 20px; width: auto; filter: brightness(0) invert(1); }
+        .hactions { display: flex; align-items: center; gap: 8px }
+
+        #liveDot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--good); display: inline-block;
+            box-shadow: 0 0 0 0 rgba(255,97,26,0.5);
+            animation: pulse 2.6s infinite;
+        }
+        #liveDot.off { background: var(--muted2); animation: none; box-shadow: none }
+        @keyframes pulse {
+            0%  { box-shadow: 0 0 0 0 rgba(255,97,26,0.45) }
+            70% { box-shadow: 0 0 0 7px rgba(255,97,26,0) }
+            100%{ box-shadow: 0 0 0 0 rgba(255,97,26,0) }
         }
 
-        .admin-hero-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+        .wrap { max-width: 1280px; margin: 0 auto; padding: 24px 26px 60px }
 
-        .admin-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 48px;
+        /* ── BUTTONS ── */
+        button {
+            font-family: inherit; font-size: 14px; cursor: pointer;
+            border: 0; border-radius: 999px; padding: 10px 20px;
+            background: var(--accent); color: #fff; font-weight: 600;
+            transition: filter 0.15s, opacity 0.15s, background 0.15s;
         }
-
-        .admin-brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
+        button:hover { filter: brightness(1.1) }
+        button.ghost {
+            background: transparent; border: 1.5px solid var(--line);
+            color: var(--fg); font-weight: 500;
         }
+        button.ghost:hover { background: rgba(255,255,255,0.06); filter: none }
+        button.sm { padding: 7px 14px; font-size: 13px }
+        button:disabled { opacity: 0.45; cursor: default; filter: none }
+        button.danger { background: transparent; border: 1.5px solid rgba(192,57,43,0.3); color: #e74c3c }
+        button.danger:hover { background: rgba(192,57,43,0.08) }
 
-        .admin-brand img {
-            height: 24px;
-            width: auto;
-            filter: brightness(0);
+        /* ── INPUT ── */
+        input {
+            font-family: inherit; font-size: 15px; height: 46px;
+            padding: 0 16px; border-radius: 12px;
+            border: 1.5px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            color: var(--fg); width: 100%;
         }
+        input::placeholder { color: var(--muted2) }
+        input:focus { outline: none; border-color: rgba(255,97,26,0.5) }
 
-        .admin-brand-divider {
-            width: 1px;
-            height: 20px;
-            background-color: rgba(44, 26, 14, 0.3);
-        }
-
-        .admin-brand-label {
-            font-family: var(--font-secondary);
-            font-size: 0.8rem;
-            font-weight: 300;
-            color: var(--color-brown-mid);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        .admin-topbar-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 11px 22px;
-            font-family: var(--font-secondary);
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 0.06em;
-            cursor: pointer;
-            border: none;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-dark {
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
-
-        .btn-dark:hover {
-            background-color: #1a1a1a;
-        }
-
-        .btn-outline-dark {
-            background-color: transparent;
-            color: var(--color-brown-dark);
-            border: 1px solid rgba(44, 26, 14, 0.3);
-        }
-
-        .btn-outline-dark:hover {
-            border-color: var(--color-brown-dark);
-            background-color: rgba(44, 26, 14, 0.05);
-        }
-
-        .btn-danger {
-            background-color: transparent;
-            color: #c0392b;
-            border: 1px solid rgba(192, 57, 43, 0.25);
-        }
-
-        .btn-danger:hover {
-            background-color: rgba(192, 57, 43, 0.08);
-        }
-
-        /* Hero Title */
-        .admin-hero-title {
-            font-family: var(--font-primary);
-            font-size: clamp(2.4rem, 5vw, 3.6rem);
-            font-weight: normal;
-            color: var(--color-brown-dark);
-            line-height: 1.1;
-            margin-bottom: 12px;
-        }
-
-        .admin-hero-title em {
-            font-style: italic;
-            color: var(--color-orange);
-        }
-
-        .admin-hero-subtitle {
-            font-family: var(--font-secondary);
-            font-size: 1rem;
-            color: var(--color-brown-mid);
-            font-weight: 300;
-        }
-
-        /* ── METRICS ROW ── */
-        .metrics-strip {
-            max-width: 1100px;
-            margin: -36px auto 0;
-            padding: 0 40px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .metric-card {
-            background-color: #0A0A0A;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .metric-card.highlight {
-            background-color: var(--color-orange);
-            border-color: var(--color-orange);
-        }
-
-        .metric-label {
-            font-family: var(--font-secondary);
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            color: rgba(255, 255, 255, 0.45);
-            text-transform: uppercase;
-        }
-
-        .metric-card.highlight .metric-label {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .metric-value {
-            font-family: var(--font-primary);
-            font-size: 3rem;
-            line-height: 1;
-            color: var(--color-white);
-        }
-
-        .metric-sub {
-            font-family: var(--font-secondary);
-            font-size: 11px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .metric-card.highlight .metric-sub {
-            color: rgba(255, 255, 255, 0.65);
-        }
-
-        /* ── MAIN CONTENT ── */
-        .admin-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 48px 40px 80px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        /* Section Headers */
-        .section-label {
-            font-family: var(--font-secondary);
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--color-orange);
-            margin-bottom: 8px;
-        }
-
-        .section-heading {
-            font-family: var(--font-primary);
-            font-style: italic;
-            font-size: 1.6rem;
-            font-weight: normal;
-            color: var(--color-white);
-        }
-
-        /* ── INSIGHTS GRID ── */
-        .insights-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .chart-card {
-            background-color: #0A0A0A;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .chart-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .chart-title {
-            font-family: var(--font-primary);
-            font-style: italic;
-            font-size: 1.3rem;
-            font-weight: normal;
-            color: var(--color-white);
-        }
-
-        .chart-count {
-            font-family: var(--font-secondary);
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.35);
-            letter-spacing: 0.05em;
-        }
-
-        .chart-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .insight-bar-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .insight-bar-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-family: var(--font-secondary);
-        }
-
-        .insight-bar-label span:first-child {
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        .insight-bar-label span:last-child {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-        }
-
-        .insight-bar-track {
-            height: 4px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.06);
-            overflow: hidden;
-        }
-
-        .insight-bar-fill {
-            height: 100%;
-            background-color: var(--color-orange);
-            width: 0;
-            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .chart-card:nth-child(2) .insight-bar-fill {
-            background-color: var(--color-bege);
-        }
-
-        /* ── LEADS TABLE ── */
-        .table-section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 20px;
-        }
-
-        .table-card {
-            background-color: #0A0A0A;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 13px;
-            font-family: var(--font-secondary);
-        }
-
-        th {
-            padding: 18px 20px;
-            background-color: rgba(255, 255, 255, 0.03);
-            color: var(--color-bege);
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        td {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.8);
-            white-space: nowrap;
-            font-weight: 300;
-        }
-
-        tr:hover td {
-            background-color: rgba(255, 97, 26, 0.03);
-        }
-
-        .link-icon {
-            text-decoration: none;
-            color: var(--color-bege);
-            font-weight: 400;
-            transition: color 0.2s;
-        }
-
-        .link-icon:hover {
-            color: var(--color-orange);
-        }
-
-        .empty-state {
-            padding: 80px 40px;
+        /* ── LOGIN ── */
+        #login {
+            display: none; max-width: 400px; margin: 16vh auto; padding: 36px 30px;
+            border-radius: 22px;
+            background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--line);
             text-align: center;
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 14px;
+        }
+        #login img { height: 24px; margin-bottom: 20px; filter: brightness(0) invert(1) }
+        #login h2 {
+            font-family: var(--font-serif); font-style: italic;
+            font-size: 1.8rem; font-weight: normal; margin: 0 0 6px;
+        }
+        #login h2 span { color: var(--accent) }
+        #login p { margin: 0 0 18px; color: var(--muted); font-size: 13px }
+        #login .row { display: flex; gap: 10px; margin-top: 14px }
+        #loginErr { color: #ef5a6f; font-size: 13px; margin-top: 12px; min-height: 16px }
+
+        /* ── TABS ── */
+        .tabs {
+            display: flex; gap: 4px;
+            border-bottom: 1px solid var(--line);
+            margin: 0 0 22px; overflow-x: auto; scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar { display: none }
+        .tab {
+            background: none; border: 0; border-bottom: 2px solid transparent;
+            border-radius: 0; padding: 12px 16px;
+            color: var(--muted); font-weight: 600; font-size: 14px;
+            white-space: nowrap; transition: color 0.15s, border-color 0.15s;
+        }
+        .tab:hover { color: var(--fg); filter: none; background: none }
+        .tab.on { color: var(--accent); border-bottom-color: var(--accent) }
+        .tab .cnt {
+            display: inline-block; margin-left: 6px; padding: 1px 7px;
+            border-radius: 999px; font-size: 11px;
+            background: rgba(255,255,255,0.1); color: var(--muted); font-weight: 600;
+        }
+        .tab.on .cnt { background: var(--accent-soft); color: var(--accent) }
+        .pane { display: none }
+        .pane.on { display: block }
+
+        /* ── CARDS ── */
+        .cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px; margin-bottom: 26px;
+        }
+        .card {
+            background: var(--panel); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px;
+        }
+        .card .k {
+            color: var(--muted); font-size: 10px; text-transform: uppercase;
+            letter-spacing: 0.14em; font-weight: 600;
+        }
+        .card .v {
+            font-size: 30px; font-weight: 700; margin-top: 8px; letter-spacing: -0.01em;
+            font-family: var(--font-serif);
+        }
+        .card .sub { color: var(--muted2); font-size: 12px; margin-top: 3px }
+        .card.highlight { border-color: var(--accent); background: var(--accent-soft) }
+        .card.highlight .k { color: var(--bege) }
+        .card.highlight .v { color: var(--accent) }
+
+        section { margin-bottom: 34px }
+        section > h3 {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
+            color: var(--muted); margin: 0 0 14px; font-weight: 600;
         }
 
-        .empty-state-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
-            opacity: 0.4;
+        /* ── FILTER BAR ── */
+        .bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px }
+        .bar input.search { height: 42px; flex: 1; min-width: 200px; max-width: 340px; font-size: 14px }
+        .seg {
+            display: inline-flex; border: 1.5px solid var(--line);
+            border-radius: 999px; overflow: hidden;
         }
+        .seg button {
+            border-radius: 0; background: transparent; color: var(--muted);
+            font-size: 13px; padding: 8px 14px; font-weight: 500;
+        }
+        .seg button:hover { background: rgba(255,255,255,0.06); filter: none; color: var(--fg) }
+        .seg button.on { background: var(--accent); color: #fff; font-weight: 600 }
+        .barnote { color: var(--muted2); font-size: 12.5px; margin-left: auto }
+
+        /* ── TABLE ── */
+        .tblwrap {
+            overflow-x: auto; border-radius: 18px;
+            border: 1px solid var(--line); background: var(--panel);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        .tbl { width: 100%; border-collapse: collapse }
+        .tbl th, .tbl td {
+            text-align: left; padding: 13px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            white-space: nowrap; font-size: 14px;
+        }
+        .tbl th {
+            color: var(--bege); font-weight: 600; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            background: rgba(0,0,0,0.3); position: sticky; top: 0;
+        }
+        .tbl tr:last-child td { border-bottom: 0 }
+        .tbl tbody tr:hover td { background: rgba(255,97,26,0.03) }
+        .tbl td.dim { color: var(--muted) }
+        .pill {
+            display: inline-block; padding: 3px 11px; border-radius: 999px;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+        }
+        .pill.lead { background: var(--accent-soft); color: var(--accent) }
+        .muted { color: var(--muted) }
+        .empty { color: var(--muted); padding: 28px 16px; font-size: 14px; text-align: center }
+        .empty b { color: var(--fg); font-weight: 600 }
+        .right { text-align: right }
+        .nowrap { white-space: nowrap }
 
         /* ── TOAST ── */
         .toast {
-            position: fixed;
-            bottom: -80px;
-            right: 40px;
-            background-color: var(--color-bege-light);
-            color: var(--color-brown-dark);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            padding: 16px 28px;
-            z-index: 100;
-            transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            font-weight: 500;
-            font-size: 13px;
+            position: fixed; bottom: -80px; right: 24px;
+            background: var(--panel-solid); backdrop-filter: blur(10px);
+            border: 1px solid var(--line); border-radius: 12px;
+            color: var(--fg); padding: 14px 24px;
+            z-index: 100; transition: bottom 0.4s cubic-bezier(0.16,1,0.3,1);
+            font-weight: 500; font-size: 13px;
         }
-
-        .toast.show {
-            bottom: 40px;
-        }
+        .toast.show { bottom: 24px }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .admin-hero { padding: 32px 20px 44px; }
-            .metrics-strip { grid-template-columns: 1fr; padding: 0 20px; margin-top: -28px; }
-            .admin-content { padding: 36px 20px 60px; }
-            .insights-grid { grid-template-columns: 1fr; }
-            .admin-topbar { flex-direction: column; gap: 16px; align-items: flex-start; }
-            .table-section-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+        @media (max-width: 560px) {
+            .wrap { padding: 16px 14px 48px }
+            header { padding: 14px 16px }
+            .bar input.search { max-width: none }
+            .cards { grid-template-columns: 1fr 1fr }
         }
     </style>
 </head>
 <body>
 
-    <!-- Bloqueio por senha -->
-    <div id="passwordOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;">
-        <!-- Beige top half -->
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 50%; background-color: #F2C9A3;"></div>
-        <!-- Black bottom half -->
-        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background-color: #000000;"></div>
-        
-        <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 24px;">
-            <img src="logo-sailors.png" alt="Sailors Logo" style="height: 28px; width: auto; filter: brightness(0);">
-            <div style="background-color: #000000; border: 1px solid rgba(255,255,255,0.1); padding: 48px 40px; width: 360px; display: flex; flex-direction: column; gap: 20px; align-items: center;">
-                <h2 style="font-family: 'Awesome Serif', 'Instrument Serif', serif; font-style: italic; font-size: 1.8rem; color: #ffffff; font-weight: normal; text-align: center;">Painel de <span style='color: #FF611A;'>Controle</span></h2>
-                <p style="font-family: 'Roobert Light', 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4); text-align: center; font-weight: 300;">Acesso restrito à equipe Sailors</p>
-                <input type="password" id="adminPasswordInput" placeholder="Senha de Acesso" style="width: 100%; padding: 14px; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15); background-color: rgba(255, 255, 255, 0.04); color: #ffffff; outline: none; font-size: 13px; text-align: center; font-family: 'Roobert Light', 'Inter', sans-serif;">
-                <button onclick="checkAdminPassword()" style="width: 100%; padding: 14px; background-color: #FF611A; color: #ffffff; border: none; font-weight: bold; cursor: pointer; transition: background-color 0.2s; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; font-family: 'Roobert Light', 'Inter', sans-serif;">Entrar</button>
-                <span id="passwordError" style="color: #e74c3c; font-size: 12px; text-align: center; display: none;">Senha incorreta. Tente novamente!</span>
+<!-- Login -->
+<div id="login">
+    <img src="logo-sailors.png" alt="Sailors">
+    <h2>Painel de <span>Controle</span></h2>
+    <p>Acesso restrito à equipe Sailors</p>
+    <input id="adminPwd" type="password" placeholder="Senha de acesso" autocomplete="off">
+    <div class="row">
+        <button id="btnLogin" style="flex:1">Entrar</button>
+    </div>
+    <div id="loginErr"></div>
+</div>
+
+<!-- App -->
+<div id="app" style="display:none">
+    <header>
+        <h1>
+            <img src="logo-sailors.png" alt="Sailors">
+            <span style="color:var(--muted2)">·</span> Painel
+        </h1>
+        <div class="hactions">
+            <span id="liveDot" title="Atualização automática"></span>
+            <span id="liveTxt" class="muted" style="font-size:12px"></span>
+            <button class="ghost sm" id="btnRefresh">Atualizar</button>
+            <a href="index.html" class="ghost sm" style="display:inline-flex;align-items:center;padding:7px 14px;font-size:13px;border:1.5px solid rgba(255,255,255,0.1);border-radius:999px;color:#fff;text-decoration:none;font-weight:500">← LP</a>
+            <button class="ghost sm" id="btnLogout">Sair</button>
+        </div>
+    </header>
+
+    <div class="wrap">
+        <!-- Tabs -->
+        <div class="tabs" id="tabs">
+            <button class="tab on" data-tab="geral">Visão geral</button>
+            <button class="tab" data-tab="leads">Leads <span class="cnt" id="cntLeads">0</span></button>
+        </div>
+
+        <!-- Visão Geral -->
+        <div class="pane on" data-pane="geral">
+            <div class="cards" id="cards"></div>
+            <section>
+                <h3>Últimos leads</h3>
+                <div class="tblwrap"><table class="tbl" id="tblRecent"></table></div>
+            </section>
+            <section>
+                <h3>Distribuição por Cargo</h3>
+                <div class="tblwrap"><table class="tbl" id="tblCargo"></table></div>
+            </section>
+            <section>
+                <h3>Distribuição por Faturamento</h3>
+                <div class="tblwrap"><table class="tbl" id="tblFat"></table></div>
+            </section>
+        </div>
+
+        <!-- Leads -->
+        <div class="pane" data-pane="leads">
+            <div class="bar">
+                <input class="search" id="qLeads" placeholder="Buscar nome, empresa, cargo, faturamento…" autocomplete="off">
+                <div class="seg" id="perLeads">
+                    <button data-per="1">Hoje</button>
+                    <button data-per="7">7 dias</button>
+                    <button data-per="30">30 dias</button>
+                    <button data-per="0" class="on">Tudo</button>
+                </div>
+                <button class="ghost sm" id="btnCsv">⬇ CSV</button>
+                <button class="danger sm" id="btnClear">Limpar</button>
+                <span class="barnote" id="noteLeads"></span>
             </div>
+            <div class="tblwrap"><table class="tbl" id="tblLeads"></table></div>
         </div>
     </div>
+</div>
 
-    <!-- HERO HEADER -->
-    <div class="admin-hero">
-        <div class="admin-hero-inner">
-            <div class="admin-topbar">
-                <div class="admin-brand">
-                    <img src="logo-sailors.png" alt="Sailors Logo">
-                    <div class="admin-brand-divider"></div>
-                    <span class="admin-brand-label">Painel</span>
-                </div>
-                <div class="admin-topbar-actions">
-                    <a href="index.html" class="btn btn-outline-dark">← Ver LP</a>
-                    <button class="btn btn-dark" onclick="exportCSV()">Exportar CSV</button>
-                </div>
-            </div>
-            <h1 class="admin-hero-title">Painel de <em>Conversão</em></h1>
-            <p class="admin-hero-subtitle">Acompanhe os leads e métricas da sua landing page em tempo real.</p>
-        </div>
-    </div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-    <!-- METRICS -->
-    <div class="metrics-strip">
-        <div class="metric-card">
-            <span class="metric-label">Leads esta semana</span>
-            <span class="metric-value" id="valWeekLeads">0</span>
-            <span class="metric-sub">Últimos 7 dias</span>
-        </div>
-        <div class="metric-card highlight">
-            <span class="metric-label">Total de Leads</span>
-            <span class="metric-value" id="valLeads">0</span>
-            <span class="metric-sub">Formulários preenchidos</span>
-        </div>
-        <div class="metric-card">
-            <span class="metric-label">Último Lead</span>
-            <span class="metric-value" id="valLastLead" style="font-size: 1.6rem;">—</span>
-            <span class="metric-sub">Data do lead mais recente</span>
-        </div>
-    </div>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   SAILORS MARKETING — ADMIN PANEL (Supabase-powered)
+   ═══════════════════════════════════════════════════════════════════ */
 
-    <!-- MAIN CONTENT -->
-    <div class="admin-content">
-        <!-- Insights -->
-        <div>
-            <p class="section-label">Insights</p>
-            <h2 class="section-heading">Distribuição dos Leads</h2>
-        </div>
-        <div class="insights-grid">
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h4 class="chart-title">Cargos</h4>
-                    <span class="chart-count" id="cargoTotal"></span>
-                </div>
-                <div class="chart-list" id="cargoDistribution"></div>
-            </div>
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h4 class="chart-title">Faturamento</h4>
-                    <span class="chart-count" id="fatTotal"></span>
-                </div>
-                <div class="chart-list" id="faturamentoDistribution"></div>
-            </div>
-        </div>
+const SB_URL = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseUrl) || '';
+const SB_KEY = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseAnonKey) || '';
+const ADMIN_PWD = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.adminPassword) || 'sailors2026';
 
-        <!-- Leads Table -->
-        <div>
-            <div class="table-section-header">
-                <div>
-                    <p class="section-label">Registros</p>
-                    <h2 class="section-heading">Leads Cadastrados</h2>
-                </div>
-                <button class="btn btn-danger" onclick="clearLeads()">Limpar Histórico</button>
-            </div>
-            <div class="table-card">
-                <div class="table-wrapper">
-                    <table id="leadsTable">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Nome</th>
-                                <th>WhatsApp</th>
-                                <th>E-mail</th>
-                                <th>Empresa</th>
-                                <th>Instagram</th>
-                                <th>Cargo</th>
-                                <th>Faturamento</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leadsTableBody"></tbody>
-                    </table>
-                    <div class="empty-state" id="emptyState" style="display: none;">
-                        <div class="empty-state-icon">⚓</div>
-                        <p>Nenhum lead cadastrado no momento.<br>Faça um teste preenchendo o formulário de contato!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+let cachedLeads = [];
+let HOJE = new Date().toISOString().slice(0, 10);
 
-    <!-- Toast -->
-    <div class="toast" id="toast">Ação concluída com sucesso!</div>
+/* ── helpers ── */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => (s == null ? '' : String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-    <script>
-        let toastTimeout = null;
-        function showToast(msg) {
-            const toastEl = document.getElementById('toast');
-            toastEl.textContent = msg;
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastEl.classList.add('show');
-            toastTimeout = setTimeout(() => {
-                toastEl.classList.remove('show');
-            }, 3000);
-        }
+function haQuanto(dateStr) {
+    if (!dateStr) return '—';
+    // Try parsing various formats
+    let d;
+    if (dateStr.includes('T') || dateStr.includes('-')) {
+        d = new Date(dateStr);
+    } else {
+        // pt-BR format: DD/MM/YYYY HH:MM:SS
+        const parts = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}):(\d{2})/);
+        if (parts) d = new Date(parts[3], parts[2]-1, parts[1], parts[4], parts[5]);
+        else d = new Date(dateStr);
+    }
+    if (isNaN(d)) return dateStr;
+    const s = (Date.now() - d.getTime()) / 1000;
+    if (s < 60) return 'agora';
+    if (s < 3600) return 'há ' + Math.floor(s/60) + ' min';
+    if (s < 86400) return 'há ' + Math.floor(s/3600) + 'h';
+    if (s < 172800) return 'ontem';
+    if (s < 604800) return 'há ' + Math.floor(s/86400) + ' dias';
+    return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit', year:'2-digit'});
+}
 
-        let cachedLeads = [];
+function fmtDate(dateStr) {
+    if (!dateStr) return '—';
+    let d;
+    if (dateStr.includes('T') || dateStr.includes('-')) {
+        d = new Date(dateStr);
+    } else {
+        const parts = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}):(\d{2})/);
+        if (parts) d = new Date(parts[3], parts[2]-1, parts[1], parts[4], parts[5]);
+        else d = new Date(dateStr);
+    }
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit'});
+}
 
-        function loadDashboard() {
-            if (typeof SAILORS_CONFIG === 'undefined' || !SAILORS_CONFIG.supabaseUrl) {
-                cachedLeads = [];
-                renderDashboard([]);
-                showToast('Supabase não configurado. Configure em config.js.');
-                return;
-            }
+function parseDate(dateStr) {
+    if (!dateStr) return null;
+    let d;
+    if (dateStr.includes('T') || dateStr.includes('-')) {
+        d = new Date(dateStr);
+    } else {
+        const parts = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}):(\d{2})/);
+        if (parts) d = new Date(parts[3], parts[2]-1, parts[1], parts[4], parts[5]);
+        else d = new Date(dateStr);
+    }
+    return isNaN(d) ? null : d;
+}
 
-            document.getElementById('valLeads').textContent = '...';
+function idadeDias(dateStr) {
+    const d = parseDate(dateStr);
+    if (!d) return 1e9;
+    return Math.round((Date.now() - d.getTime()) / 86400000);
+}
 
-            fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads?select=*&order=created_at.asc', {
-                headers: {
-                    'apikey': SAILORS_CONFIG.supabaseAnonKey,
-                    'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
-                }
-            })
-            .then(r => {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
-            .then(leads => {
-                cachedLeads = leads;
-                renderDashboard(leads);
-            })
-            .catch(err => {
-                console.error('Erro ao carregar leads do Supabase:', err);
-                cachedLeads = [];
-                renderDashboard([]);
-                showToast('Erro ao carregar leads. Verifique sua conexão.');
-            });
-        }
+const noPeriodo = (dateStr, per) => per === 0 ? true : idadeDias(dateStr) < per;
 
-        function renderDashboard(leads) {
-            document.getElementById('valLeads').textContent = leads.length;
+function casaBusca(obj, q) {
+    const t = (q || '').trim().toLowerCase();
+    if (!t) return true;
+    const hay = Object.values(obj).map(v => String(v == null ? '' : v)).join(' ').toLowerCase();
+    return t.split(/\s+/).every(w => hay.includes(w));
+}
 
-            // Calculate leads this week
-            const now = new Date();
-            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            let weekCount = 0;
-            let lastLeadDate = '—';
-            leads.forEach(lead => {
-                try {
-                    const d = new Date(lead.data);
-                    if (!isNaN(d) && d >= weekAgo) weekCount++;
-                } catch(e) {}
-            });
-            if (leads.length > 0) {
-                const last = leads[leads.length - 1];
-                if (last.data) {
-                    try {
-                        const d = new Date(last.data);
-                        if (!isNaN(d)) {
-                            lastLeadDate = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-                        } else {
-                            lastLeadDate = last.data.toString().substring(0, 10);
-                        }
-                    } catch(e) { lastLeadDate = last.data.toString().substring(0, 10); }
-                }
-            }
-            document.getElementById('valWeekLeads').textContent = weekCount;
-            document.getElementById('valLastLead').textContent = lastLeadDate;
+function waLink(tel) {
+    const d = (tel || '').toString().replace(/\D/g, '');
+    if (d.length < 10) return '';
+    return 'https://wa.me/' + (d.length <= 11 ? '55' + d : d);
+}
 
-            const tbody = document.getElementById('leadsTableBody');
-            const emptyState = document.getElementById('emptyState');
-            tbody.innerHTML = '';
+/* ── toast ── */
+let toastTimeout = null;
+function showToast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    if (toastTimeout) clearTimeout(toastTimeout);
+    t.classList.add('show');
+    toastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+}
 
-            if (leads.length === 0) {
-                emptyState.style.display = 'block';
-                document.getElementById('leadsTable').style.display = 'none';
-            } else {
-                emptyState.style.display = 'none';
-                document.getElementById('leadsTable').style.display = 'table';
-                
-                leads.slice().reverse().forEach(lead => {
-                    const tr = document.createElement('tr');
-                    
-                    const whatsappStr = (lead.whatsapp || '').toString();
-                    const cleanPhone = whatsappStr.replace(/\D/g, '');
-                    const waLink = cleanPhone ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
-                    
-                    const instaStr = (lead.instagram || '').toString();
-                    const cleanInsta = instaStr.startsWith('@') ? instaStr.substring(1) : instaStr;
+/* ── auth ── */
+function showLogin(msg) {
+    $('#app').style.display = 'none';
+    $('#login').style.display = 'block';
+    $('#loginErr').textContent = msg || '';
+    $('#adminPwd').focus();
+}
+function showApp() {
+    $('#login').style.display = 'none';
+    $('#app').style.display = 'block';
+}
 
-                    tr.innerHTML = `
-                        <td>${lead.data || 'N/A'}</td>
-                        <td><strong>${lead.nome || 'N/A'}</strong></td>
-                        <td>${whatsappStr ? `<a href="https://wa.me/${waLink}" target="_blank" class="link-icon">🟢 ${whatsappStr}</a>` : 'Não informado'}</td>
-                        <td>${lead.email ? `<a href="mailto:${lead.email}" class="link-icon">${lead.email}</a>` : 'Não informado'}</td>
-                        <td>${lead.empresa || 'N/A'}</td>
-                        <td>${instaStr ? `<a href="https://instagram.com/${cleanInsta}" target="_blank" class="link-icon">@${cleanInsta}</a>` : 'Não informado'}</td>
-                        <td>${lead.cargo || 'N/A'}</td>
-                        <td>${lead.faturamento || 'N/A'}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
+/* ── state ── */
+const UI = {
+    tab: 'geral',
+    leads: { q: '', per: 0 }
+};
 
-            calculateDistributions(leads);
-        }
+function setTab(t) {
+    UI.tab = t;
+    $$('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+    $$('.pane').forEach(p => p.classList.toggle('on', p.dataset.pane === t));
+}
 
-        function calculateDistributions(leads) {
-            const total = leads.length;
+/* ── data loading ── */
+async function loadLeads(silent) {
+    if (!SB_URL || !SB_KEY) {
+        showToast('Supabase não configurado.');
+        return;
+    }
+    if (!silent) $('#btnRefresh').disabled = true;
 
-            const cargoCounts = {
-                'Diretor / C-Level': 0,
-                'Gerente / Coordenador': 0,
-                'Especialista / Analista': 0,
-                'Sócio / Fundador': 0,
-                'Outro': 0
-            };
-            const fatCounts = {
-                'Até R$ 50 mil': 0,
-                'R$ 50 mil a R$ 100 mil': 0,
-                'R$ 100 mil a R$ 500 mil': 0,
-                'Mais de R$ 500 mil': 0
-            };
-
-            leads.forEach(lead => {
-                let cargo = lead.cargo;
-                if (cargo) {
-                    if (cargo === 'Dono' || cargo === 'Sócio / Fundador') {
-                        cargo = 'Sócio / Fundador';
-                    } else if (cargo === 'Diretor' || cargo === 'Diretor / C-Level') {
-                        cargo = 'Diretor / C-Level';
-                    } else if (cargo === 'Gerente' || cargo === 'Supervisor' || cargo === 'Gerente / Coordenador') {
-                        cargo = 'Gerente / Coordenador';
-                    } else if (cargo === 'Colaborador' || cargo === 'Especialista / Analista') {
-                        cargo = 'Especialista / Analista';
-                    } else {
-                        cargo = 'Outro';
-                    }
-                    if (cargoCounts[cargo] !== undefined) {
-                        cargoCounts[cargo]++;
-                    }
-                }
-
-                let fat = lead.faturamento;
-                if (fat) {
-                    if (fat === 'Até 50 mil' || fat === 'Até R$ 50 mil') {
-                        fat = 'Até R$ 50 mil';
-                    } else if (fat === 'de 51 à 100 mil' || fat === 'R$ 50 mil a R$ 100 mil') {
-                        fat = 'R$ 50 mil a R$ 100 mil';
-                    } else if (fat === 'de 101 à 400 mil' || fat === 'R$ 100 mil a R$ 500 mil') {
-                        fat = 'R$ 100 mil a R$ 500 mil';
-                    } else if (fat === 'de 400 mil à 1 milhão' || fat === 'mais de 1 milhão' || fat === 'Mais de R$ 500 mil') {
-                        fat = 'Mais de R$ 500 mil';
-                    }
-                    if (fatCounts[fat] !== undefined) {
-                        fatCounts[fat]++;
-                    }
-                }
-            });
-
-            // Cargo UI
-            const cargoContainer = document.getElementById('cargoDistribution');
-            cargoContainer.innerHTML = '';
-            document.getElementById('cargoTotal').textContent = total + ' leads';
-            Object.keys(cargoCounts).forEach(key => {
-                const count = cargoCounts[key];
-                const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-                cargoContainer.innerHTML += `
-                    <div class="insight-bar-wrapper">
-                        <div class="insight-bar-label">
-                            <span>${key}</span>
-                            <span>${pct}% (${count})</span>
-                        </div>
-                        <div class="insight-bar-track">
-                            <div class="insight-bar-fill" style="width: ${pct}%;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Faturamento UI
-            const fatContainer = document.getElementById('faturamentoDistribution');
-            fatContainer.innerHTML = '';
-            document.getElementById('fatTotal').textContent = total + ' leads';
-            Object.keys(fatCounts).forEach(key => {
-                const count = fatCounts[key];
-                const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-                fatContainer.innerHTML += `
-                    <div class="insight-bar-wrapper">
-                        <div class="insight-bar-label">
-                            <span>${key}</span>
-                            <span>${pct}% (${count})</span>
-                        </div>
-                        <div class="insight-bar-track">
-                            <div class="insight-bar-fill" style="width: ${pct}%;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            setTimeout(() => {
-                document.querySelectorAll('.insight-bar-fill').forEach(bar => {
-                    bar.offsetHeight;
-                });
-            }, 100);
-        }
-
-        function exportCSV() {
-            if (cachedLeads.length === 0) {
-                showToast('Nenhum lead para exportar!');
-                return;
-            }
-
-            let csvContent = "\uFEFFData;Nome;WhatsApp;Email;Empresa;Instagram;Cargo;Faturamento\n";
-
-            cachedLeads.forEach(lead => {
-                const row = [
-                    (lead.data || '').toString(),
-                    (lead.nome || '').toString(),
-                    (lead.whatsapp || '').toString(),
-                    (lead.email || '').toString(),
-                    (lead.empresa || '').toString(),
-                    (lead.instagram || '').toString(),
-                    (lead.cargo || '').toString(),
-                    (lead.faturamento || '').toString()
-                ].map(text => `"${text.replace(/"/g, '""')}"`).join(';');
-                csvContent += row + "\n";
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", `leads_sailors_${Date.now()}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast('CSV exportado com sucesso!');
-        }
-
-        function clearLeads() {
-            if (confirm('Deseja realmente apagar TODOS os leads? Esta ação não pode ser desfeita.')) {
-                fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads?id=gt.0', {
-                    method: 'DELETE',
-                    headers: {
-                        'apikey': SAILORS_CONFIG.supabaseAnonKey,
-                        'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
-                    }
-                })
-                .then(r => {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    loadDashboard();
-                    showToast('Histórico limpo com sucesso!');
-                })
-                .catch(err => {
-                    console.error('Erro ao limpar leads:', err);
-                    showToast('Erro ao limpar. Verifique as permissões no Supabase.');
-                });
-            }
-        }
-
-        function checkAdminPassword() {
-            const input = document.getElementById('adminPasswordInput').value;
-            const validPassword = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.adminPassword) || 'sailors2026';
-            if (input === validPassword) {
-                sessionStorage.setItem('sailors_admin_auth', 'true');
-                document.getElementById('passwordOverlay').style.display = 'none';
-                loadDashboard();
-            } else {
-                const errorEl = document.getElementById('passwordError');
-                errorEl.style.display = 'block';
-                document.getElementById('adminPasswordInput').value = '';
-            }
-        }
-
-        function initDashboard() {
-            if (sessionStorage.getItem('sailors_admin_auth') === 'true') {
-                document.getElementById('passwordOverlay').style.display = 'none';
-                loadDashboard();
-            } else {
-                document.getElementById('passwordOverlay').style.display = 'flex';
-                document.getElementById('adminPasswordInput').focus();
-            }
-        }
-
-        document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAdminPassword();
+    try {
+        const r = await fetch(SB_URL + '/rest/v1/leads?select=*&order=created_at.desc', {
+            headers: {
+                'apikey': SB_KEY,
+                'Authorization': 'Bearer ' + SB_KEY
             }
         });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        cachedLeads = await r.json();
+        render();
+        marcarVivo(true);
+        startAuto();
+    } catch (err) {
+        console.error('Erro ao carregar leads:', err);
+        if (silent) marcarVivo(false);
+        else showToast('Erro ao carregar. Verifique a conexão.');
+    } finally {
+        if (!silent) $('#btnRefresh').disabled = false;
+    }
+}
 
-        window.onload = initDashboard;
-    </script>
+/* ── render ── */
+function render() {
+    const leads = cachedLeads;
+    $('#cntLeads').textContent = leads.length;
+
+    renderCards(leads);
+    renderRecent(leads);
+    renderCargo(leads);
+    renderFat(leads);
+    renderLeadsTable();
+}
+
+function renderCards(leads) {
+    const now = new Date();
+    const todayStr = now.toISOString().slice(0, 10);
+    const weekAgo = new Date(now.getTime() - 7 * 86400000);
+
+    let leadsHoje = 0, leadsSemana = 0;
+    let lastDate = '—';
+
+    leads.forEach(l => {
+        const d = parseDate(l.created_at || l.data);
+        if (d) {
+            if (d.toISOString().slice(0,10) === todayStr) leadsHoje++;
+            if (d >= weekAgo) leadsSemana++;
+        }
+    });
+
+    if (leads.length > 0) {
+        const first = leads[0]; // already sorted desc
+        lastDate = haQuanto(first.created_at || first.data);
+    }
+
+    $('#cards').innerHTML = [
+        ['Leads hoje', leadsHoje, 'novos leads hoje', false],
+        ['Esta semana', leadsSemana, 'últimos 7 dias', false],
+        ['Total de Leads', leads.length, 'formulários preenchidos', true],
+        ['Último lead', lastDate, 'lead mais recente', false],
+    ].map(([k, v, sub, hl]) =>
+        `<div class="card${hl ? ' highlight' : ''}">
+            <div class="k">${esc(k)}</div>
+            <div class="v">${esc(String(v))}</div>
+            <div class="sub">${esc(sub)}</div>
+        </div>`
+    ).join('');
+}
+
+function renderRecent(leads) {
+    const top = leads.slice(0, 6);
+    $('#tblRecent').innerHTML = top.length ? (
+        '<tr><th>Quando</th><th>Nome</th><th>Contato</th><th>Cargo</th><th>Empresa</th></tr>' +
+        top.map(l => {
+            const wa = waLink(l.whatsapp);
+            const waStr = (l.whatsapp || '').toString();
+            return `<tr>
+                <td class="nowrap">${esc(haQuanto(l.created_at || l.data))}</td>
+                <td><strong>${esc(l.nome) || '<span class="muted">—</span>'}</strong></td>
+                <td>${wa ? `<a href="${esc(wa)}" target="_blank">🟢 ${esc(waStr)}</a>` : (l.email ? `<a href="mailto:${esc(l.email)}">${esc(l.email)}</a>` : '<span class="muted">—</span>')}</td>
+                <td><span class="pill lead">${esc(l.cargo) || '—'}</span></td>
+                <td class="dim">${esc(l.empresa) || '—'}</td>
+            </tr>`;
+        }).join('')
+    ) : '<tr><td class="empty" colspan="5">Nenhum lead captado ainda.<br><span class="muted">Faça um teste preenchendo o formulário de contato!</span></td></tr>';
+}
+
+function renderCargo(leads) {
+    const counts = {};
+    leads.forEach(l => { if (l.cargo) counts[l.cargo] = (counts[l.cargo] || 0) + 1; });
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    $('#tblCargo').innerHTML = sorted.length ? (
+        '<tr><th>Cargo</th><th class="right">Leads</th><th class="right">%</th></tr>' +
+        sorted.map(([cargo, count]) => {
+            const pct = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0;
+            return `<tr><td>${esc(cargo)}</td><td class="right">${count}</td><td class="right">${pct}%</td></tr>`;
+        }).join('')
+    ) : '<tr><td class="empty">Sem dados</td></tr>';
+}
+
+function renderFat(leads) {
+    const counts = {};
+    leads.forEach(l => { if (l.faturamento) counts[l.faturamento] = (counts[l.faturamento] || 0) + 1; });
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    $('#tblFat').innerHTML = sorted.length ? (
+        '<tr><th>Faturamento</th><th class="right">Leads</th><th class="right">%</th></tr>' +
+        sorted.map(([fat, count]) => {
+            const pct = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0;
+            return `<tr><td>${esc(fat)}</td><td class="right">${count}</td><td class="right">${pct}%</td></tr>`;
+        }).join('')
+    ) : '<tr><td class="empty">Sem dados</td></tr>';
+}
+
+function renderLeadsTable() {
+    const all = cachedLeads;
+    const dateField = l => l.created_at || l.data;
+    const f = all.filter(l => noPeriodo(dateField(l), UI.leads.per) && casaBusca(l, UI.leads.q));
+
+    $('#noteLeads').textContent = f.length + ' de ' + all.length;
+
+    $('#tblLeads').innerHTML = f.length ? (
+        '<tr><th>Quando</th><th>Nome</th><th>WhatsApp</th><th>E-mail</th><th>Empresa</th><th>Instagram</th><th>Cargo</th><th>Faturamento</th></tr>' +
+        f.map(l => {
+            const wa = waLink(l.whatsapp);
+            const waStr = (l.whatsapp || '').toString();
+            const insta = (l.instagram || '').toString();
+            const cleanInsta = insta.startsWith('@') ? insta.substring(1) : insta;
+            return `<tr>
+                <td class="nowrap" title="${esc(fmtDate(dateField(l)))}">${esc(haQuanto(dateField(l)))}</td>
+                <td><strong>${esc(l.nome) || '—'}</strong></td>
+                <td>${wa ? `<a href="${esc(wa)}" target="_blank">🟢 ${esc(waStr)}</a>` : (waStr || '<span class="muted">—</span>')}</td>
+                <td>${l.email ? `<a href="mailto:${esc(l.email)}">${esc(l.email)}</a>` : '<span class="muted">—</span>'}</td>
+                <td class="dim">${esc(l.empresa) || '—'}</td>
+                <td>${insta ? `<a href="https://instagram.com/${esc(cleanInsta)}" target="_blank">@${esc(cleanInsta)}</a>` : '<span class="muted">—</span>'}</td>
+                <td><span class="pill lead">${esc(l.cargo) || '—'}</span></td>
+                <td class="dim">${esc(l.faturamento) || '—'}</td>
+            </tr>`;
+        }).join('')
+    ) : '<tr><td class="empty" colspan="8">' +
+        (all.length ? 'Nenhum lead neste período ou busca.' : 'Nenhum lead captado ainda.') +
+        '</td></tr>';
+}
+
+/* ── auto refresh ── */
+const AUTO_MS = 20000;
+let _autoTimer = null;
+
+function startAuto() {
+    if (_autoTimer) return;
+    _autoTimer = setInterval(() => {
+        if (sessionStorage.getItem('sailors_admin_auth') === 'true' && !document.hidden) loadLeads(true);
+    }, AUTO_MS);
+}
+function stopAuto() {
+    if (_autoTimer) { clearInterval(_autoTimer); _autoTimer = null; }
+}
+
+function marcarVivo(ok) {
+    $('#liveDot').classList.toggle('off', !ok);
+    $('#liveTxt').textContent = ok
+        ? new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})
+        : 'sem conexão';
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && sessionStorage.getItem('sailors_admin_auth') === 'true') loadLeads(true);
+});
+
+/* ── CSV export ── */
+function exportCSV() {
+    const leads = cachedLeads;
+    if (leads.length === 0) { showToast('Nenhum lead para exportar!'); return; }
+
+    let csv = "\uFEFFData;Nome;WhatsApp;Email;Empresa;Instagram;Cargo;Faturamento\n";
+    leads.forEach(l => {
+        const row = [
+            fmtDate(l.created_at || l.data), l.nome, l.whatsapp, l.email,
+            l.empresa, l.instagram, l.cargo, l.faturamento
+        ].map(v => `"${(v||'').toString().replace(/"/g, '""')}"`).join(';');
+        csv += row + "\n";
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `leads_sailors_${Date.now()}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    showToast('CSV exportado!');
+}
+
+/* ── clear leads ── */
+function clearLeads() {
+    if (!confirm('Deseja realmente apagar TODOS os leads? Esta ação não pode ser desfeita.')) return;
+    fetch(SB_URL + '/rest/v1/leads?id=gt.0', {
+        method: 'DELETE',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); loadLeads(); showToast('Histórico limpo!'); })
+    .catch(err => { console.error(err); showToast('Erro ao limpar. Verifique permissões.'); });
+}
+
+/* ── events ── */
+$('#tabs').addEventListener('click', e => {
+    const b = e.target.closest('.tab');
+    if (b) setTab(b.dataset.tab);
+});
+
+// Search with debounce
+let searchTimeout;
+$('#qLeads').addEventListener('input', e => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => { UI.leads.q = e.target.value; renderLeadsTable(); }, 120);
+});
+
+// Period filter
+$('#perLeads').addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    $('#perLeads').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    UI.leads.per = +b.dataset.per;
+    renderLeadsTable();
+});
+
+// Login
+$('#btnLogin').onclick = () => {
+    const pwd = $('#adminPwd').value.trim();
+    if (!pwd) { $('#loginErr').textContent = 'Digite a senha.'; return; }
+    if (pwd === ADMIN_PWD) {
+        sessionStorage.setItem('sailors_admin_auth', 'true');
+        showApp();
+        loadLeads();
+    } else {
+        $('#loginErr').textContent = 'Senha incorreta. Tente novamente.';
+        $('#adminPwd').value = '';
+    }
+};
+$('#adminPwd').addEventListener('keydown', e => { if (e.key === 'Enter') $('#btnLogin').click(); });
+
+$('#btnRefresh').onclick = () => loadLeads();
+$('#btnCsv').onclick = exportCSV;
+$('#btnClear').onclick = clearLeads;
+$('#btnLogout').onclick = () => { stopAuto(); sessionStorage.removeItem('sailors_admin_auth'); showLogin(''); };
+
+// Init
+if (sessionStorage.getItem('sailors_admin_auth') === 'true') {
+    showApp();
+    loadLeads();
+} else {
+    showLogin('');
+}
+</script>
 </body>
 </html>
