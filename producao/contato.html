@@ -689,13 +689,53 @@
                 });
             }
 
-            // General Webhook dispatch (Make / Zapier / Google Sheets)
+            // Google Sheets Webhook (via hidden iframe form — bypasses CORS, works on mobile)
             if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
-                fetch(SAILORS_CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                }).catch(err => console.error('Erro ao disparar webhook geral:', err));
+                try {
+                    // Create hidden iframe target
+                    let iframe = document.getElementById('_sailors_hidden_iframe');
+                    if (!iframe) {
+                        iframe = document.createElement('iframe');
+                        iframe.id = '_sailors_hidden_iframe';
+                        iframe.name = '_sailors_hidden_iframe';
+                        iframe.style.display = 'none';
+                        document.body.appendChild(iframe);
+                    }
+
+                    // Create and submit a real HTML form (immune to CORS)
+                    const hiddenForm = document.createElement('form');
+                    hiddenForm.method = 'POST';
+                    hiddenForm.action = SAILORS_CONFIG.webhookUrl;
+                    hiddenForm.target = '_sailors_hidden_iframe';
+                    hiddenForm.style.display = 'none';
+
+                    Object.keys(formData).forEach(key => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = formData[key] || '';
+                        hiddenForm.appendChild(input);
+                    });
+
+                    document.body.appendChild(hiddenForm);
+                    hiddenForm.submit();
+
+                    // Cleanup after submission
+                    setTimeout(() => {
+                        if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
+                    }, 2000);
+
+                    console.log('Lead enviado via form submission para Google Sheets.');
+                } catch (err) {
+                    console.error('Erro ao enviar lead via form:', err);
+                    // Fallback: try fetch with no-cors
+                    fetch(SAILORS_CONFIG.webhookUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify(formData)
+                    }).catch(err2 => console.error('Fallback fetch também falhou:', err2));
+                }
             }
 
             // Discord Webhook dispatch (Rich embed notification)

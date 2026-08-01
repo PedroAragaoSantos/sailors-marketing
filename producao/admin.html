@@ -585,35 +585,8 @@
 
         let cachedLeads = [];
 
-        function mergeLeads(sheetLeads, localLeads) {
-            // Merge sheet leads with local leads, deduplicating by nome+whatsapp
-            const seen = new Set();
-            const merged = [];
-
-            // Sheet leads take priority
-            sheetLeads.forEach(lead => {
-                const key = (lead.nome || '').toLowerCase().trim() + '|' + (lead.whatsapp || '').toString().replace(/\D/g, '');
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    merged.push(lead);
-                }
-            });
-
-            // Add local leads that aren't already in sheet
-            localLeads.forEach(lead => {
-                const key = (lead.nome || '').toLowerCase().trim() + '|' + (lead.whatsapp || '').toString().replace(/\D/g, '');
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    merged.push(lead);
-                }
-            });
-
-            return merged;
-        }
-
         function loadDashboard() {
             const webhookUrl = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) || '';
-            const localLeads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
             
             if (webhookUrl) {
                 document.getElementById('valLeads').textContent = '...';
@@ -625,9 +598,8 @@
                         return r.json();
                     })
                     .then(sheetLeads => {
-                        const merged = mergeLeads(sheetLeads, localLeads);
-                        cachedLeads = merged;
-                        renderDashboard(merged);
+                        cachedLeads = sheetLeads;
+                        renderDashboard(sheetLeads);
                     })
                     .catch(err => {
                         console.warn('Fetch direto falhou, tentando via proxy...', err);
@@ -636,20 +608,20 @@
                             .then(r => r.json())
                             .then(data => {
                                 const sheetLeads = JSON.parse(data.contents);
-                                const merged = mergeLeads(sheetLeads, localLeads);
-                                cachedLeads = merged;
-                                renderDashboard(merged);
+                                cachedLeads = sheetLeads;
+                                renderDashboard(sheetLeads);
                             })
                             .catch(err2 => {
-                                console.error('Proxy também falhou, usando localStorage:', err2);
-                                // Final fallback: just use localStorage leads
-                                cachedLeads = localLeads;
-                                renderDashboard(localLeads);
+                                console.error('Não foi possível carregar leads do Google Sheets:', err2);
+                                cachedLeads = [];
+                                renderDashboard([]);
+                                showToast('Erro ao carregar leads. Verifique sua conexão.');
                             });
                     });
             } else {
-                cachedLeads = localLeads;
-                renderDashboard(localLeads);
+                cachedLeads = [];
+                renderDashboard([]);
+                showToast('Webhook não configurado. Configure em config.js.');
             }
         }
 
@@ -856,11 +828,8 @@
         }
 
         function clearLeads() {
-            if (confirm('Deseja realmente apagar todo o histórico de contatos e visualizações? Esta ação não pode ser desfeita.')) {
-                localStorage.removeItem('sailors_leads');
-                localStorage.removeItem('sailors_page_views');
-                loadDashboard();
-                showToast('Histórico limpo com sucesso!');
+            if (confirm('Os leads são gerenciados diretamente no Google Sheets.\n\nPara limpar o histórico, exclua as linhas na planilha e recarregue esta página.\n\nDeseja abrir a planilha agora?')) {
+                window.open(SAILORS_CONFIG.webhookUrl.replace('/exec', '').replace('macros/s/', 'spreadsheets/d/'), '_blank');
             }
         }
 
