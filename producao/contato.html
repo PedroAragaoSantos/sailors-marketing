@@ -676,10 +676,20 @@
             
             console.log('Final Form Data Payload:', formData);
 
-            // Save lead to localStorage for admin panel
-            const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
-            leads.push(formData);
-            localStorage.setItem('sailors_leads', JSON.stringify(leads));
+            // Salvar lead no Supabase
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseUrl) {
+                fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads', {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                        'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); console.log('Lead salvo no Supabase.'); })
+                .catch(err => console.error('Erro ao salvar lead no Supabase:', err));
+            }
 
             // Meta Pixel Lead event trigger
             if (typeof fbq === 'function') {
@@ -687,18 +697,6 @@
                     content_name: formData.cargo,
                     content_category: formData.faturamento
                 });
-            }
-
-            // Google Sheets Webhook (fetch no-cors with JSON body — works on mobile)
-            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
-                fetch(SAILORS_CONFIG.webhookUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify(formData)
-                })
-                .then(() => console.log('Lead enviado para Google Sheets.'))
-                .catch(err => console.error('Erro ao enviar lead:', err));
             }
 
             // Discord Webhook dispatch (Rich embed notification)

@@ -434,13 +434,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 desafio: ''
             };
 
-            // 1. Save lead to localStorage for admin panel
-            try {
-                const leads = JSON.parse(localStorage.getItem('sailors_leads') || '[]');
-                leads.push(formData);
-                localStorage.setItem('sailors_leads', JSON.stringify(leads));
-            } catch (err) {
-                console.error('Error saving lead to localStorage:', err);
+            // 1. Salvar lead no Supabase
+            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseUrl) {
+                fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads', {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                        'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); console.log('Lead salvo no Supabase.'); })
+                .catch(err => console.error('Erro ao salvar lead no Supabase:', err));
             }
 
             // 2. Meta Pixel Lead event
@@ -449,18 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     content_name: formData.cargo,
                     content_category: formData.faturamento
                 });
-            }
-
-            // 3. Google Sheets Webhook (fetch no-cors with JSON body — works on mobile)
-            if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) {
-                fetch(SAILORS_CONFIG.webhookUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify(formData)
-                })
-                .then(() => console.log('Lead enviado para Google Sheets.'))
-                .catch(err => console.error('Erro ao enviar lead:', err));
             }
 
             // 4. Discord Webhook

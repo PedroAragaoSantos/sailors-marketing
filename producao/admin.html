@@ -586,43 +586,35 @@
         let cachedLeads = [];
 
         function loadDashboard() {
-            const webhookUrl = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.webhookUrl) || '';
-            
-            if (webhookUrl) {
-                document.getElementById('valLeads').textContent = '...';
-                
-                // Try fetch first, fallback to proxy
-                fetch(webhookUrl, { redirect: 'follow' })
-                    .then(r => {
-                        if (!r.ok) throw new Error('HTTP ' + r.status);
-                        return r.json();
-                    })
-                    .then(sheetLeads => {
-                        cachedLeads = sheetLeads;
-                        renderDashboard(sheetLeads);
-                    })
-                    .catch(err => {
-                        console.warn('Fetch direto falhou, tentando via proxy...', err);
-                        // Fallback: use allorigins proxy to bypass CORS
-                        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(webhookUrl))
-                            .then(r => r.json())
-                            .then(data => {
-                                const sheetLeads = JSON.parse(data.contents);
-                                cachedLeads = sheetLeads;
-                                renderDashboard(sheetLeads);
-                            })
-                            .catch(err2 => {
-                                console.error('Não foi possível carregar leads do Google Sheets:', err2);
-                                cachedLeads = [];
-                                renderDashboard([]);
-                                showToast('Erro ao carregar leads. Verifique sua conexão.');
-                            });
-                    });
-            } else {
+            if (typeof SAILORS_CONFIG === 'undefined' || !SAILORS_CONFIG.supabaseUrl) {
                 cachedLeads = [];
                 renderDashboard([]);
-                showToast('Webhook não configurado. Configure em config.js.');
+                showToast('Supabase não configurado. Configure em config.js.');
+                return;
             }
+
+            document.getElementById('valLeads').textContent = '...';
+
+            fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads?select=*&order=created_at.asc', {
+                headers: {
+                    'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                    'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
+                }
+            })
+            .then(r => {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(leads => {
+                cachedLeads = leads;
+                renderDashboard(leads);
+            })
+            .catch(err => {
+                console.error('Erro ao carregar leads do Supabase:', err);
+                cachedLeads = [];
+                renderDashboard([]);
+                showToast('Erro ao carregar leads. Verifique sua conexão.');
+            });
         }
 
         function renderDashboard(leads) {
@@ -828,8 +820,23 @@
         }
 
         function clearLeads() {
-            if (confirm('Os leads são gerenciados diretamente no Google Sheets.\n\nPara limpar o histórico, exclua as linhas na planilha e recarregue esta página.\n\nDeseja abrir a planilha agora?')) {
-                window.open(SAILORS_CONFIG.webhookUrl.replace('/exec', '').replace('macros/s/', 'spreadsheets/d/'), '_blank');
+            if (confirm('Deseja realmente apagar TODOS os leads? Esta ação não pode ser desfeita.')) {
+                fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads?id=gt.0', {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                        'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
+                    }
+                })
+                .then(r => {
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    loadDashboard();
+                    showToast('Histórico limpo com sucesso!');
+                })
+                .catch(err => {
+                    console.error('Erro ao limpar leads:', err);
+                    showToast('Erro ao limpar. Verifique as permissões no Supabase.');
+                });
             }
         }
 
