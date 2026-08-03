@@ -1196,13 +1196,13 @@ img {
     margin-left: 242px;
 }
 
-/* Row 3: left card (366px from left), right card 145px gap after it */
+/* Row 3: two cards centered with 145px gap aligned to screen center */
 .depoimento-row3-left {
     grid-column: 1 / -1;
     grid-row: 3;
     width: 583px;
     height: 387px;
-    margin-left: 366px;
+    margin-left: calc(50% - 655.5px); /* center the pair: (583+145+583)/2 = 655.5 */
 }
 
 .depoimento-row3-right {
@@ -1210,7 +1210,7 @@ img {
     grid-row: 3;
     width: 583px;
     height: 387px;
-    margin-left: 1094px; /* 366 + 583 + 145 = 1094 */
+    margin-left: calc(50% + 72.5px); /* 655.5 - 583 = 72.5 from center */
 }
 
 /* Card base styles */
