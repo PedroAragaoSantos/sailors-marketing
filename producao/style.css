@@ -1883,6 +1883,8 @@ img {
         grid-template-rows: none;
         row-gap: 0;
         z-index: 5;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .depoimento-card {
@@ -1901,6 +1903,7 @@ img {
         margin: 0 !important;
         grid-column: auto !important;
         grid-row: auto !important;
+        justify-self: auto !important;
         padding: 24px;
     }
 
