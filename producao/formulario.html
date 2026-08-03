@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Iniciar Projeto — Sailors Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20260803_02">
+    <script src="config.js?v=20260801_sb"></script>
+    <style>
+        /* Force the step form to be visible immediately (no overlay toggle needed) */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        .stepform-overlay {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+        /* Hide the close button on standalone page */
+        .stepform-close {
+            display: none !important;
+        }
+        /* Add a "Voltar ao site" link instead */
+        .stepform-back {
+            position: fixed;
+            top: 28px;
+            left: 36px;
+            z-index: 1001;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            font-family: 'Roobert','Inter','Helvetica Neue',Arial,sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .stepform-back:hover {
+            color: #FF611A;
+            text-decoration: none;
+        }
+        .stepform-back svg {
+            width: 14px;
+            height: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="stepform-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Voltar ao site
+</a>
+
+<!-- FULLSCREEN STEP FORM -->
+<div class="stepform-overlay active" id="stepFormOverlay">
+    <!-- Logo -->
+    <div class="stepform-logo">
+        <img src="logo-sailors.png" alt="Sailors Logo">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="stepform-progress">
+        <div class="stepform-progress-bar" id="stepProgressBar"></div>
+    </div>
+
+    <!-- Form Container -->
+    <form class="stepform-container" id="stepForm">
+        <!-- Step 1: Nome -->
+        <div class="stepform-step" data-step="1">
+            <div class="stepform-question">
+                <span class="stepform-number">1.</span> Qual o seu nome e sobrenome?
+            </div>
+            <input type="text" class="stepform-input" id="formNome" name="nome" placeholder="digite aqui" required autocomplete="name">
+            <button type="button" class="stepform-ok-btn" data-next="2">
+                <span>Ok</span>
+                <span class="arrow">&rarr;</span>
+            </button>
+            <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
+        </div>
+
+        <!-- Step 2: Empresa -->
+        <div class="stepform-step" data-step="2">
+            <div class="stepform-question">
+                <span class="stepform-number">2.</span> Qual o nome da sua empresa?
+            </div>
+            <input type="text" class="stepform-input" id="formEmpresa" name="empresa" placeholder="digite aqui" required autocomplete="organization">
+            <button type="button" class="stepform-ok-btn" data-next="3">
+                <span>Ok</span>
+                <span class="arrow">&rarr;</span>
+            </button>
+            <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
+        </div>
+
+        <!-- Step 3: Cargo -->
+        <div class="stepform-step" data-step="3">
+            <div class="stepform-question">
+                <span class="stepform-number">3.</span> Qual o seu cargo?
+            </div>
+            <div class="stepform-options" id="cargoOptions">
+                <button type="button" class="stepform-option-btn" data-value="Diretor / C-Level">
+                    <span class="stepform-option-key">A</span> Diretor / C-Level
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="Gerente / Coordenador">
+                    <span class="stepform-option-key">B</span> Gerente / Coordenador
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="Especialista / Analista">
+                    <span class="stepform-option-key">C</span> Especialista / Analista
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="Sócio / Fundador">
+                    <span class="stepform-option-key">D</span> Sócio / Fundador
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="Outro">
+                    <span class="stepform-option-key">E</span> Outro
+                </button>
+            </div>
+            <input type="hidden" id="formCargo" name="cargo" required>
+        </div>
+
+        <!-- Step 4: Telefone -->
+        <div class="stepform-step" data-step="4">
+            <div class="stepform-question">
+                <span class="stepform-number">4.</span> Qual o seu telefone?
+            </div>
+            <input type="tel" class="stepform-input" id="formTelefone" name="telefone" placeholder="(00) 00000-0000" required autocomplete="tel">
+            <button type="button" class="stepform-ok-btn" data-next="5">
+                <span>Ok</span>
+                <span class="arrow">&rarr;</span>
+            </button>
+            <span class="stepform-hint">pressione <strong>Enter ↵</strong></span>
+        </div>
+
+        <!-- Step 5: Faturamento -->
+        <div class="stepform-step" data-step="5">
+            <div class="stepform-question">
+                <span class="stepform-number">5.</span> Qual o faturamento mensal da empresa?
+            </div>
+            <div class="stepform-options" id="faturamentoOptions">
+                <button type="button" class="stepform-option-btn" data-value="Até R$ 50 mil">
+                    <span class="stepform-option-key">A</span> Até R$ 50 mil
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="R$ 50 mil a R$ 100 mil">
+                    <span class="stepform-option-key">B</span> R$ 50 mil a R$ 100 mil
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="R$ 100 mil a R$ 500 mil">
+                    <span class="stepform-option-key">C</span> R$ 100 mil a R$ 500 mil
+                </button>
+                <button type="button" class="stepform-option-btn" data-value="Mais de R$ 500 mil">
+                    <span class="stepform-option-key">D</span> Mais de R$ 500 mil
+                </button>
+            </div>
+            <input type="hidden" id="formFaturamento" name="faturamento" required>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="stepform-step stepform-success" data-step="success">
+            <div class="stepform-success-icon">⚓</div>
+            <h3 class="stepform-success-title">Mensagem Enviada!</h3>
+            <p class="stepform-success-subtitle">O seu contato foi recebido. Logo nosso time entrará em contato com você!</p>
+            <p class="stepform-success-hint">Fique atento a ligações ou mensagens de números não salvos.</p>
+            <a href="index.html" class="stepform-ok-btn" style="display:inline-flex;margin-top:24px;text-decoration:none;">
+                <span>Voltar ao site</span>
+                <span class="arrow">&rarr;</span>
+            </a>
+        </div>
+    </form>
+
+    <!-- Navigation Arrows -->
+    <div class="stepform-nav" id="stepFormNav">
+        <button type="button" class="stepform-nav-btn" id="stepPrev" aria-label="Anterior">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </button>
+        <button type="button" class="stepform-nav-btn" id="stepNext" aria-label="Próximo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+    </div>
+</div>
+
+<script>
+/* Standalone Step Form Logic */
+(function() {
+    const overlay = document.getElementById('stepFormOverlay');
+    const stepForm = document.getElementById('stepForm');
+    const progressBar = document.getElementById('stepProgressBar');
+    const prevBtn = document.getElementById('stepPrev');
+    const nextBtn = document.getElementById('stepNext');
+    const totalSteps = 5;
+    let currentStep = 1;
+
+    const getAllSteps = () => overlay.querySelectorAll('.stepform-step[data-step]');
+
+    function showStep(stepNum) {
+        const steps = getAllSteps();
+        steps.forEach(s => s.classList.remove('active'));
+
+        const target = overlay.querySelector(`.stepform-step[data-step="${stepNum}"]`);
+        if (target) {
+            void target.offsetWidth;
+            target.classList.add('active');
+            const input = target.querySelector('.stepform-input');
+            if (input) setTimeout(() => input.focus(), 100);
+        }
+
+        if (stepNum === 'success') {
+            progressBar.style.width = '100%';
+        } else {
+            progressBar.style.width = `${(stepNum / totalSteps) * 100}%`;
+        }
+
+        if (prevBtn) prevBtn.disabled = (stepNum === 1 || stepNum === 'success');
+        if (nextBtn) nextBtn.disabled = (stepNum === totalSteps || stepNum === 'success');
+
+        const navEl = document.getElementById('stepFormNav');
+        if (navEl) navEl.style.display = (stepNum === 'success') ? 'none' : 'flex';
+
+        currentStep = stepNum;
+    }
+
+    function validateCurrentStep() {
+        if (currentStep === 'success') return false;
+        const step = overlay.querySelector(`.stepform-step[data-step="${currentStep}"]`);
+        if (!step) return false;
+
+        const input = step.querySelector('.stepform-input');
+        if (input && !input.value.trim()) {
+            input.style.borderBottomColor = '#ff4444';
+            setTimeout(() => { input.style.borderBottomColor = ''; }, 1500);
+            input.focus();
+            return false;
+        }
+
+        const hiddenInput = step.querySelector('input[type="hidden"]');
+        if (hiddenInput && !hiddenInput.value) {
+            step.querySelectorAll('.stepform-option-btn').forEach(opt => {
+                opt.style.borderColor = '#ff4444';
+                setTimeout(() => { opt.style.borderColor = ''; }, 1500);
+            });
+            return false;
+        }
+        return true;
+    }
+
+    function goToNextStep() {
+        if (currentStep === 'success') return;
+        if (!validateCurrentStep()) return;
+        if (currentStep + 1 > totalSteps) {
+            submitForm();
+        } else {
+            showStep(currentStep + 1);
+        }
+    }
+
+    function goToPrevStep() {
+        if (currentStep === 'success' || currentStep <= 1) return;
+        showStep(currentStep - 1);
+    }
+
+    function submitForm() {
+        const formData = {
+            data: new Date().toLocaleString('pt-BR'),
+            nome: document.getElementById('formNome').value.trim(),
+            whatsapp: document.getElementById('formTelefone').value.trim(),
+            email: '',
+            empresa: document.getElementById('formEmpresa').value.trim(),
+            instagram: '',
+            cargo: document.getElementById('formCargo').value,
+            faturamento: document.getElementById('formFaturamento').value,
+            desafio: ''
+        };
+
+        // Supabase
+        if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseUrl) {
+            fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/leads', {
+                method: 'POST',
+                headers: {
+                    'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                    'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).catch(err => console.error('Erro Supabase:', err));
+        }
+
+        // Meta Pixel
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead', {
+                content_name: formData.cargo,
+                content_category: formData.faturamento
+            });
+        }
+
+        // Discord
+        if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.discordWebhookUrl) {
+            const cleanPhone = formData.whatsapp.replace(/\D/g, '');
+            const waLink = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+            fetch(SAILORS_CONFIG.discordWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "⚓ Novo Lead (Formulário Direto) — Sailors Marketing",
+                        color: 16736538,
+                        fields: [
+                            { name: "👤 Nome", value: formData.nome, inline: true },
+                            { name: "💼 Empresa", value: formData.empresa, inline: true },
+                            { name: "📝 Cargo", value: formData.cargo, inline: true },
+                            { name: "💰 Faturamento", value: formData.faturamento, inline: true },
+                            { name: "🟢 WhatsApp", value: `[Falar no WhatsApp](https://wa.me/${waLink}) (${formData.whatsapp})`, inline: true }
+                        ],
+                        footer: { text: "Sailors Lead System" },
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).catch(err => console.error('Erro Discord:', err));
+        }
+
+        showStep('success');
+    }
+
+    // Nav buttons
+    if (prevBtn) prevBtn.addEventListener('click', goToPrevStep);
+    if (nextBtn) nextBtn.addEventListener('click', goToNextStep);
+
+    // Ok buttons
+    overlay.querySelectorAll('.stepform-ok-btn').forEach(btn => {
+        btn.addEventListener('click', () => goToNextStep());
+    });
+
+    // Enter key
+    overlay.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.classList.contains('stepform-input')) {
+            e.preventDefault();
+            goToNextStep();
+        }
+    });
+
+    // Option buttons
+    overlay.querySelectorAll('.stepform-options').forEach(container => {
+        const buttons = container.querySelectorAll('.stepform-option-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                const step = btn.closest('.stepform-step');
+                const hiddenInput = step.querySelector('input[type="hidden"]');
+                if (hiddenInput) hiddenInput.value = btn.getAttribute('data-value');
+                setTimeout(() => goToNextStep(), 400);
+            });
+        });
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (currentStep === 'success') return;
+        const step = overlay.querySelector(`.stepform-step[data-step="${currentStep}"]`);
+        if (!step) return;
+        const options = step.querySelectorAll('.stepform-option-btn');
+        if (options.length === 0) return;
+        const keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
+        const idx = keyMap[e.key.toLowerCase()];
+        if (idx !== undefined && idx < options.length) options[idx].click();
+    });
+
+    // Visit tracking
+    if (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabaseUrl) {
+        if (!sessionStorage.getItem('sailors_visit_formulario')) {
+            sessionStorage.setItem('sailors_visit_formulario', '1');
+            fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/visits', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                    'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
+                },
+                body: JSON.stringify({
+                    page: '/formulario.html',
+                    referrer: document.referrer || null,
+                    user_agent: navigator.userAgent || null
+                })
+            }).catch(function(){});
+        }
+    }
+
+    // Start at step 1
+    showStep(1);
+})();
+</script>
+</body>
+</html>
