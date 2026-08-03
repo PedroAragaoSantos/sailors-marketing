@@ -1202,7 +1202,7 @@ img {
     grid-row: 3;
     width: 583px;
     height: 387px;
-    margin-left: calc(50% - 655.5px); /* center the pair: (583+145+583)/2 = 655.5 */
+    margin-left: 341px;
 }
 
 .depoimento-row3-right {
@@ -1210,7 +1210,8 @@ img {
     grid-row: 3;
     width: 583px;
     height: 387px;
-    margin-left: calc(50% + 72.5px); /* 655.5 - 583 = 72.5 from center */
+    justify-self: end;
+    margin-right: 341px;
 }
 
 /* Card base styles */
