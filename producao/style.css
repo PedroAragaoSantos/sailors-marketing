@@ -1151,24 +1151,28 @@ img {
     margin-bottom: 64px;
 }
 
-/* Grid Layout — pixel-perfect asymmetric layout */
+/* Grid Layout — viewport-relative positioning */
 .depoimentos-grid {
     display: grid;
-    grid-template-columns: 583px 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 387px 387px 387px;
     row-gap: 93px;
     column-gap: 0;
     position: relative;
     z-index: 5;
     margin-bottom: 56px;
+    /* Break out of container padding so items position from viewport edges */
+    margin-left: -240px;
+    margin-right: -240px;
 }
 
-/* Row 1: card left, dark block right */
+/* Row 1: first card left (366px from left edge) + video right */
 .depoimento-row1-left {
     grid-column: 1;
     grid-row: 1;
     width: 583px;
     height: 387px;
+    margin-left: 366px;
 }
 
 .depoimento-dark-block {
@@ -1176,26 +1180,29 @@ img {
     grid-row: 1 / 3;
     width: 508px;
     height: 903px;
-    margin-left: 220px;
+    justify-self: end;
+    margin-right: 242px;
     background: var(--color-black);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
 }
 
-/* Row 2: card */
+/* Row 2: middle card (242px from left edge) */
 .depoimento-highlight {
     grid-column: 1;
     grid-row: 2;
     width: 583px;
     height: 387px;
+    margin-left: 242px;
 }
 
-/* Row 3: two cards side by side */
+/* Row 3: left card (366px from left), right card (316px from right), aligned */
 .depoimento-row3-left {
     grid-column: 1;
     grid-row: 3;
     width: 583px;
     height: 387px;
+    margin-left: 366px;
 }
 
 .depoimento-row3-right {
@@ -1203,8 +1210,8 @@ img {
     grid-row: 3;
     width: 583px;
     height: 387px;
-    margin-left: 93px;
-    margin-top: 37px;
+    justify-self: end;
+    margin-right: 316px;
 }
 
 /* Card base styles */
