@@ -746,5 +746,27 @@
             });
         });
     </script>
+    <!-- Visit Tracking -->
+    <script>
+    (function() {
+        if (typeof SAILORS_CONFIG === 'undefined' || !SAILORS_CONFIG.supabaseUrl) return;
+        var key = 'sailors_visit_' + location.pathname;
+        if (sessionStorage.getItem(key)) return;
+        sessionStorage.setItem(key, '1');
+        fetch(SAILORS_CONFIG.supabaseUrl + '/rest/v1/visits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SAILORS_CONFIG.supabaseAnonKey,
+                'Authorization': 'Bearer ' + SAILORS_CONFIG.supabaseAnonKey
+            },
+            body: JSON.stringify({
+                page: location.pathname,
+                referrer: document.referrer || null,
+                user_agent: navigator.userAgent || null
+            })
+        }).catch(function(){});
+    })();
+    </script>
 </body>
 </html>

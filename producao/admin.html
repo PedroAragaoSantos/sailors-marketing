@@ -334,6 +334,7 @@ const SB_KEY = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.supabase
 const ADMIN_PWD = (typeof SAILORS_CONFIG !== 'undefined' && SAILORS_CONFIG.adminPassword) || 'sailors2026';
 
 let cachedLeads = [];
+let cachedVisits = [];
 let HOJE = new Date().toISOString().slice(0, 10);
 
 /* ── helpers ── */
@@ -454,14 +455,17 @@ async function loadLeads(silent) {
     if (!silent) $('#btnRefresh').disabled = true;
 
     try {
-        const r = await fetch(SB_URL + '/rest/v1/leads?select=*&order=created_at.desc', {
-            headers: {
-                'apikey': SB_KEY,
-                'Authorization': 'Bearer ' + SB_KEY
-            }
-        });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        cachedLeads = await r.json();
+        const [rLeads, rVisits] = await Promise.all([
+            fetch(SB_URL + '/rest/v1/leads?select=*&order=created_at.desc', {
+                headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+            }),
+            fetch(SB_URL + '/rest/v1/visits?select=*&order=created_at.desc', {
+                headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+            })
+        ]);
+        if (!rLeads.ok) throw new Error('HTTP ' + rLeads.status);
+        cachedLeads = await rLeads.json();
+        cachedVisits = rVisits.ok ? await rVisits.json() : [];
         render();
         marcarVivo(true);
         startAuto();
@@ -507,10 +511,28 @@ function renderCards(leads) {
         lastDate = haQuanto(first.created_at || first.data);
     }
 
+    // Visit stats
+    let visitasHoje = 0, visitasSemana = 0;
+    cachedVisits.forEach(v => {
+        const d = parseDate(v.created_at);
+        if (d) {
+            if (d.toISOString().slice(0,10) === todayStr) visitasHoje++;
+            if (d >= weekAgo) visitasSemana++;
+        }
+    });
+
+    const conversao = cachedVisits.length > 0
+        ? Math.round((leads.length / cachedVisits.length) * 100) + '%'
+        : '—';
+
     $('#cards').innerHTML = [
+        ['Visitas hoje', visitasHoje, 'sessões únicas hoje', false],
+        ['Visitas semana', visitasSemana, 'últimos 7 dias', false],
+        ['Total de Visitas', cachedVisits.length, 'desde o início do rastreio', false],
         ['Leads hoje', leadsHoje, 'novos leads hoje', false],
         ['Esta semana', leadsSemana, 'últimos 7 dias', false],
         ['Total de Leads', leads.length, 'formulários preenchidos', true],
+        ['Conversão', conversao, 'visitante → lead', false],
         ['Último lead', lastDate, 'lead mais recente', false],
     ].map(([k, v, sub, hl]) =>
         `<div class="card${hl ? ' highlight' : ''}">
