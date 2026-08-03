@@ -1268,7 +1268,8 @@ img {
 }
 
 .depoimento-author {
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary-light);
+    font-weight: 300;
     font-size: 0.82rem;
     color: rgba(0, 0, 0, 0.7);
 }
