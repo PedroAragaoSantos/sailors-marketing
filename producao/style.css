@@ -1196,9 +1196,9 @@ img {
     margin-left: 242px;
 }
 
-/* Row 3: left card (366px from left), right card (316px from right), aligned */
+/* Row 3: left card (366px from left), right card 145px gap after it */
 .depoimento-row3-left {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 3;
     width: 583px;
     height: 387px;
@@ -1206,12 +1206,11 @@ img {
 }
 
 .depoimento-row3-right {
-    grid-column: 2;
+    grid-column: 1 / -1;
     grid-row: 3;
     width: 583px;
     height: 387px;
-    justify-self: end;
-    margin-right: 243px;
+    margin-left: 1094px; /* 366 + 583 + 145 = 1094 */
 }
 
 /* Card base styles */
